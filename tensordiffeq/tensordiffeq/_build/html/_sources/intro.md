@@ -47,7 +47,7 @@ Thanks to our affiliates:
 
 ```{image} images/engineering-logo.png
 :alt: Texas A&M Engineering
-:height: 75px
+:height: 100px
 :align: center
 ```
 
