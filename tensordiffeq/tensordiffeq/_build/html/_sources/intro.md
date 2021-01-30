@@ -30,5 +30,9 @@ What makes TensorDiffEq different?
 - Intuitive interface - defining domains, BCs, ICs, and strong-form PDEs in "plain english"
 
 
+Thanks to our affiliates:
+![Army Research Lab Logo](images/ARL-logo.jpg)
+![Texas A&M Engineering](images/engineering-logo.png)
+
 
 
