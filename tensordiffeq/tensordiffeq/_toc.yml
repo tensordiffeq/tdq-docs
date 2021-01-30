@@ -6,13 +6,13 @@
     - file: markdown
     - file: notebooks
 
-- part: Defining Your Problem
-  chapters:
-    - file: domain/domain.ipynb
-    - file: IC-BC/IC.ipynb
-    - file: IC-BC/BC.ipynb
-
-- part: Compiling Your Problem
-  chapters:
-    - file: model/defining.ipynb
-    - file: model/fitting.ipynb
+#- part: Defining Your Problem
+#  chapters:
+#    - file: domain/domain.ipynb
+#    - file: IC-BC/IC.ipynb
+#    - file: IC-BC/BC.ipynb
+#
+#- part: Compiling Your Problem
+#  chapters:
+#    - file: model/defining.ipynb
+#    - file: model/fitting.ipynb
