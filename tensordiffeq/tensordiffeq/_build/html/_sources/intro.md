@@ -34,21 +34,20 @@ Thanks to our affiliates:
 
 
 
-![Army Research Lab Logo](images/ARL-logo.jpg)
-![Texas A&M Engineering](images/engineering-logo.png)  
+[comment]: <> (![Army Research Lab Logo]&#40;images/ARL-logo.jpg&#41;)
+
+[comment]: <> (![Texas A&M Engineering]&#40;images/engineering-logo.png&#41;  )
 
 
 ```{image} images/ARL-logo.jpg
 :alt: Army Research Lab Logo
-:class: bg-primary
-:height: 150px
+:height: 100px
 :align: center
 ```
 
 ```{image} images/engineering-logo.png
 :alt: Texas A&M Engineering
-:class: bg-primary
-:height: 150px
+:height: 100px
 :align: center
 ```
 
