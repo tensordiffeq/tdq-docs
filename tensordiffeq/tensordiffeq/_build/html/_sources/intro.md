@@ -39,7 +39,7 @@ Thanks to our affiliates:
 [comment]: <> (![Texas A&M Engineering]&#40;images/engineering-logo.png&#41;  )
 
 
-```{image} images/ARL-logo.jpg
+```{image} images/devcom.png
 :alt: Army Research Lab Logo
 :height: 100px
 :align: center
@@ -47,7 +47,7 @@ Thanks to our affiliates:
 
 ```{image} images/engineering-logo.png
 :alt: Texas A&M Engineering
-:height: 100px
+:height: 75px
 :align: center
 ```
 
