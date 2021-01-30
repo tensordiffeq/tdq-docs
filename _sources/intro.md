@@ -41,13 +41,19 @@ Thanks to our affiliates:
 
 ```{image} images/devcom.png
 :alt: Army Research Lab Logo
-:height: 75px
+:height: 50px
 :align: center
 ```
 
 ```{image} images/engineering-logo.png
 :alt: Texas A&M Engineering
-:height: 75px
+:height: 50px
+:align: center
+```
+
+```{image} images/tamids.png
+:alt: Texas A&M Institute of Data Science
+:height: 50px
 :align: center
 ```
 
