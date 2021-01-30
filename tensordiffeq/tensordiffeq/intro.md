@@ -32,10 +32,23 @@ What makes TensorDiffEq different?
 
 Thanks to our affiliates:  
 
-<img src ="images/ARL-logo.jpg" alt = "Army Research Lab Logo" height ="200"/>
+
 
 ![Army Research Lab Logo](images/ARL-logo.jpg)
-![Texas A&M Engineering](images/engineering-logo.png)
+![Texas A&M Engineering](images/engineering-logo.png)  
 
 
+```{image} images/ARL-logo.jpg
+:alt: Army Research Lab Logo
+:class: bg-primary
+:height: 150px
+:align: center
+```
+
+```{image} images/engineering-logo.png
+:alt: Texas A&M Engineering
+:class: bg-primary
+:height: 150px
+:align: center
+```
 
