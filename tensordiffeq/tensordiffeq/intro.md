@@ -31,8 +31,8 @@ What makes TensorDiffEq different?
 
 
 Thanks to our affiliates:
-![Army Research Lab Logo](images/ARL-logo.jpg)
-![Texas A&M Engineering](images/engineering-logo.png)
+![Army Research Lab Logo](../images/ARL-logo.jpg)
+![Texas A&M Engineering](../images/engineering-logo.png)
 
 
 
