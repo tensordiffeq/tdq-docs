@@ -15,4 +15,9 @@ html:
   extra_navbar: ""
   use_edit_page_button: true
   use_repository_button: true
-  use_isseus_button: true
+  use_issues_button: true
+
+
+repository:
+  url: https://github.com/tensordiffeq/tdq-docs
+  branch: master
