@@ -11,5 +11,5 @@ copyright                   : "2021"  # Copyright year to be placed in the foote
 logo                        : images/logo.png  # A path to the book logo
 
 html:
-  favicon: images/tqd-profile.png
+  favicon: tenordiffeq/tensordiffeq/images/tqd-profile.png
   extra_navbar: ""
