@@ -13,3 +13,6 @@ logo                        : images/logo.png  # A path to the book logo
 html:
   favicon: images/tdq-profile.png
   extra_navbar: ""
+  use_edit_page_button: true
+  use_repository_button: true
+  use_isseus_button: true
