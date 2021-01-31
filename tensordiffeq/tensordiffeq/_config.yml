@@ -9,3 +9,7 @@ title                       :   # The title of the book. Will be placed in the l
 author                      : Levi McClenny  # The author of the book
 copyright                   : "2021"  # Copyright year to be placed in the footer
 logo                        : images/logo.png  # A path to the book logo
+
+html:
+  favicon: "images/tqd-profile.png"
+  extra_navbar: ""

@@ -16,7 +16,9 @@
 #  chapters:
 #    - file: model/defining.ipynb
 #    - file: model/fitting.ipynb
+#    - file: model/sa-fitting.ipynb
 #
-#- part: Inference
+#- part: PDE Discovery (Inverse Modeling)
 #  chapters:
-#    - file: inference/
+#    - file: discovery/overview.md
+#    - file: discovery/model.ipynb
