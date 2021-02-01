@@ -4,12 +4,12 @@ A `Domain` object is the first essential component of definig a problem in Tenso
 contains primatives for defining the problem scope used later in your definitions of boundary conditions,
 initial conditions, and eventually to sample collocation points that are fed into your PINN solver.
 
-Usage:
+#### Usage:
 ```{code-block} python
 DomainND(var, time_var = None)
 ```
 
-### Methods
+#### Methods
 
 Usage:
 ```{code-block} python

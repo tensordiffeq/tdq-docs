@@ -205,6 +205,11 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#usage">
+   Usage:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#methods">
    Methods
   </a>
@@ -240,9 +245,11 @@
 <p>A <code class="docutils literal notranslate"><span class="pre">Domain</span></code> object is the first essential component of definig a problem in TensorDiffEq. The domain object
 contains primatives for defining the problem scope used later in your definitions of boundary conditions,
 initial conditions, and eventually to sample collocation points that are fed into your PINN solver.</p>
-<p>Usage:</p>
+<div class="section" id="usage">
+<h2>Usage:<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainND</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">time_var</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
