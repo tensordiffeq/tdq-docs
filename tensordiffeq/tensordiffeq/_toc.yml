@@ -6,9 +6,9 @@
     - file: markdown
     - file: notebooks
 
-#- part: Defining Your Problem
-#  chapters:
-#    - file: domain/domain.ipynb
+- part: Defining Your Problem
+  chapters:
+    - file: domain/domain.ipynb
 #    - file: IC-BC/IC.ipynb
 #    - file: IC-BC/BC.ipynb
 #
