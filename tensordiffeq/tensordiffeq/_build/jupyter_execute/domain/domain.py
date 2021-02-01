@@ -4,15 +4,31 @@ A `Domain` object is the first essential component of definig a problem in Tenso
 contains primatives for defining the problem scope used later in your definitions of boundary conditions,
 initial conditions, and eventually to sample collocation points that are fed into your PINN solver.
 
+Usage:
 ```{code-block} python
-:lineno-start: 10
-:emphasize-lines: 1, 3
-
-a = 2
-print('my 1st line')
-print(f'my {a}nd line')
+DomainND(var, time_var = None)
 ```
 
+### Methods
+
+Usage:
+```{code-block} python
+add(token, vals, fidel)
+```
+
+Args:
+- `token` - A `str` by which the varialbe will be referenced, usually a dimension of the problem such as
+`"x"` or `"y"`
+- `vals` - a `list` of inputs corresponding to `[min, max]` of the target domain
+- `fidel` - An `int` defining the level of fidelity of the evenly spaced samples along this simensions boundary points
+
+```{note}
+TensorDiffEq uses *meshless* solvers, i.e. the domain is not solved using evenly spaced meshs across the domain, as in FEA.
+The `fidel` metric defined here is to allow the generation of the training points for the boundaries in the loss function of the PINN solver
+```
+
+
+where `token` is the token identifier, i.e.
 
 ## Markdown + notebooks
 

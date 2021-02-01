@@ -205,6 +205,11 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#methods">
+   Methods
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#markdown-notebooks">
    Markdown + notebooks
   </a>
@@ -235,13 +240,30 @@
 <p>A <code class="docutils literal notranslate"><span class="pre">Domain</span></code> object is the first essential component of definig a problem in TensorDiffEq. The domain object
 contains primatives for defining the problem scope used later in your definitions of boundary conditions,
 initial conditions, and eventually to sample collocation points that are fed into your PINN solver.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>10
-11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="hll"><span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;my 1st line&#39;</span><span class="p">)</span>
-<span class="hll"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;my </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">nd line&#39;</span><span class="p">)</span>
-</span></pre></div>
-</td></tr></table></div>
+<p>Usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DomainND</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">time_var</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<p>Usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">add</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="n">fidel</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code> - A <code class="docutils literal notranslate"><span class="pre">str</span></code> by which the varialbe will be referenced, usually a dimension of the problem such as
+<code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;y&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vals</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of inputs corresponding to <code class="docutils literal notranslate"><span class="pre">[min,</span> <span class="pre">max]</span></code> of the target domain</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fidel</span></code> - An <code class="docutils literal notranslate"><span class="pre">int</span></code> defining the level of fidelity of the evenly spaced samples along this simensions boundary points</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TensorDiffEq uses <em>meshless</em> solvers, i.e. the domain is not solved using evenly spaced meshs across the domain, as in FEA.
+The <code class="docutils literal notranslate"><span class="pre">fidel</span></code> metric defined here is to allow the generation of the training points for the boundaries in the loss function of the PINN solver</p>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">token</span></code> is the token identifier, i.e.</p>
+</div>
 <div class="section" id="markdown-notebooks">
 <h2>Markdown + notebooks<a class="headerlink" href="#markdown-notebooks" title="Permalink to this headline">¶</a></h2>
 <p>As it is markdown, you can embed images, HTML, etc into your posts!</p>
