@@ -9,7 +9,7 @@
 - part: Defining Your Problem
   chapters:
     - file: domain/domain.ipynb
-#    - file: IC-BC/IC.ipynb
+    - file: ic-bc/ic.ipynb
 #    - file: IC-BC/BC.ipynb
 #
 #- part: Compiling and Solving

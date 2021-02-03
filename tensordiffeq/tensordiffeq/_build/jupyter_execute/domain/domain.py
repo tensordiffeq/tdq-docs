@@ -69,8 +69,8 @@ Domain.generate_collocation_points(50000)
 ```
 
 ```{note}
-The collocation points generated are not returned, they reside in the `DomainND` object. Therefore one does not need to allocate
-the output of `generate_collocation_points` to a variable, once the `DomainND` object is passed into the solver the collocation points
+The collocation points generated are not returned, they reside in the `DomainND` object. Therefore, one does not need to allocate
+the output of `generate_collocation_points` to a variable. Once the `DomainND` object is passed into the solver the collocation points
 will be found automatically and used for generating a solution.
 ```
 
