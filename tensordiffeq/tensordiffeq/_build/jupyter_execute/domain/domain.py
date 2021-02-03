@@ -13,7 +13,7 @@ DomainND(var, time_var = None)
 
 Usage:
 ```{code-block} python
-add(token, vals, fidel)
+generate_collocation_points(N_f)
 ```
 
 Args:
