@@ -24,9 +24,13 @@ Args:
 
 ```{note}
 TensorDiffEq uses *meshless* solvers, i.e. the domain is not solved using evenly spaced meshs across the domain, as in FEA.
-The `fidel` metric defined here is to allow the generation of the training points for training the solution at the boundaries.
+The `fidel` metric defined here is to facilitate generation of training points for training the solution at the boundaries of your domain.
 ```
 
+Usage:
+```{code-block} python
+add(token, vals, fidel)
+```
 
 where `token` is the token identifier, i.e.
 
