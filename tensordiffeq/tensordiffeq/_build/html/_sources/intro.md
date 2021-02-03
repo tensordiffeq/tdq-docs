@@ -2,6 +2,9 @@ TensorDiffEq
 ============================
 ## Official Documentation
 
+### *Under Construction* - bear with us as we build out these docs! 
+#### To check recent activity and track progress checkout the [repository](https://github.com/tensordiffeq/tdq-docs)
+
 TensorDiffEq is a python package built on top of Tensorflow to provide scalable and efficient
 PINN solvers. TensorDiffEq's primary purpose is for scalable solving of PINNs (inference) and 
 inverse problems (discovery). 

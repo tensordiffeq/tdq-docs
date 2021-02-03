@@ -4,16 +4,22 @@ A `Domain` object is the first essential component of definig a problem in Tenso
 contains primatives for defining the problem scope used later in your definitions of boundary conditions,
 initial conditions, and eventually to sample collocation points that are fed into your PINN solver.
 
-#### Usage:
+##### Instantiate
 ```{code-block} python
 DomainND(var, time_var = None)
 ```
 
-#### Methods
+Args:
+- `var`
+
+##### Methods
+
+###### Adding variables to your domain
+
 
 Usage:
 ```{code-block} python
-generate_collocation_points(N_f)
+add(token, vals, fidel)
 ```
 
 Args:
@@ -29,10 +35,10 @@ The `fidel` metric defined here is to facilitate generation of training points f
 
 Usage:
 ```{code-block} python
-add(token, vals, fidel)
+generate_collocation_points(N_f)
 ```
 
-where `token` is the token identifier, i.e.
+
 
 ## Markdown + notebooks
 
