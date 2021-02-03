@@ -15,7 +15,7 @@ Args:
 
 ##### Methods
 
-####### Adding variables to your domain
+###### Adding variables to your domain
 
 
 Usage:
@@ -24,7 +24,7 @@ add(token, vals, fidel)
 ```
 
 Args:
-- `token` - A `str` by which the varialbe will be referenced, usually a dimension of the problem such as
+- `token` - A `str` by which the variable will be referenced, usually a dimension of the problem such as
 `"x"` or `"y"`
 - `vals` - a `list` of inputs corresponding to `[min, max]` of the target domain
 - `fidel` - An `int` defining the level of fidelity of the evenly spaced samples along this simensions boundary points
