@@ -285,11 +285,28 @@ The <code class="docutils literal notranslate"><span class="pre">fidel</span></c
 </div>
 <div class="section" id="generation-of-collocation-points">
 <h3>Generation of Collocation Points<a class="headerlink" href="#generation-of-collocation-points" title="Permalink to this headline">¶</a></h3>
-<p>Collocation points for solving an ND PINN problem are automatically generated using the bounds specified in the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> o0bject. All you need to do is specify how many you would like.
+<p>Collocation points for solving an ND PINN problem are automatically generated using the bounds specified in the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> object. All you need to do is specify how many you would like.
 If you have a large domain and require a lot of collocation points across your domain, TensorDiffEq was designed to handle your problem specifically. More information for solving large problems
 with large or very coarse domains are covered later in the section on <span class="xref myst">GPU best practices</span></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">generate_collocation_points</span><span class="p">(</span><span class="n">N_f</span><span class="p">)</span>
 </pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">N_f</span></code> is an <code class="docutils literal notranslate"><span class="pre">int</span></code> describing the numbe of collocation points desired within the domain defined in your <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> object</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Domain</span> <span class="o">=</span> <span class="n">DomainND</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="n">time_var</span> <span class="o">=</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">generate_collocation_points</span><span class="p">(</span><span class="mi">50000</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The collocation points generated are not returned, they reside in the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> object. Therefore one does not need to allocate
+the output of <code class="docutils literal notranslate"><span class="pre">generate_collocation_points</span></code> to a variable, once the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> object is passed into the solver the collocation points
+will be found automatically and used for generating a solution.</p>
 </div>
 </div>
 </div>
