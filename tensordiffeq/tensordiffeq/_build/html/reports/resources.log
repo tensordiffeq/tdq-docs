@@ -1,0 +1,63 @@
+Traceback (most recent call last):
+  File "/home/levi/.local/lib/python3.6/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
+    record_timing=False,
+  File "/home/levi/.local/lib/python3.6/site-packages/nbclient/client.py", line 1087, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/levi/.local/lib/python3.6/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/home/levi/.local/lib/python3.6/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/lib/python3.6/asyncio/base_events.py", line 484, in run_until_complete
+    return future.result()
+  File "/home/levi/.local/lib/python3.6/site-packages/nbclient/client.py", line 541, in async_execute
+    cell, index, execution_count=self.code_cells_executed + 1
+  File "/home/levi/.local/lib/python3.6/site-packages/nbclient/client.py", line 832, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/home/levi/.local/lib/python3.6/site-packages/nbclient/client.py", line 740, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply['content'])
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+
+
+## Markdown + notebooks
+
+As it is markdown, you can embed images, HTML, etc into your posts!
+
+![](https://myst-parser.readthedocs.io/en/latest/_static/logo.png)
+
+You an also $add_{math}$ and
+
+$$
+math^{blocks}
+$$
+
+or
+
+$$
+\begin{aligned}
+\mbox{mean} la_{tex} \\ \\
+math blocks
+\end{aligned}
+$$
+
+But make sure you \$Escape \$your \$dollar signs \$you want to keep!
+
+## MyST markdown
+
+MyST markdown works in Jupyter Notebooks as well. For more information about MyST markdown, check
+out [the MyST guide in Jupyter Book](https://jupyterbook.org/content/myst.html),
+or see [the MyST markdown documentation](https://myst-parser.readthedocs.io/en/latest/).
+
+## Code blocks and outputs
+
+Jupyter Book will also embed your code blocks and output in your book.
+For example, here's some sample Matplotlib code:
+------------------
+
+[0;36m  File [0;32m"<ipython-input-1-5e15853ce3e4>"[0;36m, line [0;32m3[0m
+[0;31m    As it is markdown, you can embed images, HTML, etc into your posts![0m
+[0m        ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m invalid syntax
+
+SyntaxError: invalid syntax (<ipython-input-1-5e15853ce3e4>, line 3)
+
