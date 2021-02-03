@@ -213,11 +213,13 @@
   <a class="reference internal nav-link" href="#methods">
    Methods
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#adding-variables-to-your-domain">
-   Adding variables to your domain
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-variables-to-your-domain">
+     Adding variables to your domain
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -248,9 +250,11 @@ initial conditions, and eventually to sample collocation points that are fed int
 </div>
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="adding-variables-to-your-domain">
-<h2>Adding variables to your domain<a class="headerlink" href="#adding-variables-to-your-domain" title="Permalink to this headline">¶</a></h2>
+<h3>Adding variables to your domain<a class="headerlink" href="#adding-variables-to-your-domain" title="Permalink to this headline">¶</a></h3>
+<p>In order to build out a domain object, we must define the different variables working together in the problem.
+A unique aspect of tensorDiffEq is that it is dimension-agnostic - there is no limit to the number of dimensions
+you can add to the problem.</p>
 <p>Usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">add</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="n">fidel</span><span class="p">)</span>
 </pre></div>
@@ -267,9 +271,17 @@ initial conditions, and eventually to sample collocation points that are fed int
 <p>TensorDiffEq uses <em>meshless</em> solvers, i.e. the domain is not solved using evenly spaced meshs across the domain, as in FEA.
 The <code class="docutils literal notranslate"><span class="pre">fidel</span></code> metric defined here is to facilitate generation of training points for training the solution at the boundaries of your domain.</p>
 </div>
+<p>Example:
+Usage:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Domain</span> <span class="o">=</span> <span class="n">DomainND</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">],</span> <span class="n">time_var</span> <span class="o">=</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">256</span><span class="p">)</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">101</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">generate_collocation_points</span><span class="p">(</span><span class="n">N_f</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

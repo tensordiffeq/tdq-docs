@@ -15,13 +15,17 @@ Args:
 
 ##### Methods
 
-##### Adding variables to your domain
+###### Adding variables to your domain
 
+In order to build out a domain object, we must define the different variables working together in the problem.
+A unique aspect of tensorDiffEq is that it is dimension-agnostic - there is no limit to the number of dimensions
+you can add to the problem.
 
 Usage:
 ```{code-block} python
 add(token, vals, fidel)
 ```
+
 
 Args:
 - `token` - A `str` by which the variable will be referenced, usually a dimension of the problem such as
@@ -33,6 +37,16 @@ Args:
 TensorDiffEq uses *meshless* solvers, i.e. the domain is not solved using evenly spaced meshs across the domain, as in FEA.
 The `fidel` metric defined here is to facilitate generation of training points for training the solution at the boundaries of your domain.
 ```
+
+Example:
+Usage:
+```{code-block} python
+Domain = DomainND(['x', 't'], time_var = 't')
+Domain.add('x', [-1.0, 1.0], 256)
+Domain.add("t", [0.0, 1.0], 101)
+```
+
+
 
 Usage:
 ```{code-block} python
