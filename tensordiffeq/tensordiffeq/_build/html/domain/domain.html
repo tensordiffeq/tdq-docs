@@ -219,6 +219,11 @@
      Adding variables to your domain
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generation-of-collocation-points">
+     Generation of Collocation Points
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -277,7 +282,12 @@ The <code class="docutils literal notranslate"><span class="pre">fidel</span></c
 <span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">101</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Usage:</p>
+</div>
+<div class="section" id="generation-of-collocation-points">
+<h3>Generation of Collocation Points<a class="headerlink" href="#generation-of-collocation-points" title="Permalink to this headline">¶</a></h3>
+<p>Collocation points for solving an ND PINN problem are automatically generated using the bounds specified in the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> o0bject. All you need to do is specify how many you would like.
+If you have a large domain and require a lot of collocation points across your domain, TensorDiffEq was designed to handle your problem specifically. More information for solving large problems
+with large or very coarse domains are covered later in the section on <span class="xref myst">GPU best practices</span></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">generate_collocation_points</span><span class="p">(</span><span class="n">N_f</span><span class="p">)</span>
 </pre></div>
 </div>
