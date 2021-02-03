@@ -24,7 +24,7 @@ Args:
 
 ```{note}
 TensorDiffEq uses *meshless* solvers, i.e. the domain is not solved using evenly spaced meshs across the domain, as in FEA.
-The `fidel` metric defined here is to allow the generation of the training points for the boundaries in the loss function of the PINN solver
+The `fidel` metric defined here is to allow the generation of the training points for training the solution at the boundaries.
 ```
 
 
