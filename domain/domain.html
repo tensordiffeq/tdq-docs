@@ -213,6 +213,13 @@
   <a class="reference internal nav-link" href="#methods">
    Methods
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-variables-to-your-domain">
+     Adding variables to your domain
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -243,14 +250,15 @@ initial conditions, and eventually to sample collocation points that are fed int
 </div>
 <div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
-<p>####### Adding variables to your domain</p>
+<div class="section" id="adding-variables-to-your-domain">
+<h3>Adding variables to your domain<a class="headerlink" href="#adding-variables-to-your-domain" title="Permalink to this headline">¶</a></h3>
 <p>Usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">add</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="n">fidel</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Args:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code> - A <code class="docutils literal notranslate"><span class="pre">str</span></code> by which the varialbe will be referenced, usually a dimension of the problem such as
+<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code> - A <code class="docutils literal notranslate"><span class="pre">str</span></code> by which the variable will be referenced, usually a dimension of the problem such as
 <code class="docutils literal notranslate"><span class="pre">&quot;x&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;y&quot;</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">vals</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of inputs corresponding to <code class="docutils literal notranslate"><span class="pre">[min,</span> <span class="pre">max]</span></code> of the target domain</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">fidel</span></code> - An <code class="docutils literal notranslate"><span class="pre">int</span></code> defining the level of fidelity of the evenly spaced samples along this simensions boundary points</p></li>
@@ -263,6 +271,7 @@ The <code class="docutils literal notranslate"><span class="pre">fidel</span></c
 <p>Usage:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">generate_collocation_points</span><span class="p">(</span><span class="n">N_f</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>
