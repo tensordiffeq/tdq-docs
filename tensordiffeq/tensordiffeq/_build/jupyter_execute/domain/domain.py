@@ -49,10 +49,28 @@ Domain.add('t', [0.0, 1.0], 101)
 
 ###### Generation of Collocation Points
 
-Collocation points for solving an ND PINN problem are automatically generated using the bounds specified in the `DomainND` o0bject. All you need to do is specify how many you would like.
+Collocation points for solving an ND PINN problem are automatically generated using the bounds specified in the `DomainND` object. All you need to do is specify how many you would like.
 If you have a large domain and require a lot of collocation points across your domain, TensorDiffEq was designed to handle your problem specifically. More information for solving large problems
 with large or very coarse domains are covered later in the section on [GPU best practices]()
 
 ```{code-block} python
 generate_collocation_points(N_f)
 ```
+
+Args:
+- `N_f` is an `int` describing the numbe of collocation points desired within the domain defined in your `DomainND` object
+
+Example:
+```{code-block} python
+Domain = DomainND(['x', 't'], time_var = 't')
+Domain.add('x', [-1.0, 1.0], 256)
+Domain.add('t', [0.0, 1.0], 101)
+Domain.generate_collocation_points(50000)
+```
+
+```{note}
+The collocation points generated are not returned, they reside in the `DomainND` object. Therefore one does not need to allocate
+the output of `generate_collocation_points` to a variable, once the `DomainND` object is passed into the solver the collocation points
+will be found automatically and used for generating a solution.
+```
+
