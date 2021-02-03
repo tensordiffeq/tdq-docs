@@ -57,6 +57,7 @@
     <link rel="shortcut icon" href="../_static/tdq-profile.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Initial Conditions" href="../ic-bc/ic.html" />
     <link rel="prev" title="TensorDiffEq" href="../intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -101,6 +102,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Generating a Domain
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ic-bc/ic.html">
+   Initial Conditions
   </a>
  </li>
 </ul>
@@ -304,8 +310,8 @@ with large or very coarse domains are covered later in the section on <span clas
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The collocation points generated are not returned, they reside in the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> object. Therefore one does not need to allocate
-the output of <code class="docutils literal notranslate"><span class="pre">generate_collocation_points</span></code> to a variable, once the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> object is passed into the solver the collocation points
+<p>The collocation points generated are not returned, they reside in the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> object. Therefore, one does not need to allocate
+the output of <code class="docutils literal notranslate"><span class="pre">generate_collocation_points</span></code> to a variable. Once the <code class="docutils literal notranslate"><span class="pre">DomainND</span></code> object is passed into the solver the collocation points
 will be found automatically and used for generating a solution.</p>
 </div>
 </div>
@@ -341,6 +347,7 @@ will be found automatically and used for generating a solution.</p>
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">TensorDiffEq</a>
+    <a class='right-next' id="next-link" href="../ic-bc/ic.html" title="next page">Initial Conditions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
