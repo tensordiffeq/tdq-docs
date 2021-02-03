@@ -15,7 +15,7 @@ Args:
 
 ##### Methods
 
-###### Adding variables to your domain
+##### Adding variables to your domain
 
 
 Usage:
