@@ -4,7 +4,7 @@ A `Domain` object is the first essential component of definig a problem in Tenso
 contains primatives for defining the problem scope used later in your definitions of boundary conditions,
 initial conditions, and eventually to sample collocation points that are fed into your PINN solver.
 
-##### Instantiate
+### Instantiate
 ```{code-block} python
 DomainND(var, time_var = None)
 ```
@@ -13,7 +13,7 @@ Args:
 - `var` - a `list` of variables intended for use in the domain
 - `time_var` - a `str`. if your problem is temporal or spatiotemporal then list the time variable here
 
-##### Methods
+### Methods
 
 ###### Adding variables to your domain
 
@@ -43,7 +43,7 @@ Usage:
 ```{code-block} python
 Domain = DomainND(['x', 't'], time_var = 't')
 Domain.add('x', [-1.0, 1.0], 256)
-Domain.add("t", [0.0, 1.0], 101)
+Domain.add('t', [0.0, 1.0], 101)
 ```
 
 
