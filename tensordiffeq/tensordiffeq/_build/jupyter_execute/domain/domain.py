@@ -11,7 +11,7 @@ DomainND(var, time_var = None)
 
 Args:
 - `var` - a `list` of variables intended for use in the domain
-- `time_var` - a `str`. if your problem is temporal or spatiotemporal then list the time variable here
+- `time_var` - a `str` indicating which variable in the list of `var` is the time variable. If your problem is temporal or spatiotemporal then list the time variable here
 
 ### Methods
 
@@ -39,7 +39,7 @@ The `fidel` metric defined here is to facilitate generation of training points f
 ```
 
 Example:
-Usage:
+
 ```{code-block} python
 Domain = DomainND(['x', 't'], time_var = 't')
 Domain.add('x', [-1.0, 1.0], 256)
