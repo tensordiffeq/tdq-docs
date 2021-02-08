@@ -39,11 +39,13 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tensordiffeq/tensordiffeq/ic-bc" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tensordiffeq/tensordiffeq/ic-bc" />
       <recent name="$PROJECT_DIR$/tensordiffeq/tensordiffeq/domain" />
+      <recent name="$PROJECT_DIR$/tensordiffeq/tensordiffeq" />
       <recent name="$USER_HOME$/Downloads" />
       <recent name="$PROJECT_DIR$/tensordiffeq/tensordiffeq/images" />
     </key>
@@ -87,7 +89,7 @@
       <updated>1611700126131</updated>
       <workItem from="1612032906405" duration="3265000" />
       <workItem from="1612043759212" duration="16877000" />
-      <workItem from="1612393383900" duration="7183000" />
+      <workItem from="1612393383900" duration="8002000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit from Cookiecutter">
       <created>1611701970862</created>
@@ -187,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612809442250</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Test netlify CI">
+      <created>1612810377434</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1612810377434</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
