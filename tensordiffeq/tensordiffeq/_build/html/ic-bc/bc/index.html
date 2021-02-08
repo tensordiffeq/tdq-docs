@@ -249,9 +249,19 @@ the boundary conditions described by the user are enforced in the solution.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">domain</span></code> - a <code class="docutils literal notranslate"><span class="pre">domain</span></code> object containing the variables in the domain</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">val</span></code> - a <code class="docutils literal notranslate"><span class="pre">float</span></code> containing the value to be enforced at the boundary</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">str</span></code> indicating which variable should be enforced by the value in <code class="docutils literal notranslate"><span class="pre">val</span></code></p></li>
-<li><p>‘target’ a <code class="docutils literal notranslate"><span class="pre">str</span></code> indicating whether the value listed in <code class="docutils literal notranslate"><span class="pre">val</span></code> will be targeting the <code class="docutils literal notranslate"><span class="pre">upper</span></code> or <code class="docutils literal notranslate"><span class="pre">lower</span></code> boundary on <code class="docutils literal notranslate"><span class="pre">var</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code> - a <code class="docutils literal notranslate"><span class="pre">str</span></code> indicating whether the value listed in <code class="docutils literal notranslate"><span class="pre">val</span></code> will be targeting the <code class="docutils literal notranslate"><span class="pre">upper</span></code> or <code class="docutils literal notranslate"><span class="pre">lower</span></code> boundary on <code class="docutils literal notranslate"><span class="pre">var</span></code></p></li>
 </ul>
 <p>to create a simple dirichletBC, one could define upper and lower boundary values on the <code class="docutils literal notranslate"><span class="pre">x</span></code> value from the <a class="reference internal" href="../ic/index.html"><span class="doc std std-doc">IC definition section</span></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">upper_x</span> <span class="o">=</span> <span class="n">dirichlectBC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">)</span>
+<span class="n">lower_x</span> <span class="o">=</span> <span class="n">dirichlectBC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will force the upper and lower boundary value of 0.0 on the upper and lower boundaries of <code class="docutils literal notranslate"><span class="pre">x</span></code> for a 1D spatio-temporal problem.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently TensorDiffEq doesn’t support functions as Dirichlet BCs. In the near future this will be a feature and will contain a similar
+interface as the <a class="reference internal" href="../ic/index.html"><span class="doc std std-doc">IC function definition</span></a>. Bear with us as we add features to help you solve your problems!</p>
+</div>
 </div>
 </div>
 
