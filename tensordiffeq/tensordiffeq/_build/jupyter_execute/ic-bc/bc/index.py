@@ -10,6 +10,9 @@ Boundary conditions have similar structure, and dont return anything once initia
 the boundary conditions described by the user are enforced in the solution.
 
 ### Dirichlet BCs
+Dirichlet BCs enforce a function at a particular boundary. These BCs are useful to "inject" heat into a boundary, for instance, or to hold the end of a spring constant.
+
+#### Initialize
 
 Dirichlet BCs are initialized in the following fashion:
 
@@ -42,7 +45,21 @@ interface as the [IC function definition](../ic/index.ipynb). Bear with us as we
 Periodic BCs in TensorDiffEq allow for fine-grain control over the depth to which the derivatives at your boundaries go.
 Many periodic BC implementations in other PINN solvers only allow for the zero-order derivative (no derivative) as a member of the loss function in
 their solvers. TensorDiffEq allows for arbitrary depth and fine-grain control over which derivatives are included in the
-final calculations. We first define a derivative model as such:
+final calculations.
+
+#### Initialize
+
+```{code-block} python
+periodicBC(domain, var, deriv_model)
+```
+
+Args:
+- `domain` - a `domain` object containing the variables in the domain
+- `var` - a `list` of `str` values indicating which variables should be enforced by the derivative function defined in `deriv_model`
+- `target` - a `function` describing which derivatives shall be enforced at the boundaries for the variables listed in `var`
+
+
+We first define a derivative model as such:
 
 ```{code-block} python
 def deriv_model(u_model, x, t):
@@ -64,6 +81,8 @@ def deriv_model(u_model, x, t):
     return u, u_x, u_xx, u_xxx, u_xxxx
 ```
 
+
+
 A similar form can be used to define higher-order derivatives at boundaries in higher dimensions as well, such as the
 following to define a periodic BC on a 2D domain:
 
@@ -81,3 +100,16 @@ def deriv_model(u_model, x, y, t):
 
 All the items listed in the `return` will be included iteratively in the loss function of your PINN solver, and adding higher order
 derivatives adds little to no additional computational cost.
+
+Once a derivative model function has been defined, a periodic BC can be initialized via the following:
+
+```{code-block} python
+x_periodic = periodicBC(Domain, ['x'], [deriv_model])
+```
+
+Args:
+- `domain` - a `domain` object containing the variables in the domain
+- `val` - a `float` containing the value to be enforced at the boundary
+- `var` - a `str` indicating which variable should be enforced by the value in `val`
+- `target` - a `str` indicating whether the value listed in `val` will be targeting the `upper` or `lower` boundary on `var`
+
