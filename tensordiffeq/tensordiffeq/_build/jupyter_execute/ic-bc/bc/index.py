@@ -36,3 +36,48 @@ This will force the upper and lower boundary value of 0.0 on the upper and lower
 Currently TensorDiffEq doesn't support functions as Dirichlet BCs. In the near future this will be a feature and will contain a similar
 interface as the [IC function definition](../ic/index.ipynb). Bear with us as we add features to help you solve your problems!
 ```
+
+### Periodic BCs
+
+Periodic BCs in TensorDiffEq allow for fine-grain control over the depth to which the derivatives at your boundaries go.
+Many periodic BC implementations in other PINN solvers only allow for the zero-order derivative (no derivative) as a member of the loss function in
+their solvers. TensorDiffEq allows for arbitrary depth and fine-grain control over which derivatives are included in the
+final calculations. We first define a derivative model as such:
+
+```{code-block} python
+def deriv_model(u_model, x, t):
+    u = u_model(tf.concat([x, t], 1))
+    u_x = tf.gradients(u, x)[0]
+    return u, u_x
+```
+
+which solves down to the first order level at the boundary, allowing for added continuity. However, we aren't limited to only one level of derivative
+in the periodic BC, and can instead define an arbitrary amount, such as a 4th-order derivative:
+
+```{code-block} python
+def deriv_model(u_model, x, t):
+    u = u_model(tf.concat([x, t], 1))
+    u_x = tf.gradients(u, x)[0]
+    u_xx = tf.gradients(u_x, x)[0]
+    u_xxx = tf.gradients(u_xx, x)[0]
+    u_xxxx = tf.gradients(u_xxx, x)[0]
+    return u, u_x, u_xx, u_xxx, u_xxxx
+```
+
+A similar form can be used to define higher-order derivatives at boundaries in higher dimensions as well, such as the
+following to define a periodic BC on a 2D domain:
+
+```{code-block} python
+def deriv_model(u_model, x, y, t):
+    u = u_model(tf.concat([x, y, t], 1))
+    u_x = tf.gradients(u, x)[0]
+    u_y = tf.gradients(u, y)[0]
+    u_xx = tf.gradients(u_x, x)[0]
+    u_yx = tf.gradients(u_y, x)[0]
+    u_yy = tf.gradients(u_y, y)[0]
+    u_xy = tf.gradients(u_x, y)[0]
+    return u, u_x, u_y, u_xx, u_yy, u_xy, u_yx
+```
+
+All the items listed in the `return` will be included iteratively in the loss function of your PINN solver, and adding higher order
+derivatives adds little to no additional computational cost.
