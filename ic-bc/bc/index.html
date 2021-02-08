@@ -218,11 +218,25 @@
   <a class="reference internal nav-link" href="#dirichlet-bcs">
    Dirichlet BCs
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#initialize">
+     Initialize
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#periodic-bcs">
    Periodic BCs
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Initialize
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -245,6 +259,9 @@ through them, and allow the solution to train.</p>
 the boundary conditions described by the user are enforced in the solution.</p>
 <div class="section" id="dirichlet-bcs">
 <h2>Dirichlet BCs<a class="headerlink" href="#dirichlet-bcs" title="Permalink to this headline">¶</a></h2>
+<p>Dirichlet BCs enforce a function at a particular boundary. These BCs are useful to “inject” heat into a boundary, for instance, or to hold the end of a spring constant.</p>
+<div class="section" id="initialize">
+<h3>Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h3>
 <p>Dirichlet BCs are initialized in the following fashion:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dirichletBC</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 </pre></div>
@@ -268,12 +285,25 @@ the boundary conditions described by the user are enforced in the solution.</p>
 interface as the <a class="reference internal" href="../ic/index.html"><span class="doc std std-doc">IC function definition</span></a>. Bear with us as we add features to help you solve your problems!</p>
 </div>
 </div>
+</div>
 <div class="section" id="periodic-bcs">
 <h2>Periodic BCs<a class="headerlink" href="#periodic-bcs" title="Permalink to this headline">¶</a></h2>
 <p>Periodic BCs in TensorDiffEq allow for fine-grain control over the depth to which the derivatives at your boundaries go.
 Many periodic BC implementations in other PINN solvers only allow for the zero-order derivative (no derivative) as a member of the loss function in
 their solvers. TensorDiffEq allows for arbitrary depth and fine-grain control over which derivatives are included in the
-final calculations. We first define a derivative model as such:</p>
+final calculations.</p>
+<div class="section" id="id1">
+<h3>Initialize<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">periodicBC</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">deriv_model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">domain</span></code> - a <code class="docutils literal notranslate"><span class="pre">domain</span></code> object containing the variables in the domain</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> values indicating which variables should be enforced by the derivative function defined in <code class="docutils literal notranslate"><span class="pre">deriv_model</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code> - a <code class="docutils literal notranslate"><span class="pre">function</span></code> describing which derivatives shall be enforced at the boundaries for the variables listed in <code class="docutils literal notranslate"><span class="pre">var</span></code></p></li>
+</ul>
+<p>We first define a derivative model as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">deriv_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -306,6 +336,18 @@ following to define a periodic BC on a 2D domain:</p>
 </div>
 <p>All the items listed in the <code class="docutils literal notranslate"><span class="pre">return</span></code> will be included iteratively in the loss function of your PINN solver, and adding higher order
 derivatives adds little to no additional computational cost.</p>
+<p>Once a derivative model function has been defined, a periodic BC can be initialized via the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_periodic</span> <span class="o">=</span> <span class="n">periodicBC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">deriv_model</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">domain</span></code> - a <code class="docutils literal notranslate"><span class="pre">domain</span></code> object containing the variables in the domain</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">val</span></code> - a <code class="docutils literal notranslate"><span class="pre">float</span></code> containing the value to be enforced at the boundary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">str</span></code> indicating which variable should be enforced by the value in <code class="docutils literal notranslate"><span class="pre">val</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code> - a <code class="docutils literal notranslate"><span class="pre">str</span></code> indicating whether the value listed in <code class="docutils literal notranslate"><span class="pre">val</span></code> will be targeting the <code class="docutils literal notranslate"><span class="pre">upper</span></code> or <code class="docutils literal notranslate"><span class="pre">lower</span></code> boundary on <code class="docutils literal notranslate"><span class="pre">var</span></code></p></li>
+</ul>
+</div>
 </div>
 </div>
 
