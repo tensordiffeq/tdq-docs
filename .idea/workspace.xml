@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8f1326b-7670-4227-a1c1-919b0f20a353" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/tensordiffeq/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tensordiffeq/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tensordiffeq/tensordiffeq/_toc.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tensordiffeq/tensordiffeq/_toc.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +87,7 @@
       <updated>1611700126131</updated>
       <workItem from="1612032906405" duration="3265000" />
       <workItem from="1612043759212" duration="16877000" />
-      <workItem from="1612393383900" duration="6543000" />
+      <workItem from="1612393383900" duration="7183000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit from Cookiecutter">
       <created>1611701970862</created>
@@ -179,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612809317405</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Test netlify CI">
+      <created>1612809442250</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1612809442250</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
