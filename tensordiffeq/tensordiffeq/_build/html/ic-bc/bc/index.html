@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt;</title>
+    <title>Boundary Conditions</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -57,6 +57,7 @@
     <link rel="shortcut icon" href="../../_static/tdq-profile.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Initial Conditions" href="../ic/index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -96,7 +97,7 @@
   Defining Your Problem
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../../domain/index.html">
    Generating a Domain
@@ -105,6 +106,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../ic/index.html">
    Initial Conditions
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Boundary Conditions
   </a>
  </li>
 </ul>
@@ -207,7 +213,12 @@
             <i class="fas fa-list"></i> Contents
         </div>
         <nav id="bd-toc-nav">
-            <ul class="simple nav section-nav flex-column">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dirichlet-bcs">
+   Dirichlet BCs
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -219,7 +230,31 @@
         
               <div>
                 
-  
+  <div class="section" id="boundary-conditions">
+<h1>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h1>
+<p>Currently, TensorDiffEq contains built-in support for Dirichlet and Periodic BCs, with expanded support coming in the near future</p>
+<p>The boundary conditions described generate additional terms in the loss function to allow for enforcement of those boundaries in the final
+solution. Therefore, one simple needs to describe all the boundaries in your problem, put them into a <code class="docutils literal notranslate"><span class="pre">list</span></code> so that TensorDiffEqs solvers can iterate
+through them, and allow the solution to train.</p>
+<p>Boundary conditions have similar structure, and dont return anything once initialized. Once fed into the solver, however,
+the boundary conditions described by the user are enforced in the solution.</p>
+<div class="section" id="dirichlet-bcs">
+<h2>Dirichlet BCs<a class="headerlink" href="#dirichlet-bcs" title="Permalink to this headline">¶</a></h2>
+<p>Dirichlet BCs are initialized in the following fashion:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dirichletBC</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">domain</span></code> - a <code class="docutils literal notranslate"><span class="pre">domain</span></code> object containing the variables in the domain</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">val</span></code> - a <code class="docutils literal notranslate"><span class="pre">float</span></code> containing the value to be enforced at the boundary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">str</span></code> indicating which variable should be enforced by the value in <code class="docutils literal notranslate"><span class="pre">val</span></code></p></li>
+<li><p>‘target’ a <code class="docutils literal notranslate"><span class="pre">str</span></code> indicating whether the value listed in <code class="docutils literal notranslate"><span class="pre">val</span></code> will be targeting the <code class="docutils literal notranslate"><span class="pre">upper</span></code> or <code class="docutils literal notranslate"><span class="pre">lower</span></code> boundary on <code class="docutils literal notranslate"><span class="pre">var</span></code></p></li>
+</ul>
+<p>to create a simple dirichletBC, one could define upper and lower boundary values on the <code class="docutils literal notranslate"><span class="pre">x</span></code> value from the <a class="reference internal" href="../ic/index.html"><span class="doc std std-doc">IC definition section</span></a></p>
+</div>
+</div>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -248,6 +283,7 @@
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="../ic/index.html" title="previous page">Initial Conditions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

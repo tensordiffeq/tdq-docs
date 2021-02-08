@@ -10,7 +10,7 @@
   chapters:
     - file: domain/index.ipynb
     - file: ic-bc/ic/index.ipynb
-#    - file: IC-BC/BC.ipynb
+    - file: ic-bc/bc/index.ipynb
 #
 #- part: Compiling and Solving
 #  chapters:

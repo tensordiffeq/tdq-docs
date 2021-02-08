@@ -30,7 +30,7 @@ def func_ic(x):
     return out
 ```
 
-The above would be valid input to TensorDiffEqs solvers, and would still allow for self-adaptive solving at the initial boundary.
+The above would be valid input to TensorDiffEq's solvers, and would still allow for self-adaptive solving at the initial boundary.
 
 Once this function has been defined, creating the initial boundary is implemented via the `IC` class:
 
@@ -51,7 +51,7 @@ Continuing with the above example, where `func_ic` is the function above, we wou
 init = IC(Domain, [func_ic], var=[['x']])
 ```
 
-which later on would be added to a list of BCs to generate the loss function for your PINN solver. 
+which later on would be added to a list of BCs to generate the loss function for your PINN solver.
 
 
 
