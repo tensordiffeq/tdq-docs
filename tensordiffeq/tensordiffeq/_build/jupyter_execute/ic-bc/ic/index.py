@@ -30,4 +30,4 @@ def func_ic(x):
     return out
 ```
 
-The above would be valid input to TensorDiffEqs solvers, and would still allow for self-adaptive solving at the initial boundary. 
+The above would be valid input to TensorDiffEqs solvers, and would still allow for self-adaptive solving at the initial boundary.
