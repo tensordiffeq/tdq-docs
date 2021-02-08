@@ -8,6 +8,10 @@ TensorDiffEq
 ![Conda Build](https://github.com/tensordiffeq/TensorDiffEq/workflows/Conda%20Build/badge.svg)
 ![Package Build](https://github.com/tensordiffeq/TensorDiffEq/workflows/Package%20Build/badge.svg)
 ![Package Release](https://github.com/tensordiffeq/TensorDiffEq/workflows/Package%20Release/badge.svg)
+![pypi](https://img.shields.io/pypi/v/tensordiffeq)
+![downloads](https://img.shields.io/pypi/dd/tensordiffeq)
+![python versions](https://img.shields.io/pypi/pyversions/tensordiffeq)
+
 
 TensorDiffEq is a python package built on top of Tensorflow to provide scalable and efficient
 PINN solvers. TensorDiffEq's primary purpose is for scalable solving of PINNs (inference) and 
