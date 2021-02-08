@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8f1326b-7670-4227-a1c1-919b0f20a353" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tensordiffeq/tensordiffeq/_toc.yml" beforeDir="false" afterPath="$PROJECT_DIR$/tensordiffeq/tensordiffeq/_toc.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +88,7 @@
       <updated>1611700126131</updated>
       <workItem from="1612032906405" duration="3265000" />
       <workItem from="1612043759212" duration="16877000" />
-      <workItem from="1612393383900" duration="8002000" />
+      <workItem from="1612393383900" duration="8026000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit from Cookiecutter">
       <created>1611701970862</created>
@@ -196,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612810377434</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="refactor for index pages">
+      <created>1612810916225</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1612810916225</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,7 +227,8 @@
     <MESSAGE value="refactor" />
     <MESSAGE value="commit logo" />
     <MESSAGE value="Test netlify CI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test netlify CI" />
+    <MESSAGE value="refactor for index pages" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor for index pages" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/tdq_docs$main.coverage" NAME="main Coverage Results" MODIFIED="1612028717101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

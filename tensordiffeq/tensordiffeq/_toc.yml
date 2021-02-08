@@ -8,8 +8,8 @@
 
 - part: Defining Your Problem
   chapters:
-    - file: domain/domain.ipynb
-    - file: ic-bc/ic.ipynb
+    - file: domain/index.ipynb
+    - file: ic-bc/index.ipynb
 #    - file: IC-BC/BC.ipynb
 #
 #- part: Compiling and Solving
