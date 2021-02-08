@@ -1,8 +1,1 @@
 jupyter-book
-matplotlib
-numpy
-ghp-import
-tensorflow
-smt
-tensorflow_probability
-scipy
