@@ -21,7 +21,7 @@ For our problem we have been building in the previous sections, we can define la
 layer_sizes = [2, 128, 128, 128, 128, 1]
 ```
 
-Or, if your problem is a function of `[x,y,t]`, the you could define the exact same network with a input layer with 3 nodes, i.e.
+Or, if your problem is a function of `[x,y,t]`, then you could define the exact same network with an input layer with 3 nodes, i.e.
 
 ```{code} python
 layer_sizes = [3, 128, 128, 128, 128, 1]
