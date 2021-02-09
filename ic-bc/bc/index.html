@@ -120,6 +120,18 @@
   </a>
  </li>
 </ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Compiling and Solving
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../model/compiling/index.html">
+   Compiling your Problem
+  </a>
+ </li>
+</ul>
 
 </nav> <!-- To handle the deprecated key -->
 
@@ -242,6 +254,11 @@
      Initialize
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#derivative-models">
+     Derivative Models
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -309,6 +326,9 @@ final calculations.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">str</span></code> values indicating which variables should be enforced by the derivative function defined in <code class="docutils literal notranslate"><span class="pre">deriv_model</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">target</span></code> - a <code class="docutils literal notranslate"><span class="pre">function</span></code> describing which derivatives shall be enforced at the boundaries for the variables listed in <code class="docutils literal notranslate"><span class="pre">var</span></code></p></li>
 </ul>
+</div>
+<div class="section" id="derivative-models">
+<h3>Derivative Models<a class="headerlink" href="#derivative-models" title="Permalink to this headline">¶</a></h3>
 <p>We first define a derivative model as such:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">deriv_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
