@@ -23,4 +23,4 @@ repository:
   branch: master
 
 bibtex_bibfiles:
-   - referencess.bib
+   - references.bib

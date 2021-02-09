@@ -11,4 +11,5 @@ TensorDiffEq is the fully-connected MLP network.
 
 
 ```{bibliography} references.bib
+:style: unsrt
 ```
