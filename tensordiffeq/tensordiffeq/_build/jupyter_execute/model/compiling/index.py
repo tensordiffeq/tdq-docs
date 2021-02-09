@@ -29,6 +29,7 @@ layer_sizes = [3, 128, 128, 128, 128, 1]
 
 ### Compile the Model
 
-```{bibliography} ../../references.bib
-:style: unsrt
-```
+In order to compile the model, we first initialize the model we are interested in. Currently, forward solutions of PINNs are performed by
+the `CollocationSolverND()` method.
+
+

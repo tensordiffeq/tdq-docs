@@ -27,5 +27,5 @@
 #    - file: gpu/gpu.ipynb
 
 - part: References
-    chapters:
+  chapters:
     - file: bib.md
