@@ -271,8 +271,8 @@
 by the boundary conditions, initial conditions, and physics defined in the previous sections.</p>
 <p>Additionally, here is where we will define the neural network size and depth. Currently, most PINN approaches use dense fully connected
 neural networks for function approximation. Fully-connected Neural Networks have some level of theoretical backing
-that they will converge to a solution of the underlying function <span class="bibtex" id="id1">[pinkus1999approximation]</span><span class="bibtex" id="id2">[chen1993approximations]</span>, and this
-theoretical backing has extended into the PINN framework <span class="bibtex" id="id3">[shin2020convergence]</span>. With that being said, currently the only type of network supported in
+that they will converge to a solution of the underlying function <a class="bibtex reference internal" href="#pinkus1999approximation" id="id1">[1]</a><a class="bibtex reference internal" href="#chen1993approximations" id="id2">[2]</a>, and this
+theoretical backing has extended into the PINN framework <a class="bibtex reference internal" href="#shin2020convergence" id="id3">[3]</a>. With that being said, currently the only type of network supported in
 TensorDiffEq is the fully-connected MLP network.</p>
 <div class="section" id="layer-sizes">
 <h2>Layer Sizes<a class="headerlink" href="#layer-sizes" title="Permalink to this headline">¶</a></h2>
@@ -292,6 +292,18 @@ a layer size list of <code class="docutils literal notranslate"><span class="pre
 <h2>Compile the Model<a class="headerlink" href="#compile-the-model" title="Permalink to this headline">¶</a></h2>
 <p>In order to compile the model, we first initialize the model we are interested in. Currently, forward solutions of PINNs are performed by
 the <code class="docutils literal notranslate"><span class="pre">CollocationSolverND()</span></code> method.</p>
+<p id="bibtex-bibliography-model/compiling/index-0"><dl class="citation">
+<dt class="bibtex label" id="pinkus1999approximation"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Allan Pinkus. Approximation theory of the mlp model. <em>Acta Numerica 1999: Volume 8</em>, 8:143–195, 1999.</p>
+</dd>
+<dt class="bibtex label" id="chen1993approximations"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Tianping Chen and Hong Chen. Approximations of continuous functionals by neural networks with application to dynamic systems. <em>IEEE Transactions on Neural Networks</em>, 4(6):910–918, 1993.</p>
+</dd>
+<dt class="bibtex label" id="shin2020convergence"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>Yeonjong Shin, Jerome Darbon, and George Em Karniadakis. On the convergence and generalization of physics informed neural networks. <em>arXiv preprint arXiv:2004.01806</em>, 2020.</p>
+</dd>
+</dl>
+</p>
 </div>
 </div>
 
