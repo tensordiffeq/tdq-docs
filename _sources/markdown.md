@@ -91,9 +91,11 @@ then the bibliography is inserted with:
 
 Resulting in a rendered bibliography that looks like:
 
-```{bibliography} references.bib
-:style: unsrt
-```
+[comment]: <> (```{bibliography} references.bib)
+
+[comment]: <> (:style: unsrt)
+
+[comment]: <> (```)
 
 
 ### Executing code in your markdown files
