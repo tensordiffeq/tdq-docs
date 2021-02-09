@@ -239,10 +239,18 @@
 by the boundary conditions, initial conditions, and physics defined in the previous sections.</p>
 <p>Additionally, here is where we will define the neural network size and depth. Currently, most PINN approaches use dense fully connected
 neural networks for function approximation. Fully-connected Neural Networks have some level of theoretical backing
-that they will converge to a solution of the underlying function <span class="bibtex" id="id1">[pinkus1999approximation]</span><span class="bibtex" id="id2">[ chen1993approximations]</span>, and this
-theoretical backing has extended into the PINN framework <span class="bibtex" id="id3">[shin2020convergence]</span>. With that being said, currently the only type of network supported in
+that they will converge to a solution of the underlying function <a class="bibtex reference internal" href="#pinkus1999approximation" id="id1">[1]</a><span class="bibtex" id="id2">[ chen1993approximations]</span>, and this
+theoretical backing has extended into the PINN framework <a class="bibtex reference internal" href="#shin2020convergence" id="id3">[2]</a>. With that being said, currently the only type of network supported in
 TensorDiffEq is the fully-connected MLP network.</p>
-<p id="bibtex-bibliography-model/compiling/index-0"></p>
+<p id="bibtex-bibliography-model/compiling/index-0"><dl class="citation">
+<dt class="bibtex label" id="pinkus1999approximation"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Allan Pinkus. Approximation theory of the mlp model. <em>Acta Numerica 1999: Volume 8</em>, 8:143–195, 1999.</p>
+</dd>
+<dt class="bibtex label" id="shin2020convergence"><span class="brackets"><a class="fn-backref" href="#id3">2</a></span></dt>
+<dd><p>Yeonjong Shin, Jerome Darbon, and George Em Karniadakis. On the convergence and generalization of physics informed neural networks. <em>arXiv preprint arXiv:2004.01806</em>, 2020.</p>
+</dd>
+</dl>
+</p>
 </div>
 
     <script type="text/x-thebe-config">
