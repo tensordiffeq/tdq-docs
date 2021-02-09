@@ -58,6 +58,7 @@ Args:
 - `var` - a `list` of `str` values indicating which variables should be enforced by the derivative function defined in `deriv_model`
 - `target` - a `function` describing which derivatives shall be enforced at the boundaries for the variables listed in `var`
 
+#### Derivative Models
 
 We first define a derivative model as such:
 
