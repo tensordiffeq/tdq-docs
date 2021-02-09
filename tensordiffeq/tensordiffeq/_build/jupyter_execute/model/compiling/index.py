@@ -10,6 +10,6 @@ theoretical backing has extended into the PINN framework {cite}`shin2020converge
 TensorDiffEq is the fully-connected MLP network.
 
 
-```{bibliography} references.bib
+```{bibliography} ../references.bib
 :style: unsrt
 ```
