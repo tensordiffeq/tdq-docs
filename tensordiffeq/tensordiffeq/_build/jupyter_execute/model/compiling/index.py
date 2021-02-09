@@ -33,3 +33,7 @@ In order to compile the model, we first initialize the model we are interested i
 the `CollocationSolverND()` method.
 
 
+
+```{bibliography} ../../references.bib
+:style: unsrt
+```
