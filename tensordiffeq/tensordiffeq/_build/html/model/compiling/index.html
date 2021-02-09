@@ -237,7 +237,11 @@
 <h1>Compiling your Problem<a class="headerlink" href="#compiling-your-problem" title="Permalink to this headline">¶</a></h1>
 <p>Once you’ve defined your problem, it must be compiled such that TensorDiffEq can build the loss function described
 by the boundary conditions, initial conditions, and physics defined in the previous sections.</p>
-<p>Additionally,</p>
+<p>Additionally, here is where we will define the neural network size and depth. Currently, most PINN approaches use dense fully connected
+neural networks for function approximation. Fully-connected Neural Networks have some level of theoretical backing
+that they will converge to a solution of the underlying function <span class="bibtex" id="id1">[pinkus1999approximation]</span><span class="bibtex" id="id2">[ chen1993approximations]</span>, and this
+theoretical backing has extended into the PINN framework <span class="bibtex" id="id3">[shin2020convergence]</span>. With that being said, currently the only type of network supported in
+TensorDiffEq is the fully-connected MLP network.</p>
 </div>
 
     <script type="text/x-thebe-config">

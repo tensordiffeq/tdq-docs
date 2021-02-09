@@ -21,3 +21,6 @@ html:
 repository:
   url: https://github.com/tensordiffeq/tdq-docs
   branch: master
+
+bibtex_bibfiles:
+   - referencess.bib
