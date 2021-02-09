@@ -11,10 +11,11 @@
     - file: domain/index.ipynb
     - file: ic-bc/ic/index.ipynb
     - file: ic-bc/bc/index.ipynb
-#
-#- part: Compiling and Solving
-#  chapters:
-#    - file: model/defining.ipynb
+    - file: physics/index.ipynb
+
+- part: Compiling and Solving
+  chapters:
+    - file: model/compiling/index.ipynb
 #    - file: model/fitting.ipynb
 #    - file: model/sa-fitting.ipynb
 #
