@@ -25,3 +25,5 @@
 #    - file: discovery/model/index.ipynb
 #- part: Solving problems on GPU
 #    - file: gpu/gpu.ipynb
+
+- file: bib.md
