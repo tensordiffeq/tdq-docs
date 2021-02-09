@@ -15,6 +15,8 @@ must be generated. In order to get the partials, we take advantage of the `tf.gr
 function with respect to an input. This provides an intuitive interface to build a strong-form PDE to represent the
 physics in your model.
 
+### Building Physics in TensorDiffEq
+
 A simple example from [Raissi et. al](https://maziarraissi.github.io/PINNs/) is the viscous Burger's equation, useful for modeling shock waves in
 a medium.
 
