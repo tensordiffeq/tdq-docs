@@ -340,7 +340,8 @@ input into the Collocation Solver</p>
 </div>
 <p>Now we define the <a class="reference internal" href="../../physics/index.html"><span class="doc std std-doc">physics model</span></a>, wrapping the PDE in a function and returning the strong form PDE. Gradients
 can be taken with <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> as the execution will end up being in graph-mode once the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> function is
-fed into the solver.</p>
+fed into the solver. This is one of the biggest perks of TensorDiffEq, all the translation into fast graph-mode execution is
+built into the package.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
@@ -348,6 +349,15 @@ fed into the solver.</p>
     <span class="n">u_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
     <span class="n">f_u</span> <span class="o">=</span> <span class="n">u_t</span> <span class="o">+</span> <span class="n">u</span> <span class="o">*</span> <span class="n">u_x</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.05</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">*</span> <span class="n">u_xx</span>
     <span class="k">return</span> <span class="n">f_u</span>
+</pre></div>
+</div>
+<p>Finally, we define the layer sizes of the FC MLP network used to approximate the solution network <span class="math notranslate nohighlight">\(u(x,t)\)</span>, initialize the model
+compile and solve.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolverND</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">newton_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
