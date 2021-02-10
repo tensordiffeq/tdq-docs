@@ -71,7 +71,10 @@ Args:
 - `col_weights` - a `tf.Variable` object containing the vector of collocation weights used in self-adaptive training, if enabled via `isAdaptive`
 - `u_weights` - a `tf.Variable` object containing the vector of initial boundary weights used in self-adaptive training, if enabled via `isAdaptive`
 - `g` - a `func` describing the lambda function described in the [SA-PINN framework](https://arxiv.org/pdf/2009.04544.pdf). This defaults to squaring the collocation weights if not explicitly defined.
-Only applacible if `isAdaptive` is enabled.
+Only applicable if `isAdaptive` is enabled.
+- `dist` - a `bool` enabling distributed training across multiple GPUs
+
+
 
 
 Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the `compile` method on the
