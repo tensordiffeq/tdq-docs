@@ -1,4 +1,4 @@
-# Compiling your Problem
+# Collocation Solver
 
 Once you've defined your problem, it must be compiled such that TensorDiffEq can build the loss function described
 by the boundary conditions, initial conditions, and physics defined in the previous sections.
@@ -76,10 +76,15 @@ Only applicable if `isAdaptive` is enabled.
 
 Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the `compile` method on the
 `CollocationSolverND` method. This will build out the loss function in the solver by iterating through the [BCs](../../ic-bc/bc/index.ipynb) and the [IC](../../ic-bc/ic/index.ipynb)
-that define your problem. The compile function will also pull in the collocation points and optimize your `f_model` function for running in graph-mode in Tensorflow. 
+that define your problem. The compile function will also pull in the collocation points and optimize your `f_model` function for running in graph-mode in Tensorflow.
 
+```{code} python
+fit(tf_iter, newton_iter,
+    batch_sz = None
+    newton_eager = True)
+```
 
-
+Args
 
 ```{bibliography} ../../references.bib
 :style: unsrt
