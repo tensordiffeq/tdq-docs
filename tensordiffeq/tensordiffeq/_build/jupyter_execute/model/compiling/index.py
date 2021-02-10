@@ -1,4 +1,4 @@
-# Collocation Solver
+# PINN Collocation Solver
 
 Once you've defined your problem, it must be compiled such that TensorDiffEq can build the loss function described
 by the boundary conditions, initial conditions, and physics defined in the previous sections.
@@ -84,7 +84,9 @@ fit(tf_iter, newton_iter,
     newton_eager = True)
 ```
 
-Args
+Args:
+- `tf_iter` - an `int` dictating the number of iterated for the selected tensorflow optimizer
+- `newton_iter` - and `int` dictating the number of L-BFGS iterations to be completed following the `tf_iter` iterations
 
 ```{bibliography} ../../references.bib
 :style: unsrt
