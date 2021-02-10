@@ -363,7 +363,16 @@ that define your problem. The compile function will also pull in the collocation
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">tf_iter</span></code> - an <code class="docutils literal notranslate"><span class="pre">int</span></code> dictating the number of iterated for the selected tensorflow optimizer</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">newton_iter</span></code> - and <code class="docutils literal notranslate"><span class="pre">int</span></code> dictating the number of L-BFGS iterations to be completed following the <code class="docutils literal notranslate"><span class="pre">tf_iter</span></code> iterations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_sz</span></code> - an <code class="docutils literal notranslate"><span class="pre">int</span></code> indicating the size of batches of collocation points fed into the solver</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">newton_eager</span></code> - a <code class="docutils literal notranslate"><span class="pre">bool</span></code> indicating whether the L-BFGS iterations will be executed eagerly</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, <code class="docutils literal notranslate"><span class="pre">newton_eager</span></code> is demonstrating some stability issues as of release v0.1.1. Neither form of newton optimization (eager or graph)
+is currently supported in a distributed environment.</p>
+<p>Additionally, <code class="docutils literal notranslate"><span class="pre">batch_sz</span></code> is not a tunable parameter in a distributed environment when using the SA-PINN methodology.</p>
+<p>Specific notes on optimizing for multi-GPU environments will be addressed later in this document.</p>
+</div>
 <p id="bibtex-bibliography-model/compiling/index-0"><dl class="citation">
 <dt class="bibtex label" id="pinkus1999approximation"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Allan Pinkus. Approximation theory of the mlp model. <em>Acta Numerica 1999: Volume 8</em>, 8:143–195, 1999.</p>

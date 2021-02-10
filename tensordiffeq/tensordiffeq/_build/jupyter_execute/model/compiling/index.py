@@ -87,6 +87,17 @@ fit(tf_iter, newton_iter,
 Args:
 - `tf_iter` - an `int` dictating the number of iterated for the selected tensorflow optimizer
 - `newton_iter` - and `int` dictating the number of L-BFGS iterations to be completed following the `tf_iter` iterations
+- `batch_sz` - an `int` indicating the size of batches of collocation points fed into the solver
+- `newton_eager` - a `bool` indicating whether the L-BFGS iterations will be executed eagerly
+
+```{note}
+Currently, `newton_eager` is demonstrating some stability issues as of release v0.1.1. Neither form of newton optimization (eager or graph)
+is currently supported in a distributed environment.
+
+Additionally, `batch_sz` is not a tunable parameter in a distributed environment when using the SA-PINN methodology.
+
+Specific notes on optimizing for multi-GPU environments will be addressed later in this document.
+```
 
 ```{bibliography} ../../references.bib
 :style: unsrt
