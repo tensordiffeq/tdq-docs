@@ -27,7 +27,7 @@ Or, if your problem is a function of `[x,y,t]`, then you could define the exact 
 layer_sizes = [3, 128, 128, 128, 128, 1]
 ```
 
-### Compile the Model
+### Build and Train the Model
 
 In order to compile the model, we first initialize the model we are interested in. Currently, forward solutions of PINNs are performed by
 the `CollocationSolverND()` method.

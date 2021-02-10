@@ -16,8 +16,8 @@
 - part: Compiling and Solving
   chapters:
     - file: model/compiling/index.ipynb
-#    - file: model/fitting.ipynb
-#    - file: model/sa-fitting.ipynb
+    - file: model/compiling-example/index.ipynb
+#    - file: model/sa-compiling-example/index.ipynb
 #
 #- part: PDE Discovery (Inverse Modeling)
 #  chapters:
