@@ -59,7 +59,7 @@ compile(layer_sizes, f_model, domain,b bcs, isAdaptive=False, col_weights=None, 
 
 Args:
 - `layer_sizes` - a `list` of `ints` describing the size of the input, hidden, and output layers of the FC MLP network
-- `f_model` a `fun` describing the physics of the problem. More info is provided in [this section](../../physics/index.ipynb
+- `f_model` a `fun` describing the physics of the problem. More info is provided in [this section](../../physics/index.ipynb)
 
 Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the `compile` method on the
 `CollocationSolverND` method.
