@@ -253,6 +253,25 @@
   <a class="reference internal nav-link" href="#compile-the-model">
    Compile the Model
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#collocation-solver">
+     Collocation Solver
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#instantiate-the-model">
+       Instantiate the Model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Compile the Model
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -269,13 +288,13 @@
 <h1>Compiling your Problem<a class="headerlink" href="#compiling-your-problem" title="Permalink to this headline">¶</a></h1>
 <p>Once you’ve defined your problem, it must be compiled such that TensorDiffEq can build the loss function described
 by the boundary conditions, initial conditions, and physics defined in the previous sections.</p>
-<p>Additionally, here is where we will define the neural network size and depth. Currently, most PINN approaches use dense fully connected
+<div class="section" id="layer-sizes">
+<h2>Layer Sizes<a class="headerlink" href="#layer-sizes" title="Permalink to this headline">¶</a></h2>
+<p>Here is where we will define the neural network size and depth. Currently, most PINN approaches use dense fully connected
 neural networks for function approximation. Fully-connected Neural Networks have some level of theoretical backing
 that they will converge to a solution of the underlying function <a class="bibtex reference internal" href="#pinkus1999approximation" id="id1">[1]</a><a class="bibtex reference internal" href="#chen1993approximations" id="id2">[2]</a>, and this
 theoretical backing has extended into the PINN framework <a class="bibtex reference internal" href="#shin2020convergence" id="id3">[3]</a>. With that being said, currently the only type of network supported in
 TensorDiffEq is the fully-connected MLP network.</p>
-<div class="section" id="layer-sizes">
-<h2>Layer Sizes<a class="headerlink" href="#layer-sizes" title="Permalink to this headline">¶</a></h2>
 <p>TensorDiffEq uses the <a class="reference external" href="https://keras.io/">Keras API</a> for neural network construction. All you need to do is define a list of layer
 sizes for your neural network. So, for a network with an <code class="docutils literal notranslate"><span class="pre">[x,t]</span></code> input, 4 layers deep, with 128 nodes, one would define
 a layer size list of <code class="docutils literal notranslate"><span class="pre">[2,128,128,1]</span></code>.</p>
@@ -292,6 +311,25 @@ a layer size list of <code class="docutils literal notranslate"><span class="pre
 <h2>Compile the Model<a class="headerlink" href="#compile-the-model" title="Permalink to this headline">¶</a></h2>
 <p>In order to compile the model, we first initialize the model we are interested in. Currently, forward solutions of PINNs are performed by
 the <code class="docutils literal notranslate"><span class="pre">CollocationSolverND()</span></code> method.</p>
+<div class="section" id="collocation-solver">
+<h3>Collocation Solver<a class="headerlink" href="#collocation-solver" title="Permalink to this headline">¶</a></h3>
+<p>The primary method of solving forward problems in TensorDiffEq is the collocation solver. This methodology identifies points
+in the domain of the problem and collocates them to the solution via a loss function. Therefore, this is a natural application
+for a neural network function approximation.</p>
+<div class="section" id="instantiate-the-model">
+<h4>Instantiate the Model<a class="headerlink" href="#instantiate-the-model" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">CollocationModelND()</span></code> solver can be initialized in the following way:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CollocationSolverND</span><span class="p">(</span><span class="n">assimilate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">assimilate</span></code> a <code class="docutils literal notranslate"><span class="pre">bool</span></code> that describes whether the <code class="docutils literal notranslate"><span class="pre">CollocationModelND</span></code> will be used for data assimilation</p></li>
+</ul>
+<p>Note that very little in the solver is truly initialized, most comes later in the <code class="docutils literal notranslate"><span class="pre">compile</span></code> call.</p>
+</div>
+<div class="section" id="id4">
+<h4>Compile the Model<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p id="bibtex-bibliography-model/compiling/index-0"><dl class="citation">
 <dt class="bibtex label" id="pinkus1999approximation"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Allan Pinkus. Approximation theory of the mlp model. <em>Acta Numerica 1999: Volume 8</em>, 8:143–195, 1999.</p>
@@ -304,6 +342,8 @@ the <code class="docutils literal notranslate"><span class="pre">CollocationSolv
 </dd>
 </dl>
 </p>
+</div>
+</div>
 </div>
 </div>
 
