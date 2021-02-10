@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Compiling your Problem</title>
+    <title>Collocation Solver</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -128,7 +128,7 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Compiling your Problem
+   Collocation Solver
   </a>
  </li>
 </ul>
@@ -255,7 +255,7 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#collocation-solver">
+    <a class="reference internal nav-link" href="#id4">
      Collocation Solver
     </a>
     <ul class="nav section-nav flex-column">
@@ -284,8 +284,8 @@
         
               <div>
                 
-  <div class="section" id="compiling-your-problem">
-<h1>Compiling your Problem<a class="headerlink" href="#compiling-your-problem" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="collocation-solver">
+<h1>Collocation Solver<a class="headerlink" href="#collocation-solver" title="Permalink to this headline">¶</a></h1>
 <p>Once you’ve defined your problem, it must be compiled such that TensorDiffEq can build the loss function described
 by the boundary conditions, initial conditions, and physics defined in the previous sections.</p>
 <div class="section" id="layer-sizes">
@@ -311,8 +311,8 @@ a layer size list of <code class="docutils literal notranslate"><span class="pre
 <h2>Compile the Model<a class="headerlink" href="#compile-the-model" title="Permalink to this headline">¶</a></h2>
 <p>In order to compile the model, we first initialize the model we are interested in. Currently, forward solutions of PINNs are performed by
 the <code class="docutils literal notranslate"><span class="pre">CollocationSolverND()</span></code> method.</p>
-<div class="section" id="collocation-solver">
-<h3>Collocation Solver<a class="headerlink" href="#collocation-solver" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>Collocation Solver<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>The primary method of solving forward problems in TensorDiffEq is the collocation solver. This methodology identifies points
 in the domain of the problem and collocates them to the solution via a loss function. Therefore, this is a natural application
 for a neural network function approximation.</p>
@@ -354,6 +354,12 @@ Only applicable if <code class="docutils literal notranslate"><span class="pre">
 <p>Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the <code class="docutils literal notranslate"><span class="pre">compile</span></code> method on the
 <code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> method. This will build out the loss function in the solver by iterating through the <a class="reference internal" href="../../ic-bc/bc/index.html"><span class="doc std std-doc">BCs</span></a> and the <a class="reference internal" href="../../ic-bc/ic/index.html"><span class="doc std std-doc">IC</span></a>
 that define your problem. The compile function will also pull in the collocation points and optimize your <code class="docutils literal notranslate"><span class="pre">f_model</span></code> function for running in graph-mode in Tensorflow.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="p">,</span> <span class="n">newton_iter</span><span class="p">,</span>
+    <span class="n">batch_sz</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">newton_eager</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Args</p>
 <p id="bibtex-bibliography-model/compiling/index-0"><dl class="citation">
 <dt class="bibtex label" id="pinkus1999approximation"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Allan Pinkus. Approximation theory of the mlp model. <em>Acta Numerica 1999: Volume 8</em>, 8:143–195, 1999.</p>
