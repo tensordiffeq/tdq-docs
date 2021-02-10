@@ -54,7 +54,12 @@ Note that very little in the solver is truly initialized when creating the `Coll
 ##### Methods
 
 ```{code} python
-compile(layer_sizes, f_model, domain, bcs, isAdaptive=False, col_weights=None, u_weights=None, g=none, dist=False)
+compile(layer_sizes, f_model, domain, bcs,
+    isAdaptive=False,
+    col_weights=None,
+    u_weights=None,
+    g=none,
+    dist=False)
 ```
 
 Args:
