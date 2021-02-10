@@ -74,16 +74,9 @@ Args:
 Only applicable if `isAdaptive` is enabled.
 - `dist` - a `bool` enabling distributed training across multiple GPUs
 
-
-
-
-
-
-
-
-
 Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the `compile` method on the
-`CollocationSolverND` method.
+`CollocationSolverND` method. This will build out the loss function in the solver by iterating through the [BCs](../../ic-bc/bc/index.ipynb) and the [IC](../../ic-bc/ic/index.ipynb)
+that define your problem. The compile function will also pull in the collocation points and optimize your `f_model` function for running in graph-mode in Tensorflow. 
 
 
 

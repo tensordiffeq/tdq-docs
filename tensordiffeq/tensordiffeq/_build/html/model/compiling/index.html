@@ -352,7 +352,8 @@ Only applicable if <code class="docutils literal notranslate"><span class="pre">
 <li><p><code class="docutils literal notranslate"><span class="pre">dist</span></code> - a <code class="docutils literal notranslate"><span class="pre">bool</span></code> enabling distributed training across multiple GPUs</p></li>
 </ul>
 <p>Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the <code class="docutils literal notranslate"><span class="pre">compile</span></code> method on the
-<code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> method.</p>
+<code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> method. This will build out the loss function in the solver by iterating through the <a class="reference internal" href="../../ic-bc/bc/index.html"><span class="doc std std-doc">BCs</span></a> and the <a class="reference internal" href="../../ic-bc/ic/index.html"><span class="doc std std-doc">IC</span></a>
+that define your problem. The compile function will also pull in the collocation points and optimize your <code class="docutils literal notranslate"><span class="pre">f_model</span></code> function for running in graph-mode in Tensorflow.</p>
 <p id="bibtex-bibliography-model/compiling/index-0"><dl class="citation">
 <dt class="bibtex label" id="pinkus1999approximation"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Allan Pinkus. Approximation theory of the mlp model. <em>Acta Numerica 1999: Volume 8</em>, 8:143–195, 1999.</p>
