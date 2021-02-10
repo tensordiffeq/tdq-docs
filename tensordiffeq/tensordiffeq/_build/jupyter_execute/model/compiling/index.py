@@ -77,6 +77,11 @@ Only applicable if `isAdaptive` is enabled.
 
 
 
+
+
+
+
+
 Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the `compile` method on the
 `CollocationSolverND` method.
 
