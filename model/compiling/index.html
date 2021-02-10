@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Collocation Solver</title>
+    <title>PINN Collocation Solver</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -128,7 +128,7 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Collocation Solver
+   PINN Collocation Solver
   </a>
  </li>
 </ul>
@@ -255,7 +255,7 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
+    <a class="reference internal nav-link" href="#collocation-solver">
      Collocation Solver
     </a>
     <ul class="nav section-nav flex-column">
@@ -284,8 +284,8 @@
         
               <div>
                 
-  <div class="section" id="collocation-solver">
-<h1>Collocation Solver<a class="headerlink" href="#collocation-solver" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="pinn-collocation-solver">
+<h1>PINN Collocation Solver<a class="headerlink" href="#pinn-collocation-solver" title="Permalink to this headline">¶</a></h1>
 <p>Once you’ve defined your problem, it must be compiled such that TensorDiffEq can build the loss function described
 by the boundary conditions, initial conditions, and physics defined in the previous sections.</p>
 <div class="section" id="layer-sizes">
@@ -311,8 +311,8 @@ a layer size list of <code class="docutils literal notranslate"><span class="pre
 <h2>Compile the Model<a class="headerlink" href="#compile-the-model" title="Permalink to this headline">¶</a></h2>
 <p>In order to compile the model, we first initialize the model we are interested in. Currently, forward solutions of PINNs are performed by
 the <code class="docutils literal notranslate"><span class="pre">CollocationSolverND()</span></code> method.</p>
-<div class="section" id="id4">
-<h3>Collocation Solver<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="collocation-solver">
+<h3>Collocation Solver<a class="headerlink" href="#collocation-solver" title="Permalink to this headline">¶</a></h3>
 <p>The primary method of solving forward problems in TensorDiffEq is the collocation solver. This methodology identifies points
 in the domain of the problem and collocates them to the solution via a loss function. Therefore, this is a natural application
 for a neural network function approximation.</p>
@@ -359,7 +359,11 @@ that define your problem. The compile function will also pull in the collocation
     <span class="n">newton_eager</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Args</p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tf_iter</span></code> - an <code class="docutils literal notranslate"><span class="pre">int</span></code> dictating the number of iterated for the selected tensorflow optimizer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">newton_iter</span></code> - and <code class="docutils literal notranslate"><span class="pre">int</span></code> dictating the number of L-BFGS iterations to be completed following the <code class="docutils literal notranslate"><span class="pre">tf_iter</span></code> iterations</p></li>
+</ul>
 <p id="bibtex-bibliography-model/compiling/index-0"><dl class="citation">
 <dt class="bibtex label" id="pinkus1999approximation"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Allan Pinkus. Approximation theory of the mlp model. <em>Acta Numerica 1999: Volume 8</em>, 8:143–195, 1999.</p>
