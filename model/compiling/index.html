@@ -265,8 +265,8 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id4">
-       Compile the Model
+      <a class="reference internal nav-link" href="#methods">
+       Methods
       </a>
      </li>
     </ul>
@@ -318,18 +318,28 @@ in the domain of the problem and collocates them to the solution via a loss func
 for a neural network function approximation.</p>
 <div class="section" id="instantiate-the-model">
 <h4>Instantiate the Model<a class="headerlink" href="#instantiate-the-model" title="Permalink to this headline">¶</a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">CollocationModelND()</span></code> solver can be initialized in the following way:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">CollocationSolverND()</span></code> solver can be initialized in the following way:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CollocationSolverND</span><span class="p">(</span><span class="n">assimilate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Args:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">assimilate</span></code> a <code class="docutils literal notranslate"><span class="pre">bool</span></code> that describes whether the <code class="docutils literal notranslate"><span class="pre">CollocationModelND</span></code> will be used for data assimilation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assimilate</span></code> - a <code class="docutils literal notranslate"><span class="pre">bool</span></code> that describes whether the <code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> will be used for data assimilation</p></li>
 </ul>
-<p>Note that very little in the solver is truly initialized, most comes later in the <code class="docutils literal notranslate"><span class="pre">compile</span></code> call.</p>
+<p>Note that very little in the solver is truly initialized when creating the <code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> instance, most comes later in the <code class="docutils literal notranslate"><span class="pre">compile</span></code> call.</p>
 </div>
-<div class="section" id="id4">
-<h4>Compile the Model<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="methods">
+<h4>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span><span class="n">b</span> <span class="n">bcs</span><span class="p">,</span> <span class="n">isAdaptive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">col_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">u_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">none</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">layer_sizes</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">ints</span></code> describing the size of the input, hidden, and output layers of the FC MLP network</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f_model</span></code> a <code class="docutils literal notranslate"><span class="pre">fun</span></code> describing the physics of the problem. More info is provided in [this section](../../physics/index.ipynb</p></li>
+</ul>
+<p>Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the <code class="docutils literal notranslate"><span class="pre">compile</span></code> method on the
+<code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> method.</p>
 <p id="bibtex-bibliography-model/compiling/index-0"><dl class="citation">
 <dt class="bibtex label" id="pinkus1999approximation"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Allan Pinkus. Approximation theory of the mlp model. <em>Acta Numerica 1999: Volume 8</em>, 8:143–195, 1999.</p>
