@@ -40,19 +40,29 @@ for a neural network function approximation.
 
 ##### Instantiate the Model
 
-The `CollocationModelND()` solver can be initialized in the following way:
+The `CollocationSolverND()` solver can be initialized in the following way:
 
 ```{code} python
 CollocationSolverND(assimilate=False)
 ```
 
 Args:
-- `assimilate` a `bool` that describes whether the `CollocationModelND` will be used for data assimilation
+- `assimilate` - a `bool` that describes whether the `CollocationSolverND` will be used for data assimilation
 
-Note that very little in the solver is truly initialized, most comes later in the `compile` call.
+Note that very little in the solver is truly initialized when creating the `CollocationSolverND` instance, most comes later in the `compile` call.
 
-##### Compile the Model
+##### Methods
 
+```{code} python
+compile(layer_sizes, f_model, domain,b bcs, isAdaptive=False, col_weights=None, u_weights=None, g=none, dist=False)
+```
+
+Args:
+- `layer_sizes` - a `list` of `ints` describing the size of the input, hidden, and output layers of the FC MLP network
+- `f_model` a `fun` describing the physics of the problem. More info is provided in [this section](../../physics/index.ipynb
+
+Model compilation is truly where the rubber meets the road in defining an inference model in TensorDiffEq. We compile the model using the `compile` method on the
+`CollocationSolverND` method.
 
 
 
