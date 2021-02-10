@@ -99,6 +99,8 @@ Additionally, `batch_sz` is not a tunable parameter in a distributed environment
 Specific notes on optimizing for multi-GPU environments will be addressed later in this document.
 ```
 
+
+#### References
 ```{bibliography} ../../references.bib
 :style: unsrt
 ```

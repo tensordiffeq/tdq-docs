@@ -1,6 +1,6 @@
 # Collocation Solver Example
 
-Lets walk through a whole script and get an idea of how to solve a simple burgers equation example, similar to
+Lets walk through a whole script and get an idea of how to solve a simple Burgers equation example, similar to
 the example seen in [Raissi et. al](https://maziarraissi.github.io/PINNs/).
 
 ## Full Script
@@ -72,3 +72,22 @@ lower_x = dirichletBC(Domain, val=0.0, var='x', target="lower")
 
 BCs = [init, upper_x, lower_x]
 ```
+
+Now we define the [physics model](../../physics/index.ipynb), wrapping the PDE in a function and returning the strong form PDE. Gradients
+can be taken with `tf.gradients` as the execution will end up being in graph-mode once the `f_model` function is
+fed into the solver.
+
+```{code} python
+def f_model(u_model, x, t):
+    u = u_model(tf.concat([x, t], 1))
+    u_x = tf.gradients(u, x)
+    u_xx = tf.gradients(u_x, x)
+    u_t = tf.gradients(u, t)
+    f_u = u_t + u * u_x - (0.05 / tf.constant(math.pi)) * u_xx
+    return f_u
+
+```
+
+
+
+
