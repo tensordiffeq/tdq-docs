@@ -17,7 +17,7 @@
   chapters:
     - file: model/compiling/index.ipynb
     - file: model/compiling-example/index.ipynb
-#    - file: model/sa-compiling-example/index.ipynb
+    - file: model/sa-compiling-example/index.ipynb
 #
 #- part: PDE Discovery (Inverse Modeling)
 #  chapters:

@@ -100,6 +100,8 @@ model.compile(layer_sizes, f_model, Domain, BCs)
 model.fit(tf_iter=1000, newton_iter=1000)
 ```
 
+Once all this is completed TensorDiffEq will begin training the solution for $u(x,t)$!
+
 
 
 
