@@ -53,7 +53,24 @@ u_weights = tf.Variable(100 * tf.random.uniform([512, 1]), trainable=True, dtype
 layer_sizes = [2, 128, 128, 128, 128, 1]
 
 model = CollocationSolverND()
-model.compile(layer_sizes, f_model, Domain, BCs, isAdaptive=True, col_weights=col_weights, u_weights=u_weights)
+model.compile(layer_sizes, f_model, Domain, BCs, isAdaptive=True,
+                col_weights=col_weights, u_weights=u_weights)
 model.fit(tf_iter=10000, newton_iter=10000)
 
 ```
+
+Lets break this script up and discuss it a bit. First we define the `domain` and everything associated in it, in this case
+we have a problems that is only dependent on `x` and `t`.
+
+```{code} python
+Domain = DomainND(["x", "t"], time_var='t')
+
+Domain.add("x", [-1.0, 1.0], 512)
+Domain.add("t", [0.0, 1.0], 201)
+
+N_f = 50000
+Domain.generate_collocation_points(N_f)
+```
+
+Notice how this problem we take more collocation points than the [last example](../compiling-example/index.ipynb) with its simpler
+example.
