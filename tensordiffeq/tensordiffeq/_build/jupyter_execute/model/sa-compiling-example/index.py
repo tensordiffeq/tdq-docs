@@ -76,7 +76,7 @@ Notice how this problem we take more collocation points than the [last example](
 example.
 
 Next up lets take a look at defining the [initial condition](../../ic-bc/ic/index.ipynb) and the
-[periodic BC derivative model](../../ic-bc/bc/index.ipynb#derivative-models). Then we drop those conditions into a list to drop them
+[periodic BC derivative model](../../ic-bc/bc/index.html#derivative-models). Then we drop those conditions into a list to drop them
 into the solver.
 
 ```{code} python

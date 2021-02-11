@@ -327,7 +327,7 @@ we have a problems that is only dependent on <code class="docutils literal notra
 <p>Notice how this problem we take more collocation points than the <a class="reference internal" href="../compiling-example/index.html"><span class="doc std std-doc">last example</span></a> with its simpler
 example.</p>
 <p>Next up lets take a look at defining the <a class="reference internal" href="../../ic-bc/ic/index.html"><span class="doc std std-doc">initial condition</span></a> and the
-<a class="reference external" href="../../ic-bc/bc/index.ipynb#derivative-models">periodic BC derivative model</a>. Then we drop those conditions into a list to drop them
+<a class="reference external" href="../../ic-bc/bc/index.html#derivative-models">periodic BC derivative model</a>. Then we drop those conditions into a list to drop them
 into the solver.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_ic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
