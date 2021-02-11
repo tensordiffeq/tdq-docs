@@ -308,10 +308,24 @@ tf.Variables for the collocation initial condition weights.</p>
 <span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolverND</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">,</span> <span class="n">isAdaptive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">col_weights</span><span class="o">=</span><span class="n">col_weights</span><span class="p">,</span> <span class="n">u_weights</span><span class="o">=</span><span class="n">u_weights</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">,</span> <span class="n">isAdaptive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">col_weights</span><span class="o">=</span><span class="n">col_weights</span><span class="p">,</span> <span class="n">u_weights</span><span class="o">=</span><span class="n">u_weights</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">newton_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Lets break this script up and discuss it a bit. First we define the <code class="docutils literal notranslate"><span class="pre">domain</span></code> and everything associated in it, in this case
+we have a problems that is only dependent on <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Domain</span> <span class="o">=</span> <span class="n">DomainND</span><span class="p">([</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">],</span> <span class="n">time_var</span><span class="o">=</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+
+<span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">512</span><span class="p">)</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">201</span><span class="p">)</span>
+
+<span class="n">N_f</span> <span class="o">=</span> <span class="mi">50000</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">generate_collocation_points</span><span class="p">(</span><span class="n">N_f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice how this problem we take more collocation points than the <a class="reference internal" href="../compiling-example/index.html"><span class="doc std std-doc">last example</span></a> with its simpler
+example.</p>
 </div>
 
     <script type="text/x-thebe-config">
