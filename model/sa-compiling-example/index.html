@@ -258,9 +258,60 @@
                 
   <div class="section" id="self-adaptive-pinn-example">
 <h1>Self-Adaptive PINN Example<a class="headerlink" href="#self-adaptive-pinn-example" title="Permalink to this headline">¶</a></h1>
-<p>Next, let’s jump into a [Self-Adaptive PINN] example, where we demonstrate some of the capabilities of the self-adaptive training.
+<p>Next, let’s jump into a <a class="reference external" href="https://arxiv.org/pdf/2009.04544.pdf">Self-Adaptive PINN</a> example, where we demonstrate some of the capabilities of the self-adaptive training.
 You may notice that the interface doesn’t change too much, and all we need to do is define weight vectors in the form of
-tf.Variables</p>
+tf.Variables for the collocation initial condition weights.</p>
+<p>A full example is shown below for the Allen-Cahn PDE:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Domain</span> <span class="o">=</span> <span class="n">DomainND</span><span class="p">([</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">],</span> <span class="n">time_var</span><span class="o">=</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>
+
+<span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">512</span><span class="p">)</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="mi">201</span><span class="p">)</span>
+
+<span class="n">N_f</span> <span class="o">=</span> <span class="mi">50000</span>
+<span class="n">Domain</span><span class="o">.</span><span class="n">generate_collocation_points</span><span class="p">(</span><span class="n">N_f</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">func_ic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># Conditions to be considered at the boundaries for the periodic BC</span>
+<span class="k">def</span> <span class="nf">deriv_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">u_xx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">u_xxx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_xx</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">u_xxxx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_xxx</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">u_x</span><span class="p">,</span> <span class="n">u_xxx</span><span class="p">,</span> <span class="n">u_xxxx</span>
+
+
+<span class="n">init</span> <span class="o">=</span> <span class="n">IC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="p">[</span><span class="n">func_ic</span><span class="p">],</span> <span class="n">var</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">]])</span>
+<span class="n">x_periodic</span> <span class="o">=</span> <span class="n">periodicBC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">deriv_model</span><span class="p">])</span>
+
+<span class="n">BCs</span> <span class="o">=</span> <span class="p">[</span><span class="n">init</span><span class="p">,</span> <span class="n">x_periodic</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">f_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">u_xx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">u_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="o">.</span><span class="mi">0001</span><span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+    <span class="n">f_u</span> <span class="o">=</span> <span class="n">u_t</span> <span class="o">-</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">u_xx</span> <span class="o">+</span> <span class="n">c2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">u</span> <span class="o">-</span> <span class="n">c2</span> <span class="o">*</span> <span class="n">u</span>
+    <span class="k">return</span> <span class="n">f_u</span>
+
+
+<span class="n">col_weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="n">N_f</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">u_weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolverND</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">,</span> <span class="n">isAdaptive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">col_weights</span><span class="o">=</span><span class="n">col_weights</span><span class="p">,</span> <span class="n">u_weights</span><span class="o">=</span><span class="n">u_weights</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">newton_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
