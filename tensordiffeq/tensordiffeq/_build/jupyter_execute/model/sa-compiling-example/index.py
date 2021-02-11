@@ -74,3 +74,28 @@ Domain.generate_collocation_points(N_f)
 
 Notice how this problem we take more collocation points than the [last example](../compiling-example/index.ipynb) with its simpler
 example.
+
+Next up lets take a look at defining the [initial condition](../../ic-bc/ic/index.ipynb) and the
+[periodic BC derivative model](../../ic-bc/bc/index.ipynb#derivative-models). Then we drop those conditions into a list to drop them
+into the solver.
+
+```{code} python
+def func_ic(x):
+    return x ** 2 * np.cos(math.pi * x)
+
+
+# Conditions to be considered at the boundaries for the periodic BC
+def deriv_model(u_model, x, t):
+    u = u_model(tf.concat([x, t], 1))
+    u_x = tf.gradients(u, x)[0]
+    u_xx = tf.gradients(u_x, x)[0]
+    u_xxx = tf.gradients(u_xx, x)[0]
+    u_xxxx = tf.gradients(u_xxx, x)[0]
+    return u, u_x, u_xxx, u_xxxx
+
+
+init = IC(Domain, [func_ic], var=[['x']])
+x_periodic = periodicBC(Domain, ['x'], [deriv_model])
+
+BCs = [init, x_periodic]
+```
