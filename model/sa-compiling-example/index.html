@@ -326,6 +326,29 @@ we have a problems that is only dependent on <code class="docutils literal notra
 </div>
 <p>Notice how this problem we take more collocation points than the <a class="reference internal" href="../compiling-example/index.html"><span class="doc std std-doc">last example</span></a> with its simpler
 example.</p>
+<p>Next up lets take a look at defining the <a class="reference internal" href="../../ic-bc/ic/index.html"><span class="doc std std-doc">initial condition</span></a> and the
+<a class="reference external" href="../../ic-bc/bc/index.ipynb#derivative-models">periodic BC derivative model</a>. Then we drop those conditions into a list to drop them
+into the solver.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_ic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># Conditions to be considered at the boundaries for the periodic BC</span>
+<span class="k">def</span> <span class="nf">deriv_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">u_xx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">u_xxx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_xx</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">u_xxxx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_xxx</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">u_x</span><span class="p">,</span> <span class="n">u_xxx</span><span class="p">,</span> <span class="n">u_xxxx</span>
+
+
+<span class="n">init</span> <span class="o">=</span> <span class="n">IC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="p">[</span><span class="n">func_ic</span><span class="p">],</span> <span class="n">var</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">]])</span>
+<span class="n">x_periodic</span> <span class="o">=</span> <span class="n">periodicBC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">deriv_model</span><span class="p">])</span>
+
+<span class="n">BCs</span> <span class="o">=</span> <span class="p">[</span><span class="n">init</span><span class="p">,</span> <span class="n">x_periodic</span><span class="p">]</span>
+</pre></div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
