@@ -99,3 +99,34 @@ x_periodic = periodicBC(Domain, ['x'], [deriv_model])
 
 BCs = [init, x_periodic]
 ```
+
+Next, we [define the physics](../../physics/index.ipynb):
+
+```{code} python
+def f_model(u_model, x, t):
+    u = u_model(tf.concat([x, t], 1))
+    u_x = tf.gradients(u, x)
+    u_xx = tf.gradients(u_x, x)
+    u_t = tf.gradients(u, t)
+    c1 = tdq.utils.constant(.0001)
+    c2 = tdq.utils.constant(5.0)
+    f_u = u_t - c1 * u_xx + c2 * u * u * u - c2 * u
+    return f_u
+```
+
+Following the definition of the `f_model`, we will define initial condition weights and collocation point
+weights, and compile the model
+
+```{code} python
+col_weights = tf.Variable(tf.random.uniform([N_f, 1]), trainable=True, dtype=tf.float32)
+u_weights = tf.Variable(100 * tf.random.uniform([512, 1]), trainable=True, dtype=tf.float32)
+
+layer_sizes = [2, 128, 128, 128, 128, 1]
+
+model = CollocationSolverND()
+model.compile(layer_sizes, f_model, Domain, BCs, isAdaptive=True,
+                col_weights=col_weights, u_weights=u_weights)
+model.fit(tf_iter=10000, newton_iter=10000)
+```
+
+This will train a solution $u(x,t)$ for the Allen-Cahn PDE using [self-adaptive training](https://arxiv.org/pdf/2009.04544.pdf)
