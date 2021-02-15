@@ -18,10 +18,10 @@
     - file: model/compiling/index.ipynb
     - file: model/compiling-example/index.ipynb
     - file: model/sa-compiling-example/index.ipynb
-#
-#- part: PDE Discovery (Inverse Modeling)
-#  chapters:
-#    - file: discovery/overview/index.md
+
+- part: PDE Discovery (Inverse Modeling)
+  chapters:
+    - file: discovery/index.md
 #    - file: discovery/model/index.ipynb
 #- part: Solving problems on GPU
 #    - file: gpu/gpu.ipynb
