@@ -21,7 +21,7 @@
 
 - part: PDE Discovery (Inverse Modeling)
   chapters:
-    - file: discovery/index.md
+    - file: discovery/discovery-model/index.md
 #    - file: discovery/model/index.ipynb
 #- part: Solving problems on GPU
 #    - file: gpu/gpu.ipynb
