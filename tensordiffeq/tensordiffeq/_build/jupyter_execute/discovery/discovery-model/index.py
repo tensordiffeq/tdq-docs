@@ -1,3 +1,3 @@
-# Discovery Model 
+# Discovery Model
 
-Next, we sill assess the discovery model, wherein we can perform some basic parameter estimation.
+Next, we will assess the discovery model, where we can perform parameter estimation of constants in a PDE system. 
