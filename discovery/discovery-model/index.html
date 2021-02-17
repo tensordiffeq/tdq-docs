@@ -266,6 +266,32 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initialize">
+   Initialize
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#methods">
+   Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compiling-the-model">
+     Compiling the Model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -278,15 +304,33 @@
 <p>Next, we will assess the discovery model, where we can perform parameter estimation of values in a PDE system.
 This is commonly referred to as “inverse modeling,” as opposed to
 forward modeling (or inference) where we provide all the input information to the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> and solve the whole solution via a
-neural network function approximation, forcing the residual term of the <code class="docutils literal notranslate"><span class="pre">f-model</span></code> constrained output to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss.</p>
+neural network function approximation, forcing the residual term of the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> constrained output to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss.</p>
 <p>This case is almost a more natural application of neural networks, as it is a physics-constrained methodology of supervised learning. We have data output from
 a simulation or an experiment, and we seek to map parameters of a known PDE system to that data. In this case, the neural network works via a multi-faceted loss
 function, where the residual of the <code class="docutils literal notranslate"><span class="pre">f_network</span></code> is being forced to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss. However, the key difference is that we are also using the estimated parameters to find that loss.
 Therefore, we also take the loss wrt the target variables (the estimated parameters, in this case) and optimize those terms via an
 MSE loss against the training data. The result is a training methodology that not only trains the <span class="math notranslate nohighlight">\(u(\textbf{X}, t)\)</span> solution (or just <span class="math notranslate nohighlight">\(u(\textbf{X})\)</span>, depending on your problem), but also
 estimates parameters within the model concurrently.</p>
-<p>In this section we will dig into the <code class="docutils literal notranslate"><span class="pre">DiscoveryMode()</span></code> in TensroDiffEq. We will discuss the pertinent methods, as well as list a <a class="reference internal" href="../discovery-example/index.html"><span class="doc std std-doc">few examples</span></a>
+<p>In this section we will dig into the <code class="docutils literal notranslate"><span class="pre">DiscoveryMode()</span></code> in TensorDiffEq. We will discuss the pertinent methods, as well as list a <a class="reference internal" href="../discovery-example/index.html"><span class="doc std std-doc">few examples</span></a>
 to get you off the ground in training your models.</p>
+<div class="section" id="initialize">
+<h2>Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DiscoveryModel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> class initialized without any arguments.</p>
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> class has methods to pass in the data for the problem, as well as methods to fit and predict similar to the <code class="docutils literal notranslate"><span class="pre">CollocationModelND()</span></code> class.</p>
+<div class="section" id="compiling-the-model">
+<h3>Compiling the Model<a class="headerlink" href="#compiling-the-model" title="Permalink to this headline">¶</a></h3>
+<p>First we must feed in the data and fitting parameters using the <code class="docutils literal notranslate"><span class="pre">compile</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">u_star</span><span class="p">,</span> <span class="n">vars_</span><span class="p">,</span> <span class="n">col_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
