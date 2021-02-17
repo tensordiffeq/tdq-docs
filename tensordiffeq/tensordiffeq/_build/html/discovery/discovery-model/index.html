@@ -57,7 +57,7 @@
     <link rel="shortcut icon" href="../../_static/tdq-profile.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Bibleography" href="../../bib.html" />
+    <link rel="next" title="Discovery Model Examples" href="../discovery-example/index.html" />
     <link rel="prev" title="Self-Adaptive PINN Example" href="../../model/sa-compiling-example/index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -151,6 +151,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Discovery Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../discovery-example/index.html">
+   Discovery Model Examples
   </a>
  </li>
 </ul>
@@ -270,7 +275,18 @@
                 
   <div class="section" id="discovery-model">
 <h1>Discovery Model<a class="headerlink" href="#discovery-model" title="Permalink to this headline">¶</a></h1>
-<p>Next, we will assess the discovery model, where we can perform parameter estimation of constants in a PDE system.</p>
+<p>Next, we will assess the discovery model, where we can perform parameter estimation of values in a PDE system.
+This is commonly referred to as “inverse modeling,” as opposed to
+forward modeling (or inference) where we provide all the input information to the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> and solve the whole solution via a
+neural network function approximation, forcing the residual term of the <code class="docutils literal notranslate"><span class="pre">f-model</span></code> constrained output to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss.</p>
+<p>This case is almost a more natural application of neural networks, as it is a physics-constrained methodology of supervised learning. We have data output from
+a simulation or an experiment, and we seek to map parameters of a known PDE system to that data. In this case, the neural network works via a multi-faceted loss
+function, where the residual of the <code class="docutils literal notranslate"><span class="pre">f_network</span></code> is being forced to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss. However, the key difference is that we are also using the estimated parameters to find that loss.
+Therefore, we also take the loss wrt the target variables (the estimated parameters, in this case) and optimize those terms via an
+MSE loss against the training data. The result is a training methodology that not only trains the <span class="math notranslate nohighlight">\(u(\textbf{X}, t)\)</span> solution (or just <span class="math notranslate nohighlight">\(u(\textbf{X})\)</span>, depending on your problem), but also
+estimates parameters within the model concurrently.</p>
+<p>In this section we will dig into the <code class="docutils literal notranslate"><span class="pre">DiscoveryMode()</span></code> in TensroDiffEq. We will discuss the pertinent methods, as well as list a <a class="reference internal" href="../discovery-example/index.html"><span class="doc std std-doc">few examples</span></a>
+to get you off the ground in training your models.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -302,7 +318,7 @@
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="../../model/sa-compiling-example/index.html" title="previous page">Self-Adaptive PINN Example</a>
-    <a class='right-next' id="next-link" href="../../bib.html" title="next page">Bibleography</a>
+    <a class='right-next' id="next-link" href="../discovery-example/index.html" title="next page">Discovery Model Examples</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
