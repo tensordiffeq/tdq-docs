@@ -23,8 +23,9 @@
   chapters:
     - file: discovery/discovery-model/index.ipynb
     - file: discovery/discovery-example/index.ipynb
-#- part: Solving problems on GPU
-#    - file: gpu/gpu.ipynb
+
+- part: Solving problems on GPU
+    - file: gpu/gpu-considerations/index.ipynb
 
 - part: References
   chapters:
