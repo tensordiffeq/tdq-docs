@@ -34,3 +34,6 @@ First we must feed in the data and fitting parameters using the `compile` method
 ```{code} python
 compile(layer_sizes, f_model, X, u_star, vars_, col_weights=None)
 ```
+
+Args:
+- `layer_sizes` a `list` of `ints` describing the width and depth of your MLP network used for approximation. See [here](../../model/compiling.index#layer-sizes) for more information
