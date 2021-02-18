@@ -25,6 +25,7 @@
     - file: discovery/discovery-example/index.ipynb
 
 - part: Solving problems on GPU
+  chapters:
     - file: gpu/gpu-considerations/index.ipynb
 
 - part: References
