@@ -343,7 +343,10 @@ to get you off the ground in training your models.</p>
 </div>
 <p>Args:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">layer_sizes</span></code> a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">ints</span></code> describing the width and depth of your MLP network used for approximation. See <a class="reference external" href="../../model/compiling/index.html#layer-sizes">here</a> for more information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layer_sizes</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">ints</span></code> describing the width and depth of your MLP network used for approximation. See
+<a class="reference external" href="../../model/compiling/index.html#layer-sizes">here</a> for more information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f_model</span></code> - a <code class="docutils literal notranslate"><span class="pre">func</span></code> describing the physics model. The <code class="docutils literal notranslate"><span class="pre">f_model</span></code> for a <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> must contain the <code class="docutils literal notranslate"><span class="pre">vars_</span></code> a you are
+trying to approximate as the <em>second</em> input, before the input variables to the PDE system. See the example <span class="xref myst">here</span>,</p></li>
 </ul>
 </div>
 </div>
