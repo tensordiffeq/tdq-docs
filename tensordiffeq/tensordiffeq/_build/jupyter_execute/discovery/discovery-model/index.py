@@ -36,4 +36,7 @@ compile(layer_sizes, f_model, X, u_star, vars_, col_weights=None)
 ```
 
 Args:
-- `layer_sizes` a `list` of `ints` describing the width and depth of your MLP network used for approximation. See [here](../../model/compiling/index.html#layer-sizes) for more information
+- `layer_sizes` - a `list` of `ints` describing the width and depth of your MLP network used for approximation. See
+[here](../../model/compiling/index.html#layer-sizes) for more information
+- `f_model` - a `func` describing the physics model. The `f_model` for a `DiscoveryModel` must contain the `vars_` a you are
+trying to approximate as the *second* input, before the input variables to the PDE system. See the example [here](../compiling-example/index.html),
