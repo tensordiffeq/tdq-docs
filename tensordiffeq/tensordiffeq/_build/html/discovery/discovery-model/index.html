@@ -338,15 +338,17 @@ to get you off the ground in training your models.</p>
 <div class="section" id="compiling-the-model">
 <h3>Compiling the Model<a class="headerlink" href="#compiling-the-model" title="Permalink to this headline">¶</a></h3>
 <p>First we must feed in the data and fitting parameters using the <code class="docutils literal notranslate"><span class="pre">compile</span></code> method.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">u_star</span><span class="p">,</span> <span class="n">vars_</span><span class="p">,</span> <span class="n">col_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">u_star</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">col_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Args:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">layer_sizes</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">ints</span></code> describing the width and depth of your MLP network used for approximation. See
 <a class="reference external" href="../../model/compiling/index.html#layer-sizes">here</a> for more information</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">f_model</span></code> - a <code class="docutils literal notranslate"><span class="pre">func</span></code> describing the physics model. The <code class="docutils literal notranslate"><span class="pre">f_model</span></code> for a <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> must contain the <code class="docutils literal notranslate"><span class="pre">vars_</span></code> a you are
-trying to approximate as the <em>second</em> input, before the input variables to the PDE system. See the example <span class="xref myst">here</span>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f_model</span></code> - a <code class="docutils literal notranslate"><span class="pre">func</span></code> describing the physics model. The <code class="docutils literal notranslate"><span class="pre">f_model</span></code> for a <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> must contain the input variable <code class="docutils literal notranslate"><span class="pre">vars_</span></code>
+as the <em>second</em> input, before the input variables to the PDE system. See the example <span class="xref myst">here</span>. The definition
+of the variables themselves will be in the <code class="docutils literal notranslate"><span class="pre">var</span></code> definition</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> arrays of input data, one for each variable (i.e. a list of <code class="docutils literal notranslate"><span class="pre">[x,t]</span></code> where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> arrays</p></li>
 </ul>
 </div>
 </div>

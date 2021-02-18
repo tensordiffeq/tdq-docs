@@ -32,11 +32,14 @@ The `DiscoveryModel` class has methods to pass in the data for the problem, as w
 First we must feed in the data and fitting parameters using the `compile` method.
 
 ```{code} python
-compile(layer_sizes, f_model, X, u_star, vars_, col_weights=None)
+compile(layer_sizes, f_model, X, u_star, var, col_weights=None)
 ```
 
 Args:
 - `layer_sizes` - a `list` of `ints` describing the width and depth of your MLP network used for approximation. See
 [here](../../model/compiling/index.html#layer-sizes) for more information
-- `f_model` - a `func` describing the physics model. The `f_model` for a `DiscoveryModel` must contain the `vars_` a you are
-trying to approximate as the *second* input, before the input variables to the PDE system. See the example [here](../compiling-example/index.html),
+- `f_model` - a `func` describing the physics model. The `f_model` for a `DiscoveryModel` must contain the input variable `vars_`
+as the *second* input, before the input variables to the PDE system. See the example [here](../compiling-example/index.html). The definition
+of the variables themselves will be in the `var` definition
+- `X` a `list` of `[N,1]` arrays of input data, one for each variable (i.e. a list of `[x,t]` where `x` and `t` are `[N,1]` arrays
+
