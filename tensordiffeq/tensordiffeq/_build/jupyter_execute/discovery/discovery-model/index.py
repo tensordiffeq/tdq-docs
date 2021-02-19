@@ -41,5 +41,9 @@ Args:
 - `f_model` - a `func` describing the physics model. The `f_model` for a `DiscoveryModel` must contain the input variable `vars_`
 as the *second* input, before the input variables to the PDE system. See the example [here](../discovery-example/index.html). The definition
 of the variables themselves will be in the `var` input
-- `X` a `list` of `[N,1]` arrays of input data, one for each variable (i.e. a list of `[x,t]` where `x` and `t` are `[N,1]` arrays)
+- `X` - a `list` of `[N,1]` arrays of input data, one for each variable (i.e. a list of `[x,t]` where `x` and `t` are `[N,1]` arrays)
+- `u_star` - an `array` containing the exact solution data, with at point to point correlation to the data input to `X`
+- `var` a `list` of `tf.Variables`, preinitialized, for training the parameters you are interested in in your model
+- `col_weights` - a `tf.Variable` array of size `[N,1]` for collocation weights for each data point in the experimental data
+
 
