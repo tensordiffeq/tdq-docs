@@ -43,7 +43,8 @@ as the *second* input, before the input variables to the PDE system. See the exa
 of the variables themselves will be in the `var` input
 - `X` - a `list` of `[N,1]` arrays of input data, one for each variable (i.e. a list of `[x,t]` where `x` and `t` are `[N,1]` arrays)
 - `u_star` - an `array` containing the exact solution data, with at point to point correlation to the data input to `X`
-- `var` a `list` of `tf.Variables`, preinitialized, for training the parameters you are interested in in your model
+- `var` - a `list` of `tf.Variables`, preinitialized, for training the parameters you are interested in in your model
 - `col_weights` - a `tf.Variable` array of size `[N,1]` for collocation weights for each data point in the experimental data
 
-
+Once compiled, the model is ready to begin training the parameters in `var` to fit the data presented in the `[X, u_star]` pairs. As mentioned above,
+this training is performed concurrently to training a $u(\textbf{X}, t)$ network for the problem presented in `f_model`.
