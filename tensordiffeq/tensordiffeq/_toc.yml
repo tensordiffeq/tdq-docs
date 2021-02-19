@@ -8,25 +8,25 @@
 
 - part: Defining Your Problem
   chapters:
-    - file: domain/index.ipynb
-    - file: ic-bc/ic/index.ipynb
-    - file: ic-bc/bc/index.ipynb
-    - file: physics/index.ipynb
+    - file: domain/index.md
+    - file: ic-bc/ic/index.md
+    - file: ic-bc/bc/index.md
+    - file: physics/index.md
 
 - part: Compiling and Solving
   chapters:
-    - file: model/compiling/index.ipynb
-    - file: model/compiling-example/index.ipynb
-    - file: model/sa-compiling-example/index.ipynb
+    - file: model/compiling/index.md
+    - file: model/compiling-example/index.md
+    - file: model/sa-compiling-example/index.md
 
 - part: PDE Discovery (Inverse Modeling)
   chapters:
-    - file: discovery/discovery-model/index.ipynb
-    - file: discovery/discovery-example/index.ipynb
+    - file: discovery/discovery-model/index.md
+    - file: discovery/discovery-example/index.md
 
 - part: Solving problems on GPU
   chapters:
-    - file: gpu/gpu-considerations/index.ipynb
+    - file: gpu/gpu-considerations/index.md
 
 - part: References
   chapters:
