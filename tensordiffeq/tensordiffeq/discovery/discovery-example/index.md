@@ -60,4 +60,31 @@ model.fit(tf_iter=10000)
 
 Let's break this apart and look at its pieces.
 
-First we define the new `f_model`. Note that the structure and syntax is largely the same as the [`CollocationSolverND` example](../../model/compiling-example/index.md)
+First we define the `tf.Variable` objects for the parameters and the new `f_model`. Note that the structure and syntax is largely the same as the [`CollocationSolverND` example](../../model/compiling-example/index.md), with a few notable exceptions.
+
+```{code} python
+# Put params into a list
+params = [tf.Variable(0.0, dtype=tf.float32), tf.Variable(0.0, dtype=tf.float32)]
+
+
+# Define f_model, note the `vars` argument. Inputs must follow this order!
+def f_model(u_model, var, x, t):
+    u = u_model(tf.concat([x, t], 1))
+    u_x = tf.gradients(u, x)
+    u_xx = tf.gradients(u_x, x)
+    u_t = tf.gradients(u, t)
+    c1 = var[0]  # tunable param 1
+    c2 = var[1]  # tunable param 2
+    f_u = u_t - c1 * u_xx + c2 * u * u * u - c2 * u
+    return f_u
+```
+
+Above, we can see that the parameters must be `tf.Variables,` initialized as above, with a `tf.float32` data type. 
+You must initialize as many of these as there are parameters to estimate. Those variables 
+must then be added to a `list` for training at a later step. 
+
+Concurrently, we generate the new `f_model`. As discussed earlier, the new `f_model` contains an additional input from its 
+[`CollocationSolverND` cousin](../../model/compiling-example/index.md) - the `var` input. This input is where the `list` of 
+`tf.Variables` goes. Inside the `f_model` definition, that list is then partitioned out piecewise into the PDE. This allows the 
+tensorflow tracing to reach into the `f_model` function and backpropogate against those values, resulting in training of the parameters 
+as well as the $u$ network itself.

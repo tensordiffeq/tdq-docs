@@ -340,7 +340,31 @@ AC PDE system.</p>
 </pre></div>
 </div>
 <p>Let’s break this apart and look at its pieces.</p>
-<p>First we define the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code>. Note that the structure and syntax is largely the same as the <a class="reference internal" href="../../model/compiling-example/index.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> example</span></a></p>
+<p>First we define the <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> objects for the parameters and the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code>. Note that the structure and syntax is largely the same as the <a class="reference internal" href="../../model/compiling-example/index.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> example</span></a>, with a few notable exceptions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Put params into a list</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)]</span>
+
+
+<span class="c1"># Define f_model, note the `vars` argument. Inputs must follow this order!</span>
+<span class="k">def</span> <span class="nf">f_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">u_xx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">u_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">var</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># tunable param 1</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">var</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># tunable param 2</span>
+    <span class="n">f_u</span> <span class="o">=</span> <span class="n">u_t</span> <span class="o">-</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">u_xx</span> <span class="o">+</span> <span class="n">c2</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">u</span> <span class="o">*</span> <span class="n">u</span> <span class="o">-</span> <span class="n">c2</span> <span class="o">*</span> <span class="n">u</span>
+    <span class="k">return</span> <span class="n">f_u</span>
+</pre></div>
+</div>
+<p>Above, we can see that the parameters must be <code class="docutils literal notranslate"><span class="pre">tf.Variables,</span></code> initialized as above, with a <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> data type.
+You must initialize as many of these as there are parameters to estimate. Those variables
+must then be added to a <code class="docutils literal notranslate"><span class="pre">list</span></code> for training at a later step.</p>
+<p>Concurrently, we generate the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code>. As discussed earlier, the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code> contains an additional input from its
+<a class="reference internal" href="../../model/compiling-example/index.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> cousin</span></a> - the <code class="docutils literal notranslate"><span class="pre">var</span></code> input. This input is where the <code class="docutils literal notranslate"><span class="pre">list</span></code> of
+<code class="docutils literal notranslate"><span class="pre">tf.Variables</span></code> goes. Inside the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> definition, that list is then partitioned out piecewise into the PDE. This allows the
+tensorflow tracing to reach into the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> function and backpropogate against those values, resulting in training of the parameters
+as well as the <span class="math notranslate nohighlight">\(u\)</span> network itself.</p>
 </div>
 </div>
 
