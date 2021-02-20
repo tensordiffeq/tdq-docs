@@ -374,7 +374,9 @@ AC PDE system.</p>
 </div>
 <p>Above, we can see that the parameters must be <code class="docutils literal notranslate"><span class="pre">tf.Variables,</span></code> initialized as above, with a <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> data type.
 You must initialize as many of these as there are parameters to estimate. Those variables
-must then be added to a <code class="docutils literal notranslate"><span class="pre">list</span></code> for training at a later step.</p>
+must then be added to a <code class="docutils literal notranslate"><span class="pre">list</span></code> for training at a later step. Here we initialize the parameters to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> to start. As a heuristic, this
+works well since the <span class="math notranslate nohighlight">\(u\)</span> network also needs to get somewhat close to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> residual soltion before the trianing of the
+parameters can really start to take root.</p>
 <p>Concurrently, we generate the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code>. As discussed earlier, the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code> contains an additional input from its
 <a class="reference internal" href="../../model/compiling-example/index.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> cousin</span></a> - the <code class="docutils literal notranslate"><span class="pre">var</span></code> input. This input is where the <code class="docutils literal notranslate"><span class="pre">list</span></code> of
 <code class="docutils literal notranslate"><span class="pre">tf.Variables</span></code> goes. Inside the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> definition, that list is then partitioned out piecewise into the PDE. This allows the
