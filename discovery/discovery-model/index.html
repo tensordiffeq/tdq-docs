@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt;</title>
+    <title>Discovery Model</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -147,7 +147,12 @@
   PDE Discovery (Inverse Modeling)
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Discovery Model
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../discovery-example/index.html">
    Discovery Model Examples
@@ -260,7 +265,29 @@
             <i class="fas fa-list"></i> Contents
         </div>
         <nav id="bd-toc-nav">
-            <ul class="simple nav section-nav flex-column">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initialize">
+   Initialize
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#methods">
+   Methods
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compiling-the-model">
+     Compiling the Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fitting-the-model">
+     Fitting the model
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
         </nav>
@@ -272,95 +299,64 @@
         
               <div>
                 
-  <p>{
-“cells”: [],
-“metadata”: {
-“kernelspec”: {
-“display_name”: “Python 3”,
-“language”: “python”,
-“name”: “python3”
-},
-“language_info”: {
-“codemirror_mode”: {
-“name”: “ipython”,
-“version”: 2
-},
-“file_extension”: “.py”,
-“mimetype”: “text/x-python”,
-“name”: “python”,
-“nbconvert_exporter”: “python”,
-“pygments_lexer”: “ipython2”,
-“version”: “2.7.6”
-},
-“pycharm”: {
-“stem_cell”: {
-“cell_type”: “raw”,
-“source”: [
-“# Discovery Model\n”,
-“\n”,
-“Next, we will assess the discovery model, where we can perform parameter estimation of values in a PDE system.\n”,
-“This is commonly referred to as “inverse modeling,” as opposed to\n”,
-“forward modeling (or inference) where we provide all the input information to the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> and solve the whole solution via a\n”,
-“neural network function approximation, forcing the residual term of the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> constrained output to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss.\n”,
-“\n”,
-“This case is almost a more natural application of neural networks, as it is a physics-constrained methodology of supervised learning. We have data output from\n”,
-“a simulation or an experiment, and we seek to map parameters of a known PDE system to that data. In this case, the neural network works via a multi-faceted loss\n”,
-“function, where the residual of the <code class="docutils literal notranslate"><span class="pre">f_network</span></code> is being forced to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss. However, the key difference is that we are also using the estimated parameters to find that loss.\n”,
-“Therefore, we also take the loss wrt the target variables (the estimated parameters, in this case) and optimize those terms via an\n”,
-“MSE loss against the training data. The result is a training methodology that not only trains the <span class="math notranslate nohighlight">\(u(\\textbf{X}, t)\)</span> solution (or just <span class="math notranslate nohighlight">\(u(\\textbf{X})\)</span>, depending on your problem), but also\n”,
-“estimates parameters within the model concurrently.\n”,
-“\n”,
-“In this section we will dig into the <code class="docutils literal notranslate"><span class="pre">DiscoveryMode()</span></code> in TensorDiffEq. We will discuss the pertinent methods, as well as list a <a class="reference internal" href="../discovery-example/index.html"><span class="doc std std-doc">few examples</span></a>\n”,
-“to get you off the ground in training your models.\n”,
-“\n”,
-“## Initialize\n”,
-“\n”,
-“<code class="docutils literal notranslate"><span class="pre">{code}</span> <span class="pre">python\n&quot;,</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;DiscoveryModel()\n&quot;,</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;</span></code>\n”,
-“\n”,
-“The <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> class initialized without any arguments.\n”,
-“\n”,
-“## Methods\n”,
-“\n”,
-“The <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> class has methods to pass in the data for the problem, as well as methods to fit and predict similar to the <code class="docutils literal notranslate"><span class="pre">CollocationModelND()</span></code> class.\n”,
-“\n”,
-“### Compiling the Model\n”,
-“\n”,
-“First we must feed in the data and fitting parameters using the <code class="docutils literal notranslate"><span class="pre">compile</span></code> method.\n”,
-“\n”,
-“<code class="docutils literal notranslate"><span class="pre">{code}</span> <span class="pre">python\n&quot;,</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;compile(layer_sizes,</span> <span class="pre">f_model,</span> <span class="pre">X,</span> <span class="pre">u_star,</span> <span class="pre">var,</span> <span class="pre">col_weights=None)\n&quot;,</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;</span></code>\n”,
-“\n”,
-“Args:\n”,
-“- <code class="docutils literal notranslate"><span class="pre">layer_sizes</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">ints</span></code> describing the width and depth of your MLP network used for approximation. See\n”,
-“<a class="reference external" href="../../model/compiling/index.html#layer-sizes">here</a> for more information\n”,
-“- <code class="docutils literal notranslate"><span class="pre">f_model</span></code> - a <code class="docutils literal notranslate"><span class="pre">func</span></code> describing the physics model. The <code class="docutils literal notranslate"><span class="pre">f_model</span></code> for a <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> must contain the input variable <code class="docutils literal notranslate"><span class="pre">vars_</span></code>\n”,
-“as the <em>second</em> input, before the input variables to the PDE system. See the example <span class="xref myst">here</span>. The definition\n”,
-“of the variables themselves will be in the <code class="docutils literal notranslate"><span class="pre">var</span></code> input\n”,
-“- <code class="docutils literal notranslate"><span class="pre">X</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> arrays of input data, one for each variable (i.e. a list of <code class="docutils literal notranslate"><span class="pre">[x,t]</span></code> where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> arrays)\n”,
-“- <code class="docutils literal notranslate"><span class="pre">u_star</span></code> - an <code class="docutils literal notranslate"><span class="pre">array</span></code> containing the exact solution data, with at point to point correlation to the data input to <code class="docutils literal notranslate"><span class="pre">X</span></code>\n”,
-“- <code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">tf.Variables</span></code>, preinitialized, for training the parameters you are interested in in your model\n”,
-“- <code class="docutils literal notranslate"><span class="pre">col_weights</span></code> - a <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> array of size <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> for collocation weights for each data point in the experimental data\n”,
-“\n”,
-“Once compiled, the model is ready to begin training the parameters in <code class="docutils literal notranslate"><span class="pre">var</span></code> to fit the data presented in the <code class="docutils literal notranslate"><span class="pre">[X,</span> <span class="pre">u_star]</span></code> pairs. As mentioned above,\n”,
-“this training is performed concurrently to training a <span class="math notranslate nohighlight">\(u(\\textbf{X}, t)\)</span> network for the problem presented in <code class="docutils literal notranslate"><span class="pre">f_model</span></code>.\n”,
-“\n”,
-“### Fitting the model\n”,
-“\n”,
-“Once compiled, we can fit the model.\n”,
-“\n”,
-“<code class="docutils literal notranslate"><span class="pre">{code}</span> <span class="pre">python\n&quot;,</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;fit(tf_itter)\n&quot;,</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;</span></code>\n”,
-“\n”,
-“Args:\n”,
-“- <code class="docutils literal notranslate"><span class="pre">tf_iter</span></code> - the number of iterations of training to be completed by the optimizer. Optimizer defaults to <code class="docutils literal notranslate"><span class="pre">tf.Keras.Optimizers.Adam(.005)</span></code> but can be <span class="xref myst">modified</span>\n”
-],
-“metadata”: {
-“collapsed”: false
-}
-}
-}
-},
-“nbformat”: 4,
-“nbformat_minor”: 0
-}</p>
+  <div class="section" id="discovery-model">
+<h1>Discovery Model<a class="headerlink" href="#discovery-model" title="Permalink to this headline">¶</a></h1>
+<p>Next, we will assess the discovery model, where we can perform parameter estimation of values in a PDE system.
+This is commonly referred to as “inverse modeling,” as opposed to
+forward modeling (or inference) where we provide all the input information to the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> and solve the whole solution via a
+neural network function approximation, forcing the residual term of the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> constrained output to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss.</p>
+<p>This case is almost a more natural application of neural networks, as it is a physics-constrained methodology of supervised learning. We have data output from
+a simulation or an experiment, and we seek to map parameters of a known PDE system to that data. In this case, the neural network works via a multi-faceted loss
+function, where the residual of the <code class="docutils literal notranslate"><span class="pre">f_network</span></code> is being forced to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss. However, the key difference is that we are also using the estimated parameters to find that loss.
+Therefore, we also take the loss wrt the target variables (the estimated parameters, in this case) and optimize those terms via an
+MSE loss against the training data. The result is a training methodology that not only trains the <span class="math notranslate nohighlight">\(u(\textbf{X}, t)\)</span> solution (or just <span class="math notranslate nohighlight">\(u(\textbf{X})\)</span>, depending on your problem), but also
+estimates parameters within the model concurrently.</p>
+<p>In this section we will dig into the <code class="docutils literal notranslate"><span class="pre">DiscoveryMode()</span></code> in TensorDiffEq. We will discuss the pertinent methods, as well as list a <a class="reference internal" href="../discovery-example/index.html"><span class="doc std std-doc">few examples</span></a>
+to get you off the ground in training your models.</p>
+<div class="section" id="initialize">
+<h2>Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DiscoveryModel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> class initialized without any arguments.</p>
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> class has methods to pass in the data for the problem, as well as methods to fit and predict similar to the <code class="docutils literal notranslate"><span class="pre">CollocationModelND()</span></code> class.</p>
+<div class="section" id="compiling-the-model">
+<h3>Compiling the Model<a class="headerlink" href="#compiling-the-model" title="Permalink to this headline">¶</a></h3>
+<p>First we must feed in the data and fitting parameters using the <code class="docutils literal notranslate"><span class="pre">compile</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">u_star</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">col_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">layer_sizes</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">ints</span></code> describing the width and depth of your MLP network used for approximation. See
+<a class="reference external" href="../../model/compiling/index.html#layer-sizes">here</a> for more information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f_model</span></code> - a <code class="docutils literal notranslate"><span class="pre">func</span></code> describing the physics model. The <code class="docutils literal notranslate"><span class="pre">f_model</span></code> for a <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> must contain the input variable <code class="docutils literal notranslate"><span class="pre">vars_</span></code>
+as the <em>second</em> input, before the input variables to the PDE system. See the example <span class="xref myst">here</span>. The definition
+of the variables themselves will be in the <code class="docutils literal notranslate"><span class="pre">var</span></code> input</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> arrays of input data, one for each variable (i.e. a list of <code class="docutils literal notranslate"><span class="pre">[x,t]</span></code> where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> arrays)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">u_star</span></code> - an <code class="docutils literal notranslate"><span class="pre">array</span></code> containing the exact solution data, with at point to point correlation to the data input to <code class="docutils literal notranslate"><span class="pre">X</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">tf.Variables</span></code>, preinitialized, for training the parameters you are interested in in your model</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">col_weights</span></code> - a <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> array of size <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> for collocation weights for each data point in the experimental data</p></li>
+</ul>
+<p>Once compiled, the model is ready to begin training the parameters in <code class="docutils literal notranslate"><span class="pre">var</span></code> to fit the data presented in the <code class="docutils literal notranslate"><span class="pre">[X,</span> <span class="pre">u_star]</span></code> pairs. As mentioned above,
+this training is performed concurrently to training a <span class="math notranslate nohighlight">\(u(\textbf{X}, t)\)</span> network for the problem presented in <code class="docutils literal notranslate"><span class="pre">f_model</span></code>.</p>
+</div>
+<div class="section" id="fitting-the-model">
+<h3>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Permalink to this headline">¶</a></h3>
+<p>Once compiled, we can fit the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fit</span><span class="p">(</span><span class="n">tf_itter</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tf_iter</span></code> - the number of iterations of training to be completed by the optimizer. Optimizer defaults to <code class="docutils literal notranslate"><span class="pre">tf.Keras.Optimizers.Adam(.005)</span></code> but can be <span class="xref myst">modified</span></p></li>
+</ul>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
