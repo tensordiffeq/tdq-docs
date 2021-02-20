@@ -282,6 +282,11 @@
      for estimation
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#importing-data-and-generating-input">
+     Importing data and generating input
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -328,9 +333,6 @@ AC PDE system.</p>
 <span class="n">Exact</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;uu&#39;</span><span class="p">]</span>
 <span class="n">Exact_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Exact</span><span class="p">)</span>
 
-<span class="c1"># define MLP depth and layer width</span>
-<span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-
 <span class="c1"># generate all combinations of x and t</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
 
@@ -343,6 +345,9 @@ AC PDE system.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="c1"># append to a list for input to model.fit</span>
 <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+
+<span class="c1"># define MLP depth and layer width</span>
+<span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="c1"># initialize, compile, train model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">DiscoveryModel</span><span class="p">()</span>
@@ -380,8 +385,43 @@ parameters can really start to take root.</p>
 <p>Concurrently, we generate the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code>. As discussed earlier, the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code> contains an additional input from its
 <a class="reference internal" href="../../model/compiling-example/index.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> cousin</span></a> - the <code class="docutils literal notranslate"><span class="pre">var</span></code> input. This input is where the <code class="docutils literal notranslate"><span class="pre">list</span></code> of
 <code class="docutils literal notranslate"><span class="pre">tf.Variables</span></code> goes. Inside the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> definition, that list is then partitioned out piecewise into the PDE. This allows the
-tensorflow tracing to reach into the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> function and backpropogate against those values, resulting in training of the parameters
+tensorflow tracing to reach into the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> function and backpropagate against those values, resulting in training of the parameters
 as well as the <span class="math notranslate nohighlight">\(u\)</span> network itself.</p>
+</div>
+<div class="section" id="importing-data-and-generating-input">
+<h3>Importing data and generating input<a class="headerlink" href="#importing-data-and-generating-input" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import data, same data as Raissi et al</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s1">&#39;AC.mat&#39;</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;tt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">Exact</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;uu&#39;</span><span class="p">]</span>
+<span class="n">Exact_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Exact</span><span class="p">)</span>
+
+<span class="c1"># generate all combinations of x and t</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="n">X_star</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">T</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]))</span>
+<span class="n">u_star</span> <span class="o">=</span> <span class="n">Exact_u</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">X_star</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">X_star</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># append to a list for input to model.fit</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>In this case, the input <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> sequences were held in the file. Therefore, we needed to generate all possible conbinations
+of x and t to use these. If you are in need of a multidimensional meshgrid generator (past 2D) that returns a list of all possible combinations
+of <code class="docutils literal notranslate"><span class="pre">np.linepace</span></code> type arrays, check out <a class="reference external" href="https://gist.github.com/levimcclenny/e87dd0979e339ea89a9885ec05fe7c10">this github gist</a> to get the input in the format you require. This multimesh generation is
+included in tdq base and is available by combining the function <code class="docutils literal notranslate"><span class="pre">multimesh</span></code> with <code class="docutils literal notranslate"><span class="pre">flatten_and_stack</span></code>, both in <code class="docutils literal notranslate"><span class="pre">tensordiffeq.utils</span></code>. Note that you need
+an <code class="docutils literal notranslate"><span class="pre">X,</span> <span class="pre">u_sol</span></code> pair for each of your data points. So, if you have a 1D (with time) problem, then you need an input pair that of the form <code class="docutils literal notranslate"><span class="pre">[x,t]</span></code> and
+a target <code class="docutils literal notranslate"><span class="pre">u_sol</span></code> value. Essentially, we are performing supervised learning of the parameters, therefore we need some target value for each input coordinate in
+the domain where we have data available.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define MLP depth and layer width</span>
+<span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
