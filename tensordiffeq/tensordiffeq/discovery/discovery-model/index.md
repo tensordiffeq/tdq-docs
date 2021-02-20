@@ -12,7 +12,7 @@ Therefore, we also take the loss wrt the target variables (the estimated paramet
 MSE loss against the training data. The result is a training methodology that not only trains the $u(\textbf{X}, t)$ solution (or just $u(\textbf{X})$, depending on your problem), but also
 estimates parameters within the model concurrently.
 
-In this section we will dig into the `DiscoveryMode()` in TensorDiffEq. We will discuss the pertinent methods, as well as list a [few examples](../discovery-example/index.ipynb)
+In this section we will dig into the `DiscoveryMode()` in TensorDiffEq. We will discuss the pertinent methods, as well as list a [few examples](../discovery-example/index.md)
 to get you off the ground in training your models.
 
 ## Initialize
