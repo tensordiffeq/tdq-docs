@@ -58,3 +58,6 @@ model.fit(tf_iter=10000)
 
 ```
 
+Let's break this apart and look at its pieces.
+
+First we define the new `f_model`. Note that the structure and syntax is largely the same as the [`CollocationSolverND`](../../model/compiling-example/)
