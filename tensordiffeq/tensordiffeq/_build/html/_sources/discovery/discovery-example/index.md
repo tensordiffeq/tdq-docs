@@ -83,7 +83,7 @@ def f_model(u_model, var, x, t):
 Above, we can see that the parameters must be `tf.Variables,` initialized as above, with a `tf.float32` data type. 
 You must initialize as many of these as there are parameters to estimate. Those variables 
 must then be added to a `list` for training at a later step. Here we initialize the parameters to `0.0` to start. As a heuristic, this 
-works well since the $u$ network also needs to get somewhat close to `0.0` residual soltion before the trianing of the 
+works well since the $u$ network also needs to get somewhat close to a `0.0` residual solution before the trianing of the 
 parameters can really start to take root.
 
 Concurrently, we generate the new `f_model`. As discussed earlier, the new `f_model` contains an additional input from its 
