@@ -1,6 +1,6 @@
 # Discovery Model Example
 
-Here we will attempt to learn the parameters provided in [this example](../../model/compiling-example/) (i.e. .0001 and 5.0) from the 
+Here we will attempt to learn the parameters provided in [this example](../../model/compiling-example/index.md) (i.e. .0001 and 5.0) from the 
 data provided. We consider that data, in this case, to be "experimental" data, however we do know it to be high-fidelity data from a  simulation of the 
 AC PDE system. 
 
@@ -60,4 +60,4 @@ model.fit(tf_iter=10000)
 
 Let's break this apart and look at its pieces.
 
-First we define the new `f_model`. Note that the structure and syntax is largely the same as the [`CollocationSolverND`](../../model/compiling-example/)
+First we define the new `f_model`. Note that the structure and syntax is largely the same as the [`CollocationSolverND`](../../model/compiling-example/index.md)
