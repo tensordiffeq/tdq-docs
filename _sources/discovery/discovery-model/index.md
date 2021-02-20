@@ -58,4 +58,6 @@ fit(tf_itter)
 ```
 
 Args:
-- `tf_iter` - the number of iterations of training to be completed by the optimizer. Optimizer defaults to `tf.Keras.Optimizers.Adam(.005)` but can be [modified](../../advanced/index.md)
+- `tf_iter` - the number of iterations of training to be completed by the optimizer. Optimizer defaults to `tf.Keras.Optimizers.Adam(.005)` but can be [modified](../../advanced/index.md). 
+
+
