@@ -287,6 +287,11 @@
      Importing data and generating input
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-the-network-and-training">
+     Defining the network and training
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -419,8 +424,21 @@ included in tdq base and is available by combining the function <code class="doc
 an <code class="docutils literal notranslate"><span class="pre">X,</span> <span class="pre">u_sol</span></code> pair for each of your data points. So, if you have a 1D (with time) problem, then you need an input pair that of the form <code class="docutils literal notranslate"><span class="pre">[x,t]</span></code> and
 a target <code class="docutils literal notranslate"><span class="pre">u_sol</span></code> value. Essentially, we are performing supervised learning of the parameters, therefore we need some target value for each input coordinate in
 the domain where we have data available.</p>
+</div>
+<div class="section" id="defining-the-network-and-training">
+<h3>Defining the network and training<a class="headerlink" href="#defining-the-network-and-training" title="Permalink to this headline">¶</a></h3>
+<p>Next we define the <code class="docutils literal notranslate"><span class="pre">layer_size</span></code>, similar to the <a class="reference internal" href="../../model/compiling-example/index.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> example</span></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define MLP depth and layer width</span>
 <span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Finally, we can compile with all the parameters we defined above and begin training!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize, compile, train model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DiscoveryModel</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">u_star</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span> 
+
+<span class="c1"># train loop</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
