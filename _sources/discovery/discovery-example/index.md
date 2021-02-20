@@ -1,6 +1,6 @@
 # Discovery Model Example
 
-Here we will attempt to learn the parameters provided in [this example](../../model/compiling-example/index.html) (i.e. .0001 and 5.0) from the 
+Here we will attempt to learn the parameters provided in [this example](../../model/compiling-example/) (i.e. .0001 and 5.0) from the 
 data provided. We consider that data, in this case, to be "experimental" data, however we do know it to be high-fidelity data from a  simulation of the 
 AC PDE system. 
 
