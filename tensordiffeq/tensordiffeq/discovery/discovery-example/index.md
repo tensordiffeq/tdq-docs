@@ -124,8 +124,23 @@ an `X, u_sol` pair for each of your data points. So, if you have a 1D (with time
 a target `u_sol` value. Essentially, we are performing supervised learning of the parameters, therefore we need some target value for each input coordinate in 
 the domain where we have data available. 
 
+### Defining the network and training
+
+Next we define the `layer_size`, similar to the [`CollocationSolverND` example](../../model/compiling-example/index.md)
 
 ```{code} python 
 # define MLP depth and layer width
 layer_sizes = [2, 128, 128, 128, 128, 1]
 ```
+
+Finally, we can compile with all the parameters we defined above and begin training!
+
+```{code} python 
+# initialize, compile, train model
+model = DiscoveryModel()
+model.compile(layer_sizes, f_model, X, u_star, params) 
+
+# train loop
+model.fit(tf_iter=10000)
+```
+
