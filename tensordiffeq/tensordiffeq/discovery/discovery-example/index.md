@@ -115,9 +115,10 @@ t = X_star[:, 1:2]
 X = [x, t]
 ```
 
-In this case, the input `x` and `t` sequences were held in the file. Therefore, we needed to generate all possible conbinations 
-of x and t to use these. If you are in need of a multidimensional meshgrid generator (past 2D) that returns a list of all possible combinations
-of `np.linepace` type arrays, check out [this github gist](https://gist.github.com/levimcclenny/e87dd0979e339ea89a9885ec05fe7c10) to get the input in the format you require. This multimesh generation is 
+In this case, the input `x` and `t` sequences were held in the file. These took a similar form to [`np.linspace` objects](https://numpy.org/doc/stable/reference/generated/numpy.linspace.html), i.e. were vectors of even spacing across the `x` and `t` 
+dimensions, independently. Therefore, we needed to generate all possible combinations 
+of `x` and `t` to use these. If you are in need of a multidimensional meshgrid generator (past 2D) that returns a list of all possible combinations
+of `np.linepace` type arrays, check out [this github gist](https://gist.github.com/levimcclenny/e87dd0979e339ea89a9885ec05fe7c10) to get the input in the format tensordiffeq requires. This multimesh generation is 
 included in tdq base and is available by combining the function `multimesh` with `flatten_and_stack`, both in `tensordiffeq.utils`. Note that you need 
 an `X, u_sol` pair for each of your data points. So, if you have a 1D (with time) problem, then you need an input pair that of the form `[x,t]` and 
 a target `u_sol` value. Essentially, we are performing supervised learning of the parameters, therefore we need some target value for each input coordinate in 
@@ -127,5 +128,4 @@ the domain where we have data available.
 ```{code} python 
 # define MLP depth and layer width
 layer_sizes = [2, 128, 128, 128, 128, 1]
-
 ```
