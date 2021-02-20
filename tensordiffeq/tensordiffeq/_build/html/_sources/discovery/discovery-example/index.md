@@ -33,9 +33,6 @@ x = data['x'].flatten()[:, None]
 Exact = data['uu']
 Exact_u = np.real(Exact)
 
-# define MLP depth and layer width
-layer_sizes = [2, 128, 128, 128, 128, 1]
-
 # generate all combinations of x and t
 X, T = np.meshgrid(x, t)
 
@@ -48,6 +45,9 @@ t = X_star[:, 1:2]
 print(np.shape(x))
 # append to a list for input to model.fit
 X = [x, t]
+
+# define MLP depth and layer width
+layer_sizes = [2, 128, 128, 128, 128, 1]
 
 # initialize, compile, train model
 model = DiscoveryModel()
@@ -89,5 +89,43 @@ parameters can really start to take root.
 Concurrently, we generate the new `f_model`. As discussed earlier, the new `f_model` contains an additional input from its 
 [`CollocationSolverND` cousin](../../model/compiling-example/index.md) - the `var` input. This input is where the `list` of 
 `tf.Variables` goes. Inside the `f_model` definition, that list is then partitioned out piecewise into the PDE. This allows the 
-tensorflow tracing to reach into the `f_model` function and backpropogate against those values, resulting in training of the parameters 
+tensorflow tracing to reach into the `f_model` function and backpropagate against those values, resulting in training of the parameters 
 as well as the $u$ network itself.
+
+### Importing data and generating input
+```{code} python
+# Import data, same data as Raissi et al
+data = scipy.io.loadmat('AC.mat')
+
+t = data['tt'].flatten()[:, None]
+x = data['x'].flatten()[:, None]
+Exact = data['uu']
+Exact_u = np.real(Exact)
+
+# generate all combinations of x and t
+X, T = np.meshgrid(x, t)
+
+X_star = np.hstack((X.flatten()[:, None], T.flatten()[:, None]))
+u_star = Exact_u.T.flatten()[:, None]
+
+x = X_star[:, 0:1]
+t = X_star[:, 1:2]
+
+# append to a list for input to model.fit
+X = [x, t]
+```
+
+In this case, the input `x` and `t` sequences were held in the file. Therefore, we needed to generate all possible conbinations 
+of x and t to use these. If you are in need of a multidimensional meshgrid generator (past 2D) that returns a list of all possible combinations
+of `np.linepace` type arrays, check out [this github gist](https://gist.github.com/levimcclenny/e87dd0979e339ea89a9885ec05fe7c10) to get the input in the format you require. This multimesh generation is 
+included in tdq base and is available by combining the function `multimesh` with `flatten_and_stack`, both in `tensordiffeq.utils`. Note that you need 
+an `X, u_sol` pair for each of your data points. So, if you have a 1D (with time) problem, then you need an input pair that of the form `[x,t]` and 
+a target `u_sol` value. Essentially, we are performing supervised learning of the parameters, therefore we need some target value for each input coordinate in 
+the domain where we have data available. 
+
+
+```{code} python 
+# define MLP depth and layer width
+layer_sizes = [2, 128, 128, 128, 128, 1]
+
+```
