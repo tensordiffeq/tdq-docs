@@ -270,6 +270,19 @@
   <a class="reference internal nav-link" href="#full-example">
    Full Example
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#defining-parameters-and-f-model-for-estimation">
+     Defining parameters and
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       f_model
+      </span>
+     </code>
+     for estimation
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -340,6 +353,8 @@ AC PDE system.</p>
 </pre></div>
 </div>
 <p>Let’s break this apart and look at its pieces.</p>
+<div class="section" id="defining-parameters-and-f-model-for-estimation">
+<h3>Defining parameters and <code class="docutils literal notranslate"><span class="pre">f_model</span></code> for estimation<a class="headerlink" href="#defining-parameters-and-f-model-for-estimation" title="Permalink to this headline">¶</a></h3>
 <p>First we define the <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> objects for the parameters and the new <code class="docutils literal notranslate"><span class="pre">f_model</span></code>. Note that the structure and syntax is largely the same as the <a class="reference internal" href="../../model/compiling-example/index.html"><span class="doc std std-doc"><code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> example</span></a>, with a few notable exceptions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Put params into a list</span>
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)]</span>
@@ -365,6 +380,7 @@ must then be added to a <code class="docutils literal notranslate"><span class="
 <code class="docutils literal notranslate"><span class="pre">tf.Variables</span></code> goes. Inside the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> definition, that list is then partitioned out piecewise into the PDE. This allows the
 tensorflow tracing to reach into the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> function and backpropogate against those values, resulting in training of the parameters
 as well as the <span class="math notranslate nohighlight">\(u\)</span> network itself.</p>
+</div>
 </div>
 </div>
 

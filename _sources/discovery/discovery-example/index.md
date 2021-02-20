@@ -60,6 +60,7 @@ model.fit(tf_iter=10000)
 
 Let's break this apart and look at its pieces.
 
+### Defining parameters and `f_model` for estimation
 First we define the `tf.Variable` objects for the parameters and the new `f_model`. Note that the structure and syntax is largely the same as the [`CollocationSolverND` example](../../model/compiling-example/index.md), with a few notable exceptions.
 
 ```{code} python
