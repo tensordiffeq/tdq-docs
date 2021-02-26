@@ -38,6 +38,8 @@ What makes TensorDiffEq different?
   
 - Intuitive interface - defining domains, BCs, ICs, and strong-form PDEs in "plain english"
 
+Know that some of these pages are still under construction as of February 20201, please see our [repository](https://github.com/tensordiffeq/tdq-docs)
+
 
 Thanks to our sponsors:  
 
@@ -68,4 +70,5 @@ Thanks to our sponsors:
 :align: center
 ```
 
-Know that some of these pages are still under construction as of February 20201, please see our [repository](https://github.com/tensordiffeq/tdq-docs)
+
+
