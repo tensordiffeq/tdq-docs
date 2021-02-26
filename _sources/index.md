@@ -2,8 +2,7 @@ TensorDiffEq
 ============================
 ## Official Documentation
 
-### *Under Construction* - bear with us as we build out these docs! 
-#### To check recent activity and track progress check out the [repository](https://github.com/tensordiffeq/tdq-docs)
+
 
 ![Package Build](https://github.com/tensordiffeq/TensorDiffEq/workflows/Package%20Build/badge.svg)
 ![Package Release](https://github.com/tensordiffeq/TensorDiffEq/workflows/Package%20Release/badge.svg)
@@ -40,7 +39,7 @@ What makes TensorDiffEq different?
 - Intuitive interface - defining domains, BCs, ICs, and strong-form PDEs in "plain english"
 
 
-Thanks to our affiliates:  
+Thanks to our sponsors:  
 
 
 
@@ -69,3 +68,4 @@ Thanks to our affiliates:
 :align: center
 ```
 
+Know that some of these pages are still under construction as of February 20201, please see our [repository](https://github.com/tensordiffeq/tdq-docs)
