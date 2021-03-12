@@ -271,6 +271,11 @@
    Under Development!
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#full-example">
+   Full example
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -286,6 +291,109 @@
 <h1>GPU Considerations<a class="headerlink" href="#gpu-considerations" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="under-development">
 <h2>Under Development!<a class="headerlink" href="#under-development" title="Permalink to this headline">¶</a></h2>
+<p>Now lets take some of these examples, make them a little “larger” (by adding more collocation points, for instance), and solve the
+across multiple GPUs.</p>
+</div>
+<div class="section" id="full-example">
+<h2>Full example<a class="headerlink" href="#full-example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">scipy.io</span>
+<span class="kn">import</span> <span class="nn">tensordiffeq</span> <span class="k">as</span> <span class="nn">tdq</span>
+<span class="kn">from</span> <span class="nn">tensordiffeq.models</span> <span class="kn">import</span> <span class="n">CollocationSolver1D</span>
+
+<span class="k">def</span> <span class="nf">f_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">t</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">u_xx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">u_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="o">.</span><span class="mi">0001</span><span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+    <span class="n">f_u</span> <span class="o">=</span> <span class="n">u_t</span> <span class="o">-</span> <span class="n">c1</span><span class="o">*</span><span class="n">u_xx</span> <span class="o">+</span> <span class="n">c2</span><span class="o">*</span><span class="n">u</span><span class="o">*</span><span class="n">u</span><span class="o">*</span><span class="n">u</span> <span class="o">-</span> <span class="n">c2</span><span class="o">*</span><span class="n">u</span> <span class="o">+</span> <span class="n">NN</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f_u</span>
+
+<span class="k">def</span> <span class="nf">u_x_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">u_x</span>
+
+
+<span class="n">N0</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">NS</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">N_b</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">N_f</span> <span class="o">=</span> <span class="mi">500000</span>
+
+<span class="n">col_weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="n">N_f</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">u_weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="n">N0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+
+<span class="c1"># Grab collocation points using latin hpyercube sampling</span>
+<span class="n">xlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="n">X_f</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">LatinHypercubeSample</span><span class="p">(</span><span class="n">N_f</span><span class="p">,</span> <span class="n">xlimits</span><span class="p">)</span> <span class="c1">#x_f, t_f</span>
+
+
+<span class="n">lb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])</span>
+
+<span class="c1"># Import data, same data as Raissi et al</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s1">&#39;AC.mat&#39;</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;tt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span><span class="kc">None</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span><span class="kc">None</span><span class="p">]</span>
+<span class="n">Exact</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;uu&#39;</span><span class="p">]</span>
+<span class="n">Exact_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Exact</span><span class="p">)</span>
+
+<span class="c1">#grab training points from domain</span>
+<span class="n">idx_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">N0</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">idx_x</span><span class="p">,:]</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">Exact_u</span><span class="p">[</span><span class="n">idx_x</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">idx_xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">NS</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1">#need multiple Xs</span>
+<span class="n">idx_ts</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1">#for 1 t value</span>
+<span class="n">y_s</span> <span class="o">=</span> <span class="n">Exact</span><span class="p">[</span><span class="n">idx_xs</span><span class="p">,</span> <span class="n">idx_ts</span><span class="p">]</span>
+<span class="n">x_s</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">idx_xs</span><span class="p">,:]</span>
+<span class="n">t_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">idx_ts</span><span class="p">,:],</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_s</span><span class="p">))</span>
+
+<span class="n">y_s</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_s</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="c1">#tensors need to be of shape (NS, 1), not (NS, )</span>
+<span class="n">x_s</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x_s</span><span class="p">)</span>
+<span class="n">t_s</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">t_s</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">idx_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">N_b</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">tb</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">idx_t</span><span class="p">,:]</span>
+
+<span class="c1"># Grab collocation points using latin hpyercube sampling</span>
+<span class="n">x_f</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">X_f</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">t_f</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">X_f</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+
+<span class="n">X0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x0</span><span class="p">,</span> <span class="mi">0</span><span class="o">*</span><span class="n">x0</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># (x0, 0)</span>
+<span class="n">X_lb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="mi">0</span><span class="o">*</span><span class="n">tb</span> <span class="o">+</span> <span class="n">lb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tb</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># (lb[0], tb)</span>
+<span class="n">X_ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="mi">0</span><span class="o">*</span><span class="n">tb</span> <span class="o">+</span> <span class="n">ub</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tb</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># (ub[0], tb)</span>
+
+
+<span class="n">x0</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">X0</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">X0</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">x_lb</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">X_lb</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">t_lb</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">X_lb</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">x_ub</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">X_ub</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">t_ub</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">X_ub</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolver1D</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">lam</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">lam</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1">#model.compile(layer_sizes, f_model, x_f, t_f, x0, t0, u0, x_lb, t_lb, x_ub, t_ub, isPeriodic=True, u_x_model=u_x_model, isAdaptive = True, col_weights = col_weights, u_weights = u_weights, g = g, dist = True)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">x_f</span><span class="p">,</span> <span class="n">t_f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">x_lb</span><span class="p">,</span> <span class="n">t_lb</span><span class="p">,</span> <span class="n">x_ub</span><span class="p">,</span> <span class="n">t_ub</span><span class="p">,</span> <span class="n">isPeriodic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">u_x_model</span><span class="o">=</span><span class="n">u_x_model</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1">#train loop</span>
+<span class="n">init</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">col_weights</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span> <span class="o">=</span> <span class="mi">301</span><span class="p">,</span> <span class="n">newton_iter</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">batch_sz</span> <span class="o">=</span> <span class="mi">500000</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>graph-mode L-BFGS is typically faster on a single-GPU, given sufficient model size. On a CPU, empirically,
 it has been demonstrated that eager-mode L-BFGS is actually faster than graph-mode.</p>
 <p>We are interested in
