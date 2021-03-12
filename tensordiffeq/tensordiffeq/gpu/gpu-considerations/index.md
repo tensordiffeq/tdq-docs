@@ -22,7 +22,7 @@ def f_model(u_model, x, t):
     u_t = tf.gradients(u,t)
     c1 = tdq.utils.constant(.0001)
     c2 = tdq.utils.constant(5.0)
-    f_u = u_t - c1*u_xx + c2*u*u*u - c2*u + NN(u)
+    f_u = u_t - c1*u_xx + c2*u*u*u - c2*u 
     return f_u
 
 def u_x_model(u_model, x, t):
