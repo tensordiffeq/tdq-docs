@@ -276,6 +276,11 @@
    Full example
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notes">
+   Notes
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -322,7 +327,7 @@ across multiple GPUs.</p>
 <span class="n">N0</span> <span class="o">=</span> <span class="mi">200</span>
 <span class="n">NS</span> <span class="o">=</span> <span class="mi">200</span>
 <span class="n">N_b</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">N_f</span> <span class="o">=</span> <span class="mi">500000</span>
+<span class="n">N_f</span> <span class="o">=</span> <span class="mi">500000</span> <span class="c1">#500k collocation points, typically not possible on single GPU</span>
 
 <span class="n">col_weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="n">N_f</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="n">u_weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">([</span><span class="n">N0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
@@ -394,6 +399,9 @@ across multiple GPUs.</p>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span> <span class="o">=</span> <span class="mi">301</span><span class="p">,</span> <span class="n">newton_iter</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">batch_sz</span> <span class="o">=</span> <span class="mi">500000</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <p>graph-mode L-BFGS is typically faster on a single-GPU, given sufficient model size. On a CPU, empirically,
 it has been demonstrated that eager-mode L-BFGS is actually faster than graph-mode.</p>
 <p>We are interested in
