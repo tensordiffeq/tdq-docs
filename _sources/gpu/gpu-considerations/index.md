@@ -34,7 +34,7 @@ def u_x_model(u_model, x, t):
 N0 = 200
 NS = 200
 N_b = 100
-N_f = 500000
+N_f = 500000 #500k collocation points, typically not possible on single GPU
 
 col_weights = tf.random.uniform([N_f, 1])
 u_weights = tf.Variable(100*tf.random.uniform([N0, 1]))
@@ -107,6 +107,8 @@ model.fit(tf_iter = 301, newton_iter = 100, batch_sz = 500000)
 
 ```
 
+
+## Notes
 graph-mode L-BFGS is typically faster on a single-GPU, given sufficient model size. On a CPU, empirically,
 it has been demonstrated that eager-mode L-BFGS is actually faster than graph-mode.
 
