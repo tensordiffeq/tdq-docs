@@ -13,7 +13,7 @@ Domain = DomainND(["x", "t"], time_var='t')
 Domain.add("x", [-1.0, 1.0], 512)
 Domain.add("t", [0.0, 1.0], 201)
 
-N_f = 1000000
+N_f = 1000000 # 1m collocation points
 Domain.generate_collocation_points(N_f)
 
 
