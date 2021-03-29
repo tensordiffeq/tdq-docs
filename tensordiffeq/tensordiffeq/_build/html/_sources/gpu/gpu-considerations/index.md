@@ -26,8 +26,6 @@ def deriv_model(u_model, x, t):
     u = u_model(tf.concat([x, t], 1))
     u_x = tf.gradients(u, x)[0]
     u_xx = tf.gradients(u_x, x)[0]
-    u_xxx = tf.gradients(u_xx, x)[0]
-    u_xxxx = tf.gradients(u_xxx, x)[0]
     return u, u_x, u_xxx, u_xxxx
 
 init = IC(Domain, [func_ic], var=[['x']])
@@ -50,45 +48,15 @@ layer_sizes = [2, 128, 128, 128, 128, 1]
 
 model = CollocationSolverND()
 model.compile(layer_sizes, f_model, Domain, BCs, dist=True)
-model.fit(tf_iter=1001)
-print("training pass 1 completed")
-model.fit(tf_iter=1001)
-
-# Load high-fidelity data for error calculation
-data = scipy.io.loadmat('AC.mat')
-
-Exact = data['uu']
-Exact_u = np.real(Exact)
-
-# t = data['tt'].flatten()[:,None]
-# x = data['x'].flatten()[:,None]
-
-x = Domain.domaindict[0]['xlinspace']
-t = Domain.domaindict[1]["tlinspace"]
-
-# create mesh for plotting
-
-X, T = np.meshgrid(x, t)
-
-X_star = np.hstack((X.flatten()[:, None], T.flatten()[:, None]))
-u_star = Exact_u.T.flatten()[:, None]
-
-# forward pass through model
-u_pred, f_u_pred = model.predict(X_star)
-
-error_u = tdq.helpers.find_L2_error(u_pred, u_star)
-print('Error u: %e' % (error_u))
-
-U_pred = tdq.plotting.get_griddata(X_star, u_pred.flatten(), (X, T))
-FU_pred = tdq.plotting.get_griddata(X_star, f_u_pred.flatten(), (X, T))
-
-lb = np.array([-1.0, 0.0])
-ub = np.array([1.0, 1])
-
-tdq.plotting.plot_solution_domain1D(model, [x, t], ub=ub, lb=lb, Exact_u=Exact_u)
-
-
+model.fit(tf_iter=1000)
 ```
+
+We note here that the only difference in the code comes in the `compile` call, where we add the argument `dist=True`. 
+This enables TensorDiffEq to adopt a [`tf.distribute.MirroredStrategy()`](https://www.tensorflow.org/api_docs/python/tf/distribute/MirroredStrategy)
+data-parallelism approach to training. In this case, the collocation points are distributed evenly across all available workers. This is one of 
+the most powerful aspects of TensorDiffEq, being able to scale readily without modification of the code. The same physics model, neural network model, and 
+optimizer (except for L-BFGS, at the time of this writing) can be run on a small model on a local machine, and can also be scaled up to run on an
+enterprise-level datacenter with $N$ GPUs. 
 
 
 ## Notes

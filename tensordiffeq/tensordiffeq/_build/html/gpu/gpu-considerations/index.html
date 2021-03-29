@@ -331,8 +331,6 @@ across multiple GPUs.</p>
     <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">u_xx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">u_xxx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_xx</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">u_xxxx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_xxx</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">u_x</span><span class="p">,</span> <span class="n">u_xxx</span><span class="p">,</span> <span class="n">u_xxxx</span>
 
 <span class="n">init</span> <span class="o">=</span> <span class="n">IC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="p">[</span><span class="n">func_ic</span><span class="p">],</span> <span class="n">var</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">]])</span>
@@ -355,45 +353,15 @@ across multiple GPUs.</p>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolverND</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">1001</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;training pass 1 completed&quot;</span><span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">1001</span><span class="p">)</span>
-
-<span class="c1"># Load high-fidelity data for error calculation</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s1">&#39;AC.mat&#39;</span><span class="p">)</span>
-
-<span class="n">Exact</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;uu&#39;</span><span class="p">]</span>
-<span class="n">Exact_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Exact</span><span class="p">)</span>
-
-<span class="c1"># t = data[&#39;tt&#39;].flatten()[:,None]</span>
-<span class="c1"># x = data[&#39;x&#39;].flatten()[:,None]</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">Domain</span><span class="o">.</span><span class="n">domaindict</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;xlinspace&#39;</span><span class="p">]</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">Domain</span><span class="o">.</span><span class="n">domaindict</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;tlinspace&quot;</span><span class="p">]</span>
-
-<span class="c1"># create mesh for plotting</span>
-
-<span class="n">X</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-
-<span class="n">X_star</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">T</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]))</span>
-<span class="n">u_star</span> <span class="o">=</span> <span class="n">Exact_u</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:,</span> <span class="kc">None</span><span class="p">]</span>
-
-<span class="c1"># forward pass through model</span>
-<span class="n">u_pred</span><span class="p">,</span> <span class="n">f_u_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_star</span><span class="p">)</span>
-
-<span class="n">error_u</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">helpers</span><span class="o">.</span><span class="n">find_L2_error</span><span class="p">(</span><span class="n">u_pred</span><span class="p">,</span> <span class="n">u_star</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error u: </span><span class="si">%e</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error_u</span><span class="p">))</span>
-
-<span class="n">U_pred</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">get_griddata</span><span class="p">(</span><span class="n">X_star</span><span class="p">,</span> <span class="n">u_pred</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">T</span><span class="p">))</span>
-<span class="n">FU_pred</span> <span class="o">=</span> <span class="n">tdq</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">get_griddata</span><span class="p">(</span><span class="n">X_star</span><span class="p">,</span> <span class="n">f_u_pred</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">T</span><span class="p">))</span>
-
-<span class="n">lb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
-<span class="n">tdq</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_solution_domain1D</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="n">ub</span><span class="o">=</span><span class="n">ub</span><span class="p">,</span> <span class="n">lb</span><span class="o">=</span><span class="n">lb</span><span class="p">,</span> <span class="n">Exact_u</span><span class="o">=</span><span class="n">Exact_u</span><span class="p">)</span>
-
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>We note here that the only difference in the code comes in the <code class="docutils literal notranslate"><span class="pre">compile</span></code> call, where we add the argument <code class="docutils literal notranslate"><span class="pre">dist=True</span></code>.
+This enables TensorDiffEq to adopt a <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/distribute/MirroredStrategy"><code class="docutils literal notranslate"><span class="pre">tf.distribute.MirroredStrategy()</span></code></a>
+data-parallelism approach to training. In this case, the collocation points are distributed evenly across all available workers. This is one of
+the most powerful aspects of TensorDiffEq, being able to scale readily without modification of the code. The same physics model, neural network model, and
+optimizer (except for L-BFGS, at the time of this writing) can be run on a small model on a local machine, and can also be scaled up to run on an
+enterprise-level datacenter with <span class="math notranslate nohighlight">\(N\)</span> GPUs.</p>
 </div>
 <div class="section" id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
