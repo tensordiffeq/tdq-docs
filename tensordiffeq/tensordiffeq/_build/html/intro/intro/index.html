@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Initial Conditions</title>
+    <title>TensorDiffEq</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -57,8 +57,7 @@
     <link rel="shortcut icon" href="../../_static/tdq-profile.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Boundary Conditions" href="../bc/index.html" />
-    <link rel="prev" title="Generating a Domain" href="../../domain/index.html" />
+    <link rel="next" title="Installing TensorDiffEq" href="../install/index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -87,8 +86,8 @@
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
     <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro/intro/index.html">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="#">
    TensorDiffEq
   </a>
  </li>
@@ -100,7 +99,7 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../intro/install/index.html">
+  <a class="reference internal" href="../install/index.html">
    Installing TensorDiffEq
   </a>
  </li>
@@ -110,19 +109,19 @@
   Defining Your Problem
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../../domain/index.html">
    Generating a Domain
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../ic-bc/ic/index.html">
    Initial Conditions
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../bc/index.html">
+  <a class="reference internal" href="../../ic-bc/bc/index.html">
    Boundary Conditions
   </a>
  </li>
@@ -230,7 +229,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/ic-bc/ic/index.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/intro/intro/index.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -250,10 +249,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/tensordiffeq/tdq-docs/issues/new?title=Issue%20on%20page%20%2Fic-bc/ic/index.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/tensordiffeq/tdq-docs/issues/new?title=Issue%20on%20page%20%2Fintro/intro/index.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/tensordiffeq/tdq-docs/edit/master/ic-bc/ic/index.md"><button
+        <a class="edit-button" href="https://github.com/tensordiffeq/tdq-docs/edit/master/intro/intro/index.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -279,14 +278,11 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#defining-a-function-of-domain-variables">
-   Defining a function of Domain variables
+  <a class="reference internal nav-link" href="#official-documentation">
+   Official Documentation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#instantiate">
-   Instantiate
-  </a>
+  <ul class="nav section-nav flex-column">
+  </ul>
  </li>
 </ul>
 
@@ -299,54 +295,61 @@
         
               <div>
                 
-  <div class="section" id="initial-conditions">
-<h1>Initial Conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h1>
-<p>Paramount to any IVP are the initial conditions on which your problem is based. If your problem is temporal, i.e. evolving with time
-(as is the case with most PDEs) the initial values are required to discern the exact solution for the problem you are interested in.
-The same is true when solving a PDE via a collocation PINN solver. Here we will discuss how to implement initial condition functions
-in TensorDiffEq.</p>
-<div class="section" id="defining-a-function-of-domain-variables">
-<h2>Defining a function of Domain variables<a class="headerlink" href="#defining-a-function-of-domain-variables" title="Permalink to this headline">¶</a></h2>
-<p>The primary method of setting an initial condition in TensorDiffEq is to simply define a method that generates the physical function
-describing the initial values of your problem. This is a powerful function of TensorDiffEq as it allows for any sort of function, continuous,
-discrete, linear, nonlinear, piecewise, etc. This allows for modeling discontinuinities at the initial boundary, giving the user a
-wide range of complex possibilities.</p>
-<p>In order to build an initial boundary in TensorDiffEq, a python method with inputs corresponding to the variables of the problem <code class="docutils literal notranslate"><span class="pre">Domain</span></code>
-can be defined, i.e.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_ic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span> <span class="p">)</span>
-</pre></div>
-</div>
-<p>This defines an initial condition that is only dependent on <code class="docutils literal notranslate"><span class="pre">x</span></code>, of the form <span class="math notranslate nohighlight">\(u(x,0) = -sin(\pi x)\)</span>. However, as mentioned, there is no requirement that
-the initial condition is a linear or even a continuously differentiable function. One could define a piecewise function in the form below:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_ic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">:</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="mf">1.0</span>
-     <span class="k">else</span><span class="p">:</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="k">return</span> <span class="n">out</span>
-</pre></div>
-</div>
-<p>The above would be valid input to TensorDiffEq’s solvers, and would still allow for self-adaptive solving at the initial boundary.</p>
-<p>Once this function has been defined, creating the initial boundary is implemented via the <code class="docutils literal notranslate"><span class="pre">IC</span></code> class:</p>
-</div>
-<div class="section" id="instantiate">
-<h2>Instantiate<a class="headerlink" href="#instantiate" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">IC</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Args:</p>
+  <div class="section" id="tensordiffeq">
+<h1>TensorDiffEq<a class="headerlink" href="#tensordiffeq" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="official-documentation">
+<h2>Official Documentation<a class="headerlink" href="#official-documentation" title="Permalink to this headline">¶</a></h2>
+<p><img alt="Package Build" src="https://github.com/tensordiffeq/TensorDiffEq/workflows/Package%20Build/badge.svg" />
+<img alt="Package Release" src="https://github.com/tensordiffeq/TensorDiffEq/workflows/Package%20Release/badge.svg" />
+<img alt="pypi" src="https://img.shields.io/pypi/v/tensordiffeq" />
+<img alt="downloads" src="https://img.shields.io/pypi/dm/tensordiffeq" />
+<img alt="python versions" src="https://img.shields.io/pypi/pyversions/tensordiffeq" /></p>
+<p>TensorDiffEq is a python package built on top of Tensorflow to provide scalable and efficient
+PINN solvers. TensorDiffEq’s primary purpose is for scalable solving of PINNs (inference) and
+inverse problems (discovery).</p>
+<p>Additionally, TensorDiffEq is the only package that fully supports and implements <a class="reference external" href="https://arxiv.org/abs/2009.04544">Self-Adaptive PINN</a> solvers
+and is the only Multi-GPU PINN solution suite that is fully open-source.</p>
+<p>Many choices for your scientific machine learning solution exist, use TensorDiffEq if you require</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">domain</span></code> - a <code class="docutils literal notranslate"><span class="pre">domain</span></code> object containing the variables in the domain</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fun</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> containing the python method describing the physical function at the initial condition boundary</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">lists</span></code> containing <code class="docutils literal notranslate"><span class="pre">str</span></code> indicators as to which variables should be fed into the functions listed in <code class="docutils literal notranslate"><span class="pre">fun</span></code>,
-in respective order</p></li>
+<li><p>A meshless PINN solver that can distribute over multiple workers (GPUs) for
+forward problems (inference) and inverse problems (discovery)</p></li>
+<li><p>Scalable domains - Iterated solver construction allows for N-D spatio-temporal support</p>
+<ul>
+<li><p>support for N-D spatial domains with no time element is included</p></li>
 </ul>
-<p>Continuing with the above example, where <code class="docutils literal notranslate"><span class="pre">func_ic</span></code> is the function above, we would create and IC object as follows</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="n">IC</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="p">[</span><span class="n">func_ic</span><span class="p">],</span> <span class="n">var</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">]])</span>
-</pre></div>
+</li>
+<li><p>Self-Adaptive Collocation methods for forward and inverse PINNs</p></li>
+<li><p>Intuitive user interface allowing for explicit definitions of variable domains,
+boundary conditions, initial conditions, and strong-form PDEs</p></li>
+</ul>
+<p>What makes TensorDiffEq different?</p>
+<ul class="simple">
+<li><p>Completely open-source</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2009.04544">Self-Adaptive Solvers</a> for forward and inverse problems, leading to increased accuracy of the solution and stability in training, resulting in
+less overall training time</p></li>
+<li><p>Multi-GPU distributed training for large or fine-grain spatio-temporal domains</p></li>
+<li><p>Built on top of Tensorflow 2.0 for increased support in new functionality exclusive to recent TF releases, such as <a class="reference external" href="https://www.tensorflow.org/xla">XLA support</a>,
+<a class="reference external" href="https://blog.tensorflow.org/2018/07/autograph-converts-python-into-tensorflow-graphs.html">autograph</a> for efficent graph-building, and <a class="reference external" href="https://www.tensorflow.org/guide/graph_optimization">grappler support</a>
+for graph optimization* - with no chance of the source code being sunset in a further Tensorflow version release</p></li>
+<li><p>Intuitive interface - defining domains, BCs, ICs, and strong-form PDEs in “plain english”</p></li>
+</ul>
+<p>Know that some of these pages are still under construction as of February 2021, please see our <a class="reference external" href="https://github.com/tensordiffeq/tdq-docs">repository</a></p>
+<p>Thanks to our sponsors:</p>
+<a class="reference internal image-reference" href="intro/intro/images/devcom.png"><img alt="Army Research Lab Logo" class="align-center" src="intro/intro/images/devcom.png" style="height: 65px;" /></a>
+<a class="reference internal image-reference" href="intro/intro/images/engineering-logo.png"><img alt="Texas A&amp;M Engineering" class="align-center" src="intro/intro/images/engineering-logo.png" style="height: 65px;" /></a>
+<a class="reference internal image-reference" href="intro/intro/images/tamids.png"><img alt="Texas A&amp;M Institute of Data Science" class="align-center" src="intro/intro/images/tamids.png" style="height: 65px;" /></a>
+<div class="toctree-wrapper compound">
 </div>
-<p>which later on would be added to a list of BCs to generate the loss function for your PINN solver.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 </div>
 
@@ -363,7 +366,7 @@ in respective order</p></li>
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./ic-bc/ic"
+            path: "./intro/intro"
         },
         predefinedOutput: true
     }
@@ -378,8 +381,7 @@ in respective order</p></li>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../../domain/index.html" title="previous page">Generating a Domain</a>
-    <a class='right-next' id="next-link" href="../bc/index.html" title="next page">Boundary Conditions</a>
+    <a class='right-next' id="next-link" href="../install/index.html" title="next page">Installing TensorDiffEq</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

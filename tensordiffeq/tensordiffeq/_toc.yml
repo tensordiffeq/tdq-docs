@@ -4,11 +4,12 @@
 #- file: content
 #  sections:
 #    - file: markdown
-#    - file: notebooks
+#    - file: notebook
 
 - part: Installing TensorDiffEq
-    chapters:
+  chapters:
     - file: intro/install/index.md
+
 
 - part: Defining Your Problem
   chapters:
