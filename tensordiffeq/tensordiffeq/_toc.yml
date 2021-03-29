@@ -8,7 +8,7 @@
 
 - part: Installing TensorDiffEq
     chapters:
-      - file: intro/install/index.md
+    - file: intro/install/index.md
 
 - part: Defining Your Problem
   chapters:
