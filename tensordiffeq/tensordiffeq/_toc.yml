@@ -1,7 +1,7 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
-- file: intro/intro/index
-- file:
+- file: intro/intro/index.md
+- file: intro/install/index.md
 #- file: content
 #  sections:
 #    - file: markdown
