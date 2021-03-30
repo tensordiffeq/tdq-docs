@@ -329,7 +329,7 @@ Therefore, we adopt a similar attitude, and <em>very</em> minimal modifications 
 <p>in order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
 This can be a somewhat tedious and error prone task. It is <em>highly</em> recommended that you work with Tensorflow’s <a class="reference external" href="https://www.tensorflow.org/install/docker">containerized distributions</a>
 for easy implementation of TensorDiffEq’s solvers.</p>
-<p><em>Typically</em> installing via <code class="docutils literal notranslate"><span class="pre">pip</span></code> does not pose problems when installing inside a docker container. However, depending on the age of your container build, some level
+<p><em>Typically</em> installing via <code class="docutils literal notranslate"><span class="pre">pip</span></code> does not pose problems when installing inside a Tensorflow docker container. However, depending on the age of your container build, some level
 of CUDA dependency issues may arise. If this occurs, rebuild your docker container using the <code class="docutils literal notranslate"><span class="pre">latest</span></code> version via</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">gpus</span> <span class="nb">all</span> <span class="o">-</span><span class="n">it</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="p">:</span><span class="n">latest</span><span class="o">-</span><span class="n">gpu</span> <span class="n">bash</span>
 </pre></div>
