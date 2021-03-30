@@ -303,10 +303,10 @@
 <h1>GPU Considerations<a class="headerlink" href="#gpu-considerations" title="Permalink to this headline">¶</a></h1>
 <p>Now lets take some of these examples, make them a little “larger” (by adding more collocation points, for instance), and solve the
 across multiple GPUs.</p>
-<p>An extremely unique feature of TensorDiffEq is that the exact same code will implement a solver on a small scale CPU implementation
-that can implement a solver on a massive scale. The only major difference is scaling up the number of collocation points and implementing
+<p>An extremely unique feature of TensorDiffEq is that the exact same code that implements a solver on a small scale CPU platform
+can implement a solver on a massive scale. The only major difference is scaling up the number of collocation points and implementing
 a distributed solver in TensorDiffEq.</p>
-<p>Even more powerful - this only requires the modification of one line of code. See the below Allen-Cahn example:</p>
+<p>Even more powerful - this only requires the modification of one line of code - a single boolean value to be modified. See the below Allen-Cahn example:</p>
 <div class="section" id="full-example">
 <h2>Full example<a class="headerlink" href="#full-example" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Domain</span> <span class="o">=</span> <span class="n">DomainND</span><span class="p">([</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">],</span> <span class="n">time_var</span><span class="o">=</span><span class="s1">&#39;t&#39;</span><span class="p">)</span>

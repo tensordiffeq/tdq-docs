@@ -4,11 +4,11 @@
 Now lets take some of these examples, make them a little "larger" (by adding more collocation points, for instance), and solve the 
 across multiple GPUs. 
 
-An extremely unique feature of TensorDiffEq is that the exact same code will implement a solver on a small scale CPU implementation 
-that can implement a solver on a massive scale. The only major difference is scaling up the number of collocation points and implementing 
+An extremely unique feature of TensorDiffEq is that the exact same code that implements a solver on a small scale CPU platform 
+ can implement a solver on a massive scale. The only major difference is scaling up the number of collocation points and implementing 
 a distributed solver in TensorDiffEq. 
 
-Even more powerful - this only requires the modification of one line of code. See the below Allen-Cahn example:
+Even more powerful - this only requires the modification of one line of code - a single boolean value to be modified. See the below Allen-Cahn example:
 
 ## Full example 
 
