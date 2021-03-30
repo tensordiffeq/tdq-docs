@@ -273,6 +273,20 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installing-tensordiffeq-on-a-cpu-only-enviromnent">
+   Installing TensorDiffEq on a CPU-only Enviromnent
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -282,6 +296,26 @@
                 
   <div class="section" id="installing-tensordiffeq">
 <h1>Installing TensorDiffEq<a class="headerlink" href="#installing-tensordiffeq" title="Permalink to this headline">¶</a></h1>
+<p>Here are some baseline instructions for getting TensorDiffEq online and running on your system. We have multiple potential deployment
+environments that can potentially be utilized, from CPUs on a local machine (i.e. a windows PC or MacBook) all the way up to data center
+scale computations. Here we will break the install down into CPU and GPU implementations.</p>
+<div class="section" id="installing-tensordiffeq-on-a-cpu-only-enviromnent">
+<h2>Installing TensorDiffEq on a CPU-only Enviromnent<a class="headerlink" href="#installing-tensordiffeq-on-a-cpu-only-enviromnent" title="Permalink to this headline">¶</a></h2>
+<p>TensorDiffEq is freely available for install on <a class="reference external" href="https://pypi.org/project/tensordiffeq/">PyPi</a> and can
+be installed using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-code notranslate"><div class="highlight"><pre><span></span>pip install tensordiffeq
+</pre></div>
+</div>
+<p>This will automatically install the latest stable version of Tensorflow, but dies not guarantee CUDA and its affiliated dependencies
+will be installed for GPU.</p>
+<p>It is important to note that while TensorDiffEq is scalable on the larger end, it is perfectly capable of running on a local machine on CPU.
+A unique feature of Tensorflow - and, by extension, TensorDiffEq - is that the software will automatically detect whether your hardware is GPU-compatible,
+identify the number of workers available, and automatically utilize all of them, unless otherwise specified. The user does not need to worry about specific
+installations or setups to ensure that their code runs on their system, and we take that same attitude into consideration with the package.
+Therefore, we adopt a similar attitude, and <em>very</em> minimal modifications to your code are required to distribute across multiple GPU workers.</p>
+<p>in order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
+This can be a somewhat tedious and error prone task. It is <em>highly</em> recommended that you work with Tensorflow’s <span class="xref myst">containerized distributions</span></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
