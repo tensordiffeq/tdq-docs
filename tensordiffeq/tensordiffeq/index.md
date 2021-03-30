@@ -50,21 +50,21 @@ Thanks to our sponsors:
 [comment]: <> (![Texas A&M Engineering]&#40;images/engineering-logo.png&#41;  )
 
 
-```{image} ../../images/devcom.png
+```{image} images/devcom.png
 :alt: Army Research Lab Logo
 :height: 65px
 :align: center
 ```  
 
 
-```{image} ../../images/engineering-logo.png
+```{image} images/engineering-logo.png
 :alt: Texas A&M Engineering
 :height: 65px
 :align: center
 ```  
 
 
-```{image} ../../images/tamids.png
+```{image} images/tamids.png
 :alt: Texas A&M Institute of Data Science
 :height: 65px
 :align: center
