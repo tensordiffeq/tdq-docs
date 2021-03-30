@@ -61,7 +61,7 @@ This enables TensorDiffEq to adopt a [`tf.distribute.MirroredStrategy()`](https:
 data-parallelism approach to training. In this case, the collocation points are distributed evenly across all available workers. This is one of 
 the most powerful aspects of TensorDiffEq, being able to scale readily without modification of the code. The same physics model, neural network model, and 
 optimizer (except for L-BFGS, at the time of this writing) can be run on a small model on a local machine, and can also be scaled up to run on an
-enterprise-level datacenter with $N$ GPUs. 
+enterprise-level data center with $N$ GPUs. 
 
 
 ## Notes
