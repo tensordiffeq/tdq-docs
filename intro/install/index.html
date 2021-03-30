@@ -311,8 +311,13 @@ be installed using <code class="docutils literal notranslate"><span class="pre">
 <div class="highlight-code notranslate"><div class="highlight"><pre><span></span>pip install tensordiffeq
 </pre></div>
 </div>
-<p>This will automatically install the latest stable version of Tensorflow, but does not guarantee CUDA and its affiliated dependencies
+<p>This will automatically install the latest stable version of Tensorflow with TensorDiffEq, but does not guarantee CUDA and its affiliated dependencies
 will be installed for GPU.</p>
+<p>TensorDiffEq’s developers develop on <code class="docutils literal notranslate"><span class="pre">tf-nightly</span></code>, meaning that the latest stable install version of Tensorflow should not provide any sort of
+version errors. However - if your local system (i.e. a supercomputing facility, etc.) has not upgraded to Tensorflow 2.x, more than likely TensorDiffeq
+will be unsupported. A version of Tensorflow &gt; 2.0 on your local machine if you intend on executing TensorDiffEq on that machine. The <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> command
+should install all these dependencies automatically if you have administrator privileges on your machine, meaning that for most attepmting to install via
+<code class="docutils literal notranslate"><span class="pre">pip</span></code>, these concerns will not pose a problem.</p>
 </div>
 <div class="section" id="installing-tensordiffeq-on-a-gpu-enviroment">
 <h2>Installing TensorDiffEq on a GPU Enviroment<a class="headerlink" href="#installing-tensordiffeq-on-a-gpu-enviroment" title="Permalink to this headline">¶</a></h2>

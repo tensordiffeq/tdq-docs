@@ -13,8 +13,14 @@ be installed using `pip`:
 pip install tensordiffeq
 ```
 
-This will automatically install the latest stable version of Tensorflow, but does not guarantee CUDA and its affiliated dependencies
+This will automatically install the latest stable version of Tensorflow with TensorDiffEq, but does not guarantee CUDA and its affiliated dependencies
 will be installed for GPU. 
+
+TensorDiffEq's developers develop on `tf-nightly`, meaning that the latest stable install version of Tensorflow should not provide any sort of 
+version errors. However - if your local system (i.e. a supercomputing facility, etc.) has not upgraded to Tensorflow 2.x, more than likely TensorDiffeq 
+will be unsupported. A version of Tensorflow > 2.0 on your local machine if you intend on executing TensorDiffEq on that machine. The `pip install` command 
+should install all these dependencies automatically if you have administrator privileges on your machine, meaning that for most attepmting to install via
+`pip`, these concerns will not pose a problem.
 
 ## Installing TensorDiffEq on a GPU Enviroment 
 
