@@ -22,15 +22,17 @@ will be unsupported. A version of Tensorflow > 2.0 on your local machine if you 
 should install all these dependencies automatically if you have administrator privileges on your machine, meaning that for most attepmting to install via
 `pip`, these concerns will not pose a problem.
 
-## Installing TensorDiffEq on a GPU Enviroment 
-
 It is important to note that while TensorDiffEq is scalable on the larger end, it is perfectly capable of running on a local machine on CPU. 
 A unique feature of Tensorflow - and, by extension, TensorDiffEq - is that the software will automatically detect whether your hardware is GPU-compatible,
 identify the number of workers available, and automatically utilize all of them, unless otherwise specified. The user does not need to worry about specific 
 installations or setups to ensure that their code runs on their system, and we take that same attitude into consideration with the package. 
 Therefore, we adopt a similar attitude, and *very* minimal modifications to your code are required to distribute across multiple GPU workers. 
 
-in order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
+
+## Installing TensorDiffEq on a GPU Enviroment 
+
+
+In order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
 This can be a somewhat tedious and error prone task. It is *highly* recommended that you work with Tensorflow's [containerized distributions](https://www.tensorflow.org/install/docker)
 for easy implementation of TensorDiffEq's solvers. 
 

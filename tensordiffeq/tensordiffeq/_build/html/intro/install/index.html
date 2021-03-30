@@ -318,15 +318,15 @@ version errors. However - if your local system (i.e. a supercomputing facility, 
 will be unsupported. A version of Tensorflow &gt; 2.0 on your local machine if you intend on executing TensorDiffEq on that machine. The <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> command
 should install all these dependencies automatically if you have administrator privileges on your machine, meaning that for most attepmting to install via
 <code class="docutils literal notranslate"><span class="pre">pip</span></code>, these concerns will not pose a problem.</p>
-</div>
-<div class="section" id="installing-tensordiffeq-on-a-gpu-enviroment">
-<h2>Installing TensorDiffEq on a GPU Enviroment<a class="headerlink" href="#installing-tensordiffeq-on-a-gpu-enviroment" title="Permalink to this headline">¶</a></h2>
 <p>It is important to note that while TensorDiffEq is scalable on the larger end, it is perfectly capable of running on a local machine on CPU.
 A unique feature of Tensorflow - and, by extension, TensorDiffEq - is that the software will automatically detect whether your hardware is GPU-compatible,
 identify the number of workers available, and automatically utilize all of them, unless otherwise specified. The user does not need to worry about specific
 installations or setups to ensure that their code runs on their system, and we take that same attitude into consideration with the package.
 Therefore, we adopt a similar attitude, and <em>very</em> minimal modifications to your code are required to distribute across multiple GPU workers.</p>
-<p>in order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
+</div>
+<div class="section" id="installing-tensordiffeq-on-a-gpu-enviroment">
+<h2>Installing TensorDiffEq on a GPU Enviroment<a class="headerlink" href="#installing-tensordiffeq-on-a-gpu-enviroment" title="Permalink to this headline">¶</a></h2>
+<p>In order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
 This can be a somewhat tedious and error prone task. It is <em>highly</em> recommended that you work with Tensorflow’s <a class="reference external" href="https://www.tensorflow.org/install/docker">containerized distributions</a>
 for easy implementation of TensorDiffEq’s solvers.</p>
 <p><em>Typically</em> installing via <code class="docutils literal notranslate"><span class="pre">pip</span></code> does not pose problems when installing inside a Tensorflow docker container. However, depending on the age of your container build, some level
