@@ -31,4 +31,21 @@ installations or setups to ensure that their code runs on their system, and we t
 Therefore, we adopt a similar attitude, and *very* minimal modifications to your code are required to distribute across multiple GPU workers. 
 
 in order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
-This can be a somewhat tedious and error prone task. It is *highly* recommended that you work with Tensorflow's [containerized distributions]()
+This can be a somewhat tedious and error prone task. It is *highly* recommended that you work with Tensorflow's [containerized distributions](https://www.tensorflow.org/install/docker)
+for easy implementation of TensorDiffEq's solvers. 
+
+*Typically* installing via `pip` does not pose problems when installing inside a docker container. However, depending on the age of your container build, some level
+CUDA dependency issues may arise. If this occurs, rebuild your docker container using the `latest` version via something
+
+```{code}
+docker run --gpus all -it tensorflow/tensorflow:latest-gpu bash
+
+```
+
+This will drop you into a GPU-enabled Tensorflow container, where you can run
+
+```angular2html
+pip install tensordiffeq
+```
+
+and run scripts as applicable. 
