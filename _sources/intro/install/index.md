@@ -34,7 +34,7 @@ in order to fully utilize Tensorflow on GPU - and fully utilize the features of 
 This can be a somewhat tedious and error prone task. It is *highly* recommended that you work with Tensorflow's [containerized distributions](https://www.tensorflow.org/install/docker)
 for easy implementation of TensorDiffEq's solvers. 
 
-*Typically* installing via `pip` does not pose problems when installing inside a docker container. However, depending on the age of your container build, some level
+*Typically* installing via `pip` does not pose problems when installing inside a Tensorflow docker container. However, depending on the age of your container build, some level
 of CUDA dependency issues may arise. If this occurs, rebuild your docker container using the `latest` version via 
 
 ```{code}
