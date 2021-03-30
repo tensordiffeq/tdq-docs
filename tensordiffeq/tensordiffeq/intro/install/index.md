@@ -18,8 +18,8 @@ will be installed for GPU.
 
 TensorDiffEq's developers develop on `tf-nightly`, meaning that the latest stable install version of Tensorflow should not provide any sort of 
 version errors. However - if your local system (i.e. a supercomputing facility, etc.) has not upgraded to Tensorflow 2.x, more than likely TensorDiffeq 
-will be unsupported. A version of Tensorflow > 2.0 on your local machine if you intend on executing TensorDiffEq on that machine. The `pip install` command 
-should install all these dependencies automatically if you have administrator privileges on your machine, meaning that for most attepmting to install via
+will be unsupported. A version of Tensorflow > 2.0 is required on your local machine if you intend on executing TensorDiffEq on that machine. The `pip install` command 
+should install all these dependencies automatically if you have administrator privileges on your machine, meaning that for most attempting to install via
 `pip`, these concerns will not pose a problem.
 
 It is important to note that while TensorDiffEq is scalable on the larger end, it is perfectly capable of running on a local machine on CPU. 
