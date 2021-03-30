@@ -35,7 +35,7 @@ This can be a somewhat tedious and error prone task. It is *highly* recommended 
 for easy implementation of TensorDiffEq's solvers. 
 
 *Typically* installing via `pip` does not pose problems when installing inside a docker container. However, depending on the age of your container build, some level
-CUDA dependency issues may arise. If this occurs, rebuild your docker container using the `latest` version via 
+of CUDA dependency issues may arise. If this occurs, rebuild your docker container using the `latest` version via 
 
 ```{code}
 docker run --gpus all -it tensorflow/tensorflow:latest-gpu bash
