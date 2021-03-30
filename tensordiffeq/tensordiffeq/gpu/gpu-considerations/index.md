@@ -31,7 +31,7 @@ def deriv_model(u_model, x, t):
     u = u_model(tf.concat([x, t], 1))
     u_x = tf.gradients(u, x)[0]
     u_xx = tf.gradients(u_x, x)[0]
-    return u, u_x, u_xxx, u_xxxx
+    return u, u_x
 
 init = IC(Domain, [func_ic], var=[['x']])
 x_periodic = periodicBC(Domain, ['x'], [deriv_model])
