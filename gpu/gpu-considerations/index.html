@@ -284,8 +284,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#notes-and-best-practces-for-gpus">
-   Notes and Best-Practces for GPUs
+  <a class="reference internal nav-link" href="#notes-and-best-practices-for-gpus">
+   Notes and Best-Practices for GPUs
   </a>
  </li>
 </ul>
@@ -359,8 +359,8 @@ the most powerful aspects of TensorDiffEq, being able to scale readily without m
 optimizer (except for L-BFGS, at the time of this writing) can be run on a small model on a local machine, and can also be scaled up to run on an
 enterprise-level data center with <span class="math notranslate nohighlight">\(N\)</span> GPUs.</p>
 </div>
-<div class="section" id="notes-and-best-practces-for-gpus">
-<h2>Notes and Best-Practces for GPUs<a class="headerlink" href="#notes-and-best-practces-for-gpus" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="notes-and-best-practices-for-gpus">
+<h2>Notes and Best-Practices for GPUs<a class="headerlink" href="#notes-and-best-practices-for-gpus" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>graph-mode L-BFGS is typically faster on a single-GPU, given sufficient model size. On a CPU, empirically,
 it has been demonstrated that eager-mode L-BFGS is actually faster than graph-mode</p></li>
