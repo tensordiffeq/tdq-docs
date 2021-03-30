@@ -64,7 +64,7 @@ optimizer (except for L-BFGS, at the time of this writing) can be run on a small
 enterprise-level data center with $N$ GPUs. 
 
 
-## Notes and Best-Practces for GPUs
+## Notes and Best-Practices for GPUs
 - graph-mode L-BFGS is typically faster on a single-GPU, given sufficient model size. On a CPU, empirically,
 it has been demonstrated that eager-mode L-BFGS is actually faster than graph-mode
 
