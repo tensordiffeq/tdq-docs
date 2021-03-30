@@ -283,6 +283,11 @@
    Installing TensorDiffEq on a CPU-only Enviromnent
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installing-tensordiffeq-on-a-gpu-enviroment">
+   Installing TensorDiffEq on a GPU Enviroment
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -306,8 +311,11 @@ be installed using <code class="docutils literal notranslate"><span class="pre">
 <div class="highlight-code notranslate"><div class="highlight"><pre><span></span>pip install tensordiffeq
 </pre></div>
 </div>
-<p>This will automatically install the latest stable version of Tensorflow, but dies not guarantee CUDA and its affiliated dependencies
+<p>This will automatically install the latest stable version of Tensorflow, but does not guarantee CUDA and its affiliated dependencies
 will be installed for GPU.</p>
+</div>
+<div class="section" id="installing-tensordiffeq-on-a-gpu-enviroment">
+<h2>Installing TensorDiffEq on a GPU Enviroment<a class="headerlink" href="#installing-tensordiffeq-on-a-gpu-enviroment" title="Permalink to this headline">¶</a></h2>
 <p>It is important to note that while TensorDiffEq is scalable on the larger end, it is perfectly capable of running on a local machine on CPU.
 A unique feature of Tensorflow - and, by extension, TensorDiffEq - is that the software will automatically detect whether your hardware is GPU-compatible,
 identify the number of workers available, and automatically utilize all of them, unless otherwise specified. The user does not need to worry about specific
