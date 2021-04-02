@@ -24,9 +24,9 @@ should install all these dependencies automatically if you have administrator pr
 
 It is important to note that while TensorDiffEq is scalable on the larger end, it is perfectly capable of running on a local machine on CPU. 
 A unique feature of Tensorflow - and, by extension, TensorDiffEq - is that the software will automatically detect whether your hardware is GPU-compatible,
-identify the number of workers available, and automatically utilize all of them, unless otherwise specified. The user does not need to worry about specific 
-installations or setups to ensure that their code runs on their system, and we take that same attitude into consideration with the package. 
-Therefore, we adopt a similar attitude, and *very* minimal modifications to your code are required to distribute across multiple GPU workers. 
+identify the number of workers available, and automatically utilize all of them, unless otherwise specified. With Tensorflow, the user does not need to worry about specific 
+installations or setups to ensure that their code runs on their system, and we take that same approach with the TensorDiffEq package interface. 
+Therefore, *very* minimal modifications to your code are required to distribute across multiple GPU workers, or run on a quad-core processor found in a personal computer. 
 
 
 ## Installing TensorDiffEq on a GPU Enviroment 
