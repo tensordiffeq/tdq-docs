@@ -40,6 +40,16 @@ What makes TensorDiffEq different?
 
 Know that some of these pages are still under construction as of February 2021, please see our [repository](https://github.com/tensordiffeq/tdq-docs)
 
+If you use TensorDiffEq in your work, please cite:
+
+```code
+@article{mcclenny2021tensordiffeq,
+  title={TensorDiffEq: Scalable Multi-GPU Forward and Inverse Solvers for Physics Informed Neural Networks},
+  author={McClenny, Levi D and Haile, Mulugeta A and Braga-Neto, Ulisses M},
+  journal={arXiv preprint arXiv:2103.16034},
+  year={2021}
+}
+```
 
 Thanks to our sponsors:  
 
