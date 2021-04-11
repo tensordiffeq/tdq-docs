@@ -44,5 +44,4 @@ model.compile(layer_sizes, f_model, Domain, BCs)
 # overwrite the default NN with our new one defined above
 model.u_model = model_bn
 model.fit(tf_iter=1000, newton_iter=1000)
-
 ```
