@@ -1,4 +1,4 @@
-# Hacking TensorDiffEq
+# Custom Neural Network Architectures
 
 ## In Development *(as of 7 April 2021)*
 The fact that TensorDiffEq is built on top of Keras allows for some unique properties when training PINNs.
