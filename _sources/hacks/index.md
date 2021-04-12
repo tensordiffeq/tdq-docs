@@ -45,3 +45,6 @@ model.compile(layer_sizes, f_model, Domain, BCs)
 model.u_model = model_bn
 model.fit(tf_iter=1000, newton_iter=1000)
 ```
+
+This will fit your network with batchnorm as the PDE approximation network, allowing more stability during training and 
+reducing the likelihood of vanishing gradients in the training.
