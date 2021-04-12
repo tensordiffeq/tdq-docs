@@ -39,5 +39,5 @@ model.u_model = model_bn
 model.fit(tf_iter=1000, newton_iter=1000)
 ```
 
-This will fit your network with batch norm as the PDE approximation network, allowing more stability during training and 
+This will fit your custom network (i.e., with batch norm) as the PDE approximation network, allowing more stability and 
 reducing the likelihood of vanishing gradients in the training.
