@@ -5,10 +5,10 @@
 ## Modification of Neural Network Architecture 
 
 By default, TensorDiffEq will build a fully-connected network using the layer sizes and lengths you define in 
-the `layer sizes` parameter, which is fed into the `model.compile` call. However, once the mode has been compiled,
+the `layer sizes` parameter, which is fed into the `model.compile` call. However, once the model has been compiled,
 that network can be overwritten with any Keras neural network. Here we demonstrate how to do so, adding batch norm layers 
 to the network. 
-Referencing the example [here](../model/compiling-example/index.html), we can modify the neural network as such:
+Referencing the example [here](../../model/compiling-example/index.html), we can modify the neural network as such:
 
 
 ```{code} python
@@ -39,5 +39,5 @@ model.u_model = model_bn
 model.fit(tf_iter=1000, newton_iter=1000)
 ```
 
-This will fit your network with batchnorm as the PDE approximation network, allowing more stability during training and 
+This will fit your network with batch norm as the PDE approximation network, allowing more stability during training and 
 reducing the likelihood of vanishing gradients in the training.
