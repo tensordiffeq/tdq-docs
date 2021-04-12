@@ -27,8 +27,8 @@ model.fit(tf_iter=2000)
 ```
 
 Additionally, one could replace the learning rate parameter in the `tf_optimizer` object with 
-a different learning rate if that is desired in the default `Adam` optimizer in the same way.
-
+a different learning rate if that is desired in the default `Adam` optimizer in the same way. The built-in learning rate for Adam
+is set to `0.005`, and one could reduce it to `0.001` via the following:
 ```{code} python
 model = CollocationSolverND()
 model.compile(layer_sizes, f_model, Domain, BCs)
