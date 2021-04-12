@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Installing TensorDiffEq</title>
+    <title>Custom Neural Network Architectures</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -57,8 +57,8 @@
     <link rel="shortcut icon" href="../../_static/tdq-profile.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Generating a Domain" href="../../domain/index.html" />
-    <link rel="prev" title="TensorDiffEq" href="../../index.html" />
+    <link rel="next" title="Bibleography" href="../../bib.html" />
+    <link rel="prev" title="GPU Considerations" href="../../gpu/gpu-considerations/index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -98,9 +98,9 @@
   Installing TensorDiffEq
  </span>
 </p>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro/install/index.html">
    Installing TensorDiffEq
   </a>
  </li>
@@ -188,9 +188,9 @@
   Hacking TensorDiffEq
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../hacks/networks/index.html">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Custom Neural Network Architectures
   </a>
  </li>
@@ -242,7 +242,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/intro/install/index.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/hacks/networks/index.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -262,10 +262,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/tensordiffeq/tdq-docs/issues/new?title=Issue%20on%20page%20%2Fintro/install/index.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/tensordiffeq/tdq-docs/issues/new?title=Issue%20on%20page%20%2Fhacks/networks/index.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/tensordiffeq/tdq-docs/edit/master/intro/install/index.md"><button
+        <a class="edit-button" href="https://github.com/tensordiffeq/tdq-docs/edit/master/hacks/networks/index.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -291,13 +291,16 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#installing-tensordiffeq-on-a-cpu-only-enviromnent">
-   Installing TensorDiffEq on a CPU-only Enviromnent
+  <a class="reference internal nav-link" href="#in-development-as-of-7-april-2021">
+   In Development
+   <em>
+    (as of 7 April 2021)
+   </em>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#installing-tensordiffeq-on-a-gpu-enviroment">
-   Installing TensorDiffEq on a GPU Enviroment
+  <a class="reference internal nav-link" href="#modification-of-neural-network-architecture">
+   Modification of Neural Network Architecture
   </a>
  </li>
 </ul>
@@ -311,46 +314,55 @@
         
               <div>
                 
-  <div class="section" id="installing-tensordiffeq">
-<h1>Installing TensorDiffEq<a class="headerlink" href="#installing-tensordiffeq" title="Permalink to this headline">¶</a></h1>
-<p>Here are some baseline instructions for getting TensorDiffEq online and running on your system. We have multiple potential deployment
-environments that can potentially be utilized, from CPUs on a local machine (i.e. a windows PC or MacBook) all the way up to data center
-scale computations. Here we will break the install down into CPU and GPU implementations.</p>
-<div class="section" id="installing-tensordiffeq-on-a-cpu-only-enviromnent">
-<h2>Installing TensorDiffEq on a CPU-only Enviromnent<a class="headerlink" href="#installing-tensordiffeq-on-a-cpu-only-enviromnent" title="Permalink to this headline">¶</a></h2>
-<p>TensorDiffEq is freely available for install on <a class="reference external" href="https://pypi.org/project/tensordiffeq/">PyPi</a> and can
-be installed using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
-<div class="highlight-code notranslate"><div class="highlight"><pre><span></span>pip install tensordiffeq
+  <div class="section" id="custom-neural-network-architectures">
+<h1>Custom Neural Network Architectures<a class="headerlink" href="#custom-neural-network-architectures" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="in-development-as-of-7-april-2021">
+<h2>In Development <em>(as of 7 April 2021)</em><a class="headerlink" href="#in-development-as-of-7-april-2021" title="Permalink to this headline">¶</a></h2>
+<p>The fact that TensorDiffEq is built on top of Keras allows for some unique properties when training PINNs.
+So far, a (non-exhaustive) list includes:</p>
+<ul class="simple">
+<li><p>easy modification of neural network architecture with ANY Keras layers (whether or not they are useful for your model is left up to you)</p></li>
+<li><p>easy modification of optimizers using the <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers</span></code> bank of solvers</p></li>
+<li><p>exporting and re-importing a model for later use or transfer learning</p></li>
+</ul>
+<p>Here we will discuss a few of these options and how to execute these ‘hacks’</p>
+</div>
+<div class="section" id="modification-of-neural-network-architecture">
+<h2>Modification of Neural Network Architecture<a class="headerlink" href="#modification-of-neural-network-architecture" title="Permalink to this headline">¶</a></h2>
+<p>By default, TensorDiffEq will build a fully-connected network using the layer sizes and lengths you define in
+the <code class="docutils literal notranslate"><span class="pre">layer</span> <span class="pre">sizes</span></code> parameter, which is fed into the <code class="docutils literal notranslate"><span class="pre">model.compile</span></code> call. However, once the mode has been compiled,
+that network can be overwritten with any Keras neural network. Here we demonstrate how to do so, adding batch norm layers
+to the network.
+Referencing the example <span class="xref myst">here</span>, we can modify the neural network as such:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># need to include keras.layers and Sequential API</span>
+<span class="kn">from</span> <span class="nn">tf.keras</span> <span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">Sequential</span>
+
+<span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">model_bn</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">,</span>
+            <span class="n">kernel_initializer</span><span class="o">=</span><span class="s2">&quot;glorot_normal&quot;</span><span class="p">),</span>        
+            <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">,</span>
+            <span class="n">kernel_initializer</span><span class="o">=</span><span class="s2">&quot;glorot_normal&quot;</span><span class="p">),</span> 
+            <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">,</span>
+            <span class="n">kernel_initializer</span><span class="o">=</span><span class="s2">&quot;glorot_normal&quot;</span><span class="p">),</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>           
+            <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolverND</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">)</span>
+<span class="c1"># overwrite the default NN with our new one defined above</span>
+<span class="n">model</span><span class="o">.</span><span class="n">u_model</span> <span class="o">=</span> <span class="n">model_bn</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">newton_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will automatically install the latest stable version of Tensorflow with TensorDiffEq, but does not guarantee CUDA and its affiliated dependencies
-will be installed for GPU.</p>
-<p>TensorDiffEq’s developers develop on <code class="docutils literal notranslate"><span class="pre">tf-nightly</span></code>, meaning that the latest stable install version of Tensorflow should not provide any sort of
-version errors. However - if your local system (i.e. a supercomputing facility, etc.) has not upgraded to Tensorflow 2.x, more than likely TensorDiffeq
-will be unsupported. A version of Tensorflow &gt; 2.0 is required on your local machine if you intend on executing TensorDiffEq on that machine. The <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> command
-should install all these dependencies automatically if you have administrator privileges on your machine, meaning that for most attempting to install via
-<code class="docutils literal notranslate"><span class="pre">pip</span></code>, these concerns will not pose a problem.</p>
-<p>It is important to note that while TensorDiffEq is scalable on the larger end, it is perfectly capable of running on a local machine on CPU.
-A unique feature of Tensorflow - and, by extension, TensorDiffEq - is that the software will automatically detect whether your hardware is GPU-compatible,
-identify the number of workers available, and automatically utilize all of them, unless otherwise specified. With Tensorflow, the user does not need to worry about specific
-installations or setups to ensure that their code runs on their system, and we take that same approach with the TensorDiffEq package interface.
-Therefore, <em>very</em> minimal modifications to your code are required to distribute across multiple GPU workers, or run on a quad-core processor found in a personal computer.</p>
-</div>
-<div class="section" id="installing-tensordiffeq-on-a-gpu-enviroment">
-<h2>Installing TensorDiffEq on a GPU Enviroment<a class="headerlink" href="#installing-tensordiffeq-on-a-gpu-enviroment" title="Permalink to this headline">¶</a></h2>
-<p>In order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
-This can be a somewhat tedious and error prone task. It is <em>highly</em> recommended that you work with Tensorflow’s <a class="reference external" href="https://www.tensorflow.org/install/docker">containerized distributions</a>
-for easy implementation of TensorDiffEq’s solvers.</p>
-<p><em>Typically</em> installing via <code class="docutils literal notranslate"><span class="pre">pip</span></code> does not pose problems when installing inside a Tensorflow docker container. However, depending on the age of your container build, some level
-of CUDA dependency issues may arise. If this occurs, rebuild your docker container using the <code class="docutils literal notranslate"><span class="pre">latest</span></code> version via</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">gpus</span> <span class="nb">all</span> <span class="o">-</span><span class="n">it</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="p">:</span><span class="n">latest</span><span class="o">-</span><span class="n">gpu</span> <span class="n">bash</span>
-</pre></div>
-</div>
-<p>This will drop you into a GPU-enabled Tensorflow container, where you can run</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensordiffeq</span>
-</pre></div>
-</div>
-<p>and run scripts as applicable.</p>
+<p>This will fit your network with batchnorm as the PDE approximation network, allowing more stability during training and
+reducing the likelihood of vanishing gradients in the training.</p>
 </div>
 </div>
 
@@ -367,7 +379,7 @@ of CUDA dependency issues may arise. If this occurs, rebuild your docker contain
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./intro/install"
+            path: "./hacks/networks"
         },
         predefinedOutput: true
     }
@@ -382,8 +394,8 @@ of CUDA dependency issues may arise. If this occurs, rebuild your docker contain
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../../index.html" title="previous page">TensorDiffEq</a>
-    <a class='right-next' id="next-link" href="../../domain/index.html" title="next page">Generating a Domain</a>
+    <a class='left-prev' id="prev-link" href="../../gpu/gpu-considerations/index.html" title="previous page">GPU Considerations</a>
+    <a class='right-next' id="next-link" href="../../bib.html" title="next page">Bibleography</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

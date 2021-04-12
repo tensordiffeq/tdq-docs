@@ -35,7 +35,7 @@
 
 - part: Hacking TensorDiffEq
   chapters:
-    - file: hacks/index.md
+    - file: hacks/networks/index.md
 
 - part: References
   chapters:
