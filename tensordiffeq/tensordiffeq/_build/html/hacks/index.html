@@ -361,6 +361,8 @@ Referencing the example <span class="xref myst">here</span>, we can modify the n
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">newton_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>This will fit your network with batchnorm as the PDE approximation network, allowing more stability during training and
+reducing the likelihood of vanishing gradients in the training.</p>
 </div>
 </div>
 
