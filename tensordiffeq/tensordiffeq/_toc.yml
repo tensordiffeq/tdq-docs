@@ -33,6 +33,12 @@
   chapters:
     - file: gpu/gpu-considerations/index.md
 
+- part: Hacking TensorDiffEq
+  chapters:
+    - file: hacks/overview/index.md
+    - file: hacks/networks/index.md
+    - file: hacks/optimizers/index.md
+
 - part: References
   chapters:
     - file: bib.md

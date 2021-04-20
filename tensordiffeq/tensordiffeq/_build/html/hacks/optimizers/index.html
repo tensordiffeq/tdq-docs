@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Discovery Model</title>
+    <title>Modification of Keras Optimizers</title>
     
   <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -57,8 +57,8 @@
     <link rel="shortcut icon" href="../../_static/tdq-profile.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Discovery Model Example" href="../discovery-example/index.html" />
-    <link rel="prev" title="Self-Adaptive PINN Example" href="../../model/sa-compiling-example/index.html" />
+    <link rel="next" title="Bibleography" href="../../bib.html" />
+    <link rel="prev" title="Custom Neural Network Architectures" href="../networks/index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -159,14 +159,14 @@
   PDE Discovery (Inverse Modeling)
  </span>
 </p>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../discovery/discovery-model/index.html">
    Discovery Model
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../discovery-example/index.html">
+  <a class="reference internal" href="../../discovery/discovery-example/index.html">
    Discovery Model Example
   </a>
  </li>
@@ -188,19 +188,19 @@
   Hacking TensorDiffEq
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../hacks/overview/index.html">
+  <a class="reference internal" href="../overview/index.html">
    Overview
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../../hacks/networks/index.html">
+  <a class="reference internal" href="../networks/index.html">
    Custom Neural Network Architectures
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../../hacks/optimizers/index.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Modification of Keras Optimizers
   </a>
  </li>
@@ -252,7 +252,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/discovery/discovery-model/index.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/hacks/optimizers/index.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -272,10 +272,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/tensordiffeq/tdq-docs/issues/new?title=Issue%20on%20page%20%2Fdiscovery/discovery-model/index.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/tensordiffeq/tdq-docs/issues/new?title=Issue%20on%20page%20%2Fhacks/optimizers/index.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/tensordiffeq/tdq-docs/edit/master/discovery/discovery-model/index.md"><button
+        <a class="edit-button" href="https://github.com/tensordiffeq/tdq-docs/edit/master/hacks/optimizers/index.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -295,37 +295,6 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#initialize">
-   Initialize
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#methods">
-   Methods
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#compiling-the-model">
-     Compiling the Model
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fitting-the-model">
-     Fitting the model
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -333,63 +302,43 @@
         
               <div>
                 
-  <div class="section" id="discovery-model">
-<h1>Discovery Model<a class="headerlink" href="#discovery-model" title="Permalink to this headline">¶</a></h1>
-<p>Next, we will assess the discovery model, where we can perform parameter estimation of values in a PDE system.
-This is commonly referred to as “inverse modeling,” as opposed to
-forward modeling (or inference) where we provide all the input information to the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> and solve the whole solution via a
-neural network function approximation, forcing the residual term of the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> constrained output to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss.</p>
-<p>This case is almost a more natural application of neural networks, as it is a physics-constrained methodology of supervised learning. We have data output from
-a simulation or an experiment, and we seek to map parameters of a known PDE system to that data. In this case, the neural network works via a multi-faceted loss
-function, where the residual of the <code class="docutils literal notranslate"><span class="pre">f_network</span></code> is being forced to <code class="docutils literal notranslate"><span class="pre">0.0</span></code> via an MSE loss. However, the key difference is that we are also using the estimated parameters to find that loss.
-Therefore, we also take the loss wrt the target variables (the estimated parameters, in this case) and optimize those terms via an
-MSE loss against the training data. The result is a training methodology that not only trains the <span class="math notranslate nohighlight">\(u(\textbf{X}, t)\)</span> solution (or just <span class="math notranslate nohighlight">\(u(\textbf{X})\)</span>, depending on your problem), but also
-estimates parameters within the model concurrently.</p>
-<p>In this section we will dig into the <code class="docutils literal notranslate"><span class="pre">DiscoveryMode()</span></code> in TensorDiffEq. We will discuss the pertinent methods, as well as list a <a class="reference internal" href="../discovery-example/index.html"><span class="doc std std-doc">few examples</span></a>
-to get you off the ground in training your models.</p>
-<div class="section" id="initialize">
-<h2>Initialize<a class="headerlink" href="#initialize" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DiscoveryModel</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> class initialized without any arguments.</p>
-</div>
-<div class="section" id="methods">
-<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> class has methods to pass in the data for the problem, as well as methods to fit and predict similar to the <code class="docutils literal notranslate"><span class="pre">CollocationModelND()</span></code> class.</p>
-<div class="section" id="compiling-the-model">
-<h3>Compiling the Model<a class="headerlink" href="#compiling-the-model" title="Permalink to this headline">¶</a></h3>
-<p>First we must feed in the data and fitting parameters using the <code class="docutils literal notranslate"><span class="pre">compile</span></code> method.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">u_star</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">col_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Args:</p>
+  <div class="section" id="modification-of-keras-optimizers">
+<h1>Modification of Keras Optimizers<a class="headerlink" href="#modification-of-keras-optimizers" title="Permalink to this headline">¶</a></h1>
+<p>Due to the fact that TensorDiffEq is based on Keras, we have access to the full swath of optimizers pushed out by the Tensorflow
+team for neural network training. A full list is available <a class="reference external" href="https://keras.io/api/optimizers/">here</a>, and includes:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">layer_sizes</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">ints</span></code> describing the width and depth of your MLP network used for approximation. See
-<a class="reference external" href="../../model/compiling/index.html#layer-sizes">here</a> for more information</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">f_model</span></code> - a <code class="docutils literal notranslate"><span class="pre">func</span></code> describing the physics model. The <code class="docutils literal notranslate"><span class="pre">f_model</span></code> for a <code class="docutils literal notranslate"><span class="pre">DiscoveryModel</span></code> must contain the input variable <code class="docutils literal notranslate"><span class="pre">vars_</span></code>
-as the <em>second</em> input, before the input variables to the PDE system. See the example <span class="xref myst">here</span>. The definition
-of the variables themselves will be in the <code class="docutils literal notranslate"><span class="pre">var</span></code> input</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> arrays of input data, one for each variable (i.e. a list of <code class="docutils literal notranslate"><span class="pre">[x,t]</span></code> where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> arrays)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">u_star</span></code> - an <code class="docutils literal notranslate"><span class="pre">array</span></code> containing the exact solution data, with at point to point correlation to the data input to <code class="docutils literal notranslate"><span class="pre">X</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code> - a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">tf.Variables</span></code>, preinitialized, for training the parameters you are interested in in your model</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">col_weights</span></code> - a <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> array of size <code class="docutils literal notranslate"><span class="pre">[N,1]</span></code> for collocation weights for each data point in the experimental data</p></li>
+<li><p>SGD</p></li>
+<li><p>RMSprop</p></li>
+<li><p>Adam</p></li>
+<li><p>Adadelta</p></li>
+<li><p>Adagrad</p></li>
+<li><p>Adamax</p></li>
+<li><p>Nadam</p></li>
+<li><p>Ftrl</p></li>
 </ul>
-<p>Once compiled, the model is ready to begin training the parameters in <code class="docutils literal notranslate"><span class="pre">var</span></code> to fit the data presented in the <code class="docutils literal notranslate"><span class="pre">[X,</span> <span class="pre">u_star]</span></code> pairs. As mentioned above,
-this training is performed concurrently to training a <span class="math notranslate nohighlight">\(u(\textbf{X}, t)\)</span> network for the problem presented in <code class="docutils literal notranslate"><span class="pre">f_model</span></code>.</p>
-</div>
-<div class="section" id="fitting-the-model">
-<h3>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Permalink to this headline">¶</a></h3>
-<p>Once compiled, we can fit the model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fit</span><span class="p">(</span><span class="n">tf_itter</span><span class="p">)</span>
+<p>Modification of these optimizers away from the baseline default parameters in TensorDiffEq is relatively straightforward,
+allowing the user to identify which optimizer is best for their specific problem.</p>
+<p>One can modify the optimizers in the <code class="docutils literal notranslate"><span class="pre">CollocationSolverND</span></code> object by either changing the
+<code class="docutils literal notranslate"><span class="pre">tf_optimizer</span></code> object or the <code class="docutils literal notranslate"><span class="pre">tf_optimizer_weights</span></code> object and replacing them with a new instance of
+a <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers</span></code> object, annotated above. As an example, this is how one could modify the built-in <code class="docutils literal notranslate"><span class="pre">Adam</span></code> optimizer with an
+<code class="docutils literal notranslate"><span class="pre">SGD</span></code> optimizer for training:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolverND</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">tf_optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=.</span><span class="mi">001</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Args:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tf_iter</span></code> - the number of iterations of training to be completed by the optimizer. Optimizer defaults to <code class="docutils literal notranslate"><span class="pre">tf.Keras.Optimizers.Adam(.005)</span></code> but can be <span class="xref myst">modified</span>.</p></li>
-</ul>
+<p>Additionally, one could replace the learning rate parameter in the <code class="docutils literal notranslate"><span class="pre">tf_optimizer</span></code> object with
+a different learning rate if that is desired in the default <code class="docutils literal notranslate"><span class="pre">Adam</span></code> optimizer in the same way. The built-in learning rate for Adam
+is set to <code class="docutils literal notranslate"><span class="pre">0.005</span></code>, and one could reduce it to <code class="docutils literal notranslate"><span class="pre">0.001</span></code> via the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolverND</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">tf_optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=.</span><span class="mi">001</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
 </div>
-</div>
+<p>It is important to note that replacing the optimizers in this way does not guarantee they will converge. The question
+of PINN training stability and convergence isa heavily researched and ongoing conversation.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -405,7 +354,7 @@ this training is performed concurrently to training a <span class="math notransl
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./discovery/discovery-model"
+            path: "./hacks/optimizers"
         },
         predefinedOutput: true
     }
@@ -420,8 +369,8 @@ this training is performed concurrently to training a <span class="math notransl
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../../model/sa-compiling-example/index.html" title="previous page">Self-Adaptive PINN Example</a>
-    <a class='right-next' id="next-link" href="../discovery-example/index.html" title="next page">Discovery Model Example</a>
+    <a class='left-prev' id="prev-link" href="../networks/index.html" title="previous page">Custom Neural Network Architectures</a>
+    <a class='right-next' id="next-link" href="../../bib.html" title="next page">Bibleography</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

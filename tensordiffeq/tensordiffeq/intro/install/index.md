@@ -9,7 +9,7 @@ scale computations. Here we will break the install down into CPU and GPU impleme
 TensorDiffEq is freely available for install on [PyPi](https://pypi.org/project/tensordiffeq/) and can 
 be installed using `pip`:
 
-```code
+```{code} python
 pip install tensordiffeq
 ```
 

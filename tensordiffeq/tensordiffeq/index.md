@@ -1,4 +1,4 @@
-TensorDiffEq 
+*TensorDiffEq* Overview
 ============================
 ## Official Documentation
 
@@ -42,7 +42,7 @@ Know that some of these pages are still under construction as of February 2021, 
 
 If you use TensorDiffEq in your work, please cite:
 
-```code
+```{code}
 @article{mcclenny2021tensordiffeq,
   title={TensorDiffEq: Scalable Multi-GPU Forward and Inverse Solvers for Physics Informed Neural Networks},
   author={McClenny, Levi D and Haile, Mulugeta A and Braga-Neto, Ulisses M},

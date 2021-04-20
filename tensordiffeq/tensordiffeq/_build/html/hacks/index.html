@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Building the Physics</title>
+    <title>Custom Neural Network Architectures</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -57,8 +57,8 @@
     <link rel="shortcut icon" href="../_static/tdq-profile.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="PINN Collocation Solver" href="../model/compiling/index.html" />
-    <link rel="prev" title="Boundary Conditions" href="../ic-bc/bc/index.html" />
+    <link rel="next" title="Bibleography" href="../bib.html" />
+    <link rel="prev" title="GPU Considerations" href="../gpu/gpu-considerations/index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -110,7 +110,7 @@
   Defining Your Problem
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../domain/index.html">
    Generating a Domain
@@ -126,8 +126,8 @@
    Boundary Conditions
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../physics/index.html">
    Building the Physics
   </a>
  </li>
@@ -188,20 +188,10 @@
   Hacking TensorDiffEq
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../hacks/overview/index.html">
-   Overview
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../hacks/networks/index.html">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Custom Neural Network Architectures
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../hacks/optimizers/index.html">
-   Modification of Keras Optimizers
   </a>
  </li>
 </ul>
@@ -252,7 +242,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/physics/index.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/hacks/index.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -272,10 +262,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/tensordiffeq/tdq-docs/issues/new?title=Issue%20on%20page%20%2Fphysics/index.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/tensordiffeq/tdq-docs/issues/new?title=Issue%20on%20page%20%2Fhacks/index.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/tensordiffeq/tdq-docs/edit/master/physics/index.md"><button
+        <a class="edit-button" href="https://github.com/tensordiffeq/tdq-docs/edit/master/hacks/index.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -301,8 +291,16 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#building-physics-in-tensordiffeq">
-   Building Physics in TensorDiffEq
+  <a class="reference internal nav-link" href="#in-development-as-of-7-april-2021">
+   In Development
+   <em>
+    (as of 7 April 2021)
+   </em>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modification-of-neural-network-architecture">
+   Modification of Neural Network Architecture
   </a>
  </li>
 </ul>
@@ -316,52 +314,55 @@
         
               <div>
                 
-  <div class="section" id="building-the-physics">
-<h1>Building the Physics<a class="headerlink" href="#building-the-physics" title="Permalink to this headline">¶</a></h1>
-<p>Physics are paramount to the PINN concept. The fundamental idea of PINNs is that there could be little to no data available to
-solve the problem at hand. The solution is to build a model capable of operating in the middle ground - somewhere in between a rote data-driven model and one in which the entire problem
-is completely defined. The data requirement for PINNs is drastically reduced from a black-box machine learning model, leaning instead on the
-physics of the problem at hand to bridge the gap to identifying a solution.</p>
-<p>The fantastic part about PINN solvers, such as those we are building in this section, is that there is no data requirement whatsoever to train
-the solution network. The training, in this case, is minimizing the residual between the output of the network as it goes through the PDE we define.
-We are simply seeking to push that residual to zero. On the boundaries we do explicitly define solutions, which could be considered as
-“data,” however these are known quantities when solving any PDE, and are required to generate a unique solution for your problem.</p>
-<p>In order to add the physics to a problem in TensorDiffEq, a function describing the relationships between all the partial derivatives
-must be generated. In order to get the partials, we take advantage of the <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> function, which generates the gradients of a
-function with respect to an input. This provides an intuitive interface to build a strong-form PDE to represent the
-physics in your model.</p>
-<div class="section" id="building-physics-in-tensordiffeq">
-<h2>Building Physics in TensorDiffEq<a class="headerlink" href="#building-physics-in-tensordiffeq" title="Permalink to this headline">¶</a></h2>
-<p>A simple example from <a class="reference external" href="https://maziarraissi.github.io/PINNs/">Raissi et. al</a> is the viscous Burger’s equation, useful for modeling shock waves in
-a medium.</p>
-<p>To implement the Burger’s equation in TensorDiffEq, we define a <code class="docutils literal notranslate"><span class="pre">f_model</span></code> that contains the strong form of the PDE as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># this line is required regardless of the model</span>
-    <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-    <span class="n">u_xx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-    <span class="n">u_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-    <span class="n">f_u</span> <span class="o">=</span> <span class="n">u_t</span> <span class="o">+</span> <span class="n">u</span> <span class="o">*</span> <span class="n">u_x</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">*</span> <span class="n">u_xx</span>
-    <span class="k">return</span> <span class="n">f_u</span>
+  <div class="section" id="custom-neural-network-architectures">
+<h1>Custom Neural Network Architectures<a class="headerlink" href="#custom-neural-network-architectures" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="in-development-as-of-7-april-2021">
+<h2>In Development <em>(as of 7 April 2021)</em><a class="headerlink" href="#in-development-as-of-7-april-2021" title="Permalink to this headline">¶</a></h2>
+<p>The fact that TensorDiffEq is built on top of Keras allows for some unique properties when training PINNs.
+So far, a (non-exhaustive) list includes:</p>
+<ul class="simple">
+<li><p>easy modification of neural network architecture with ANY Keras layers (whether or not they are useful for your model is left up to you)</p></li>
+<li><p>easy modification of optimizers using the <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers</span></code> bank of solvers</p></li>
+<li><p>exporting and re-importing a model for later use or transfer learning</p></li>
+</ul>
+<p>Here we will discuss a few of these options and how to execute these ‘hacks’</p>
+</div>
+<div class="section" id="modification-of-neural-network-architecture">
+<h2>Modification of Neural Network Architecture<a class="headerlink" href="#modification-of-neural-network-architecture" title="Permalink to this headline">¶</a></h2>
+<p>By default, TensorDiffEq will build a fully-connected network using the layer sizes and lengths you define in
+the <code class="docutils literal notranslate"><span class="pre">layer</span> <span class="pre">sizes</span></code> parameter, which is fed into the <code class="docutils literal notranslate"><span class="pre">model.compile</span></code> call. However, once the mode has been compiled,
+that network can be overwritten with any Keras neural network. Here we demonstrate how to do so, adding batch norm layers
+to the network.
+Referencing the example <span class="xref myst">here</span>, we can modify the neural network as such:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># need to include keras.layers and Sequential API</span>
+<span class="kn">from</span> <span class="nn">tf.keras</span> <span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">Sequential</span>
+
+<span class="n">layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">model_bn</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">,</span>
+            <span class="n">kernel_initializer</span><span class="o">=</span><span class="s2">&quot;glorot_normal&quot;</span><span class="p">),</span>        
+            <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">,</span>
+            <span class="n">kernel_initializer</span><span class="o">=</span><span class="s2">&quot;glorot_normal&quot;</span><span class="p">),</span> 
+            <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">tanh</span><span class="p">,</span>
+            <span class="n">kernel_initializer</span><span class="o">=</span><span class="s2">&quot;glorot_normal&quot;</span><span class="p">),</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>           
+            <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">CollocationSolverND</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">layer_sizes</span><span class="p">,</span> <span class="n">f_model</span><span class="p">,</span> <span class="n">Domain</span><span class="p">,</span> <span class="n">BCs</span><span class="p">)</span>
+<span class="c1"># overwrite the default NN with our new one defined above</span>
+<span class="n">model</span><span class="o">.</span><span class="n">u_model</span> <span class="o">=</span> <span class="n">model_bn</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tf_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">newton_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>the <code class="docutils literal notranslate"><span class="pre">f_model</span></code> is then fed into the solver as-is, with no special processing required.</p>
-<p>Defining a higher-dimensional model in TensorDiffEq is just as straightforward, for instance a 2D heat diffusion
-equation could be described in the following way:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span> <span class="c1"># this line must be modified to include the new dimension `y`</span>
-    <span class="n">u_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-    <span class="n">u_xx</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-    <span class="n">u_y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">u_yy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u_y</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">u_t</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
-
-    <span class="n">f_u</span> <span class="o">=</span> <span class="n">u_t</span> <span class="o">-</span> <span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="n">u_xx</span> <span class="o">+</span> <span class="n">u_yy</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">f_u</span>
-</pre></div>
-</div>
-<p>Once you define the physics of the model, you are ready to compile the model and begin training to generate a solution
-approximation network for your PDE.</p>
+<p>This will fit your network with batchnorm as the PDE approximation network, allowing more stability during training and
+reducing the likelihood of vanishing gradients in the training.</p>
 </div>
 </div>
 
@@ -378,7 +379,7 @@ approximation network for your PDE.</p>
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./physics"
+            path: "./hacks"
         },
         predefinedOutput: true
     }
@@ -393,8 +394,8 @@ approximation network for your PDE.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../ic-bc/bc/index.html" title="previous page">Boundary Conditions</a>
-    <a class='right-next' id="next-link" href="../model/compiling/index.html" title="next page">PINN Collocation Solver</a>
+    <a class='left-prev' id="prev-link" href="../gpu/gpu-considerations/index.html" title="previous page">GPU Considerations</a>
+    <a class='right-next' id="next-link" href="../bib.html" title="next page">Bibleography</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
