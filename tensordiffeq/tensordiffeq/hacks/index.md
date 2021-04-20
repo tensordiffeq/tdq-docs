@@ -17,7 +17,6 @@ that network can be overwritten with any Keras neural network. Here we demonstra
 to the network. 
 Referencing the example [here](../model/compiling-example/index.html), we can modify the neural network as such:
 
-
 ```{code} python
 # need to include keras.layers and Sequential API
 from tf.keras import layers, Sequential
