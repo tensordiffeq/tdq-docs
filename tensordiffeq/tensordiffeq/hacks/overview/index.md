@@ -7,4 +7,4 @@ So far, a (non-exhaustive) list includes:
 - easy modification of optimizers using the `tf.keras.optimizers` bank of solvers
 - exporting and re-importing a model for later use or transfer learning
 
-Here we will discuss a few of these options and how to execute these 'hacks'
+Here we will discuss a few of these options and how to execute these 'hacks'. Please contribute more if you discover any!
