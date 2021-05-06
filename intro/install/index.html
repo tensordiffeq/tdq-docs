@@ -58,7 +58,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Generating a Domain" href="../../domain/index.html" />
-    <link rel="prev" title="TensorDiffEq" href="../../index.html" />
+    <link rel="prev" title="TensorDiffEq Overview" href="../../index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -89,7 +89,7 @@
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../../index.html">
-   TensorDiffEq
+   TensorDiffEq Overview
   </a>
  </li>
 </ul>
@@ -301,13 +301,13 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#installing-tensordiffeq-on-a-cpu-only-enviromnent">
-   Installing TensorDiffEq on a CPU-only Enviromnent
+  <a class="reference internal nav-link" href="#installing-tensordiffeq-on-a-cpu-only-environment">
+   Installing TensorDiffEq on a CPU-only Environment
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#installing-tensordiffeq-on-a-gpu-enviroment">
-   Installing TensorDiffEq on a GPU Enviroment
+  <a class="reference internal nav-link" href="#installing-tensordiffeq-on-a-gpu-environment">
+   Installing TensorDiffEq on a GPU Environment
   </a>
  </li>
 </ul>
@@ -326,8 +326,8 @@
 <p>Here are some baseline instructions for getting TensorDiffEq online and running on your system. We have multiple potential deployment
 environments that can potentially be utilized, from CPUs on a local machine (i.e. a windows PC or MacBook) all the way up to data center
 scale computations. Here we will break the install down into CPU and GPU implementations.</p>
-<div class="section" id="installing-tensordiffeq-on-a-cpu-only-enviromnent">
-<h2>Installing TensorDiffEq on a CPU-only Enviromnent<a class="headerlink" href="#installing-tensordiffeq-on-a-cpu-only-enviromnent" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-tensordiffeq-on-a-cpu-only-environment">
+<h2>Installing TensorDiffEq on a CPU-only Environment<a class="headerlink" href="#installing-tensordiffeq-on-a-cpu-only-environment" title="Permalink to this headline">¶</a></h2>
 <p>TensorDiffEq is freely available for install on <a class="reference external" href="https://pypi.org/project/tensordiffeq/">PyPi</a> and can
 be installed using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensordiffeq</span>
@@ -346,8 +346,8 @@ identify the number of workers available, and automatically utilize all of them,
 installations or setups to ensure that their code runs on their system, and we take that same approach with the TensorDiffEq package interface.
 Therefore, <em>very</em> minimal modifications to your code are required to distribute across multiple GPU workers, or run on a quad-core processor found in a personal computer.</p>
 </div>
-<div class="section" id="installing-tensordiffeq-on-a-gpu-enviroment">
-<h2>Installing TensorDiffEq on a GPU Enviroment<a class="headerlink" href="#installing-tensordiffeq-on-a-gpu-enviroment" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-tensordiffeq-on-a-gpu-environment">
+<h2>Installing TensorDiffEq on a GPU Environment<a class="headerlink" href="#installing-tensordiffeq-on-a-gpu-environment" title="Permalink to this headline">¶</a></h2>
 <p>In order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
 This can be a somewhat tedious and error prone task. It is <em>highly</em> recommended that you work with Tensorflow’s <a class="reference external" href="https://www.tensorflow.org/install/docker">containerized distributions</a>
 for easy implementation of TensorDiffEq’s solvers.</p>
@@ -392,7 +392,7 @@ of CUDA dependency issues may arise. If this occurs, rebuild your docker contain
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../../index.html" title="previous page">TensorDiffEq</a>
+    <a class='left-prev' id="prev-link" href="../../index.html" title="previous page"><em>TensorDiffEq</em> Overview</a>
     <a class='right-next' id="next-link" href="../../domain/index.html" title="next page">Generating a Domain</a>
 
     </div>
