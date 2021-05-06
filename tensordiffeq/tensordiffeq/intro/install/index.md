@@ -4,7 +4,7 @@ Here are some baseline instructions for getting TensorDiffEq online and running 
 environments that can potentially be utilized, from CPUs on a local machine (i.e. a windows PC or MacBook) all the way up to data center 
 scale computations. Here we will break the install down into CPU and GPU implementations.
 
-## Installing TensorDiffEq on a CPU-only Enviromnent
+## Installing TensorDiffEq on a CPU-only Environment
 
 TensorDiffEq is freely available for install on [PyPi](https://pypi.org/project/tensordiffeq/) and can 
 be installed using `pip`:
@@ -29,7 +29,7 @@ installations or setups to ensure that their code runs on their system, and we t
 Therefore, *very* minimal modifications to your code are required to distribute across multiple GPU workers, or run on a quad-core processor found in a personal computer. 
 
 
-## Installing TensorDiffEq on a GPU Enviroment 
+## Installing TensorDiffEq on a GPU Environment 
 
 
 In order to fully utilize Tensorflow on GPU - and fully utilize the features of TensorDiffEq - all the upstream CUDA dependencies must be installed.
