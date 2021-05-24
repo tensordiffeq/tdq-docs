@@ -66,7 +66,7 @@ Args:
 - `layer_sizes` - a `list` of `ints` describing the size of the input, hidden, and output layers of the FC MLP network
 - `f_model` - a `func` describing the physics of the problem. More info is provided in [this section](../../physics/index.ipynb)
 - `domain` - a `domain` object containing the collocation points, defined further [here](../../domain/index.ipynb)
-- `bcs` - a `list` of BCs describing the problem
+- `bcs` - a `list` of [IC](../../ic-bc/ic/index.ipynb) and [BCs](../../ic-bc/bc/index.ipynb) describing the problem
 - `isAdaptive` - a `bool` describing whether the problem is solved adaptively using the [SA-PINN](https://arxiv.org/pdf/2009.04544.pdf)
 - `col_weights` - a `tf.Variable` object containing the vector of collocation weights used in self-adaptive training, if enabled via `isAdaptive`
 - `u_weights` - a `tf.Variable` object containing the vector of initial boundary weights used in self-adaptive training, if enabled via `isAdaptive`
