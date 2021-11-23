@@ -320,11 +320,7 @@ tf.Variables for the collocation initial condition weights.</p>
 <span class="k">def</span> <span class="nf">func_ic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
 
-<span class="c1"># We must select which loss functions will have adaptive weights</span>
-<span class="c1"># &quot;residual&quot; should a tuple for the case of multiple residual equation</span>
-<span class="c1"># BCs have to follow the same order as the previously defined BCs list</span>
-<span class="n">dict_adaptive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;residual&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span>
-                 <span class="s2">&quot;BCs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]}</span>
+
                  
 <span class="c1">## Weights initialization</span>
 <span class="c1"># dictionary with keys &quot;residual&quot; and &quot;BCs&quot;. Values must be a tuple with dimension</span>
@@ -347,6 +343,15 @@ tf.Variables for the collocation initial condition weights.</p>
 
 <span class="n">BCs</span> <span class="o">=</span> <span class="p">[</span><span class="n">init</span><span class="p">,</span> <span class="n">x_periodic</span><span class="p">]</span>
 
+<span class="c1"># We must select which loss functions will have adaptive weights</span>
+<span class="c1"># &quot;residual&quot; should a tuple for the case of multiple residual equation</span>
+<span class="c1"># BCs have to follow the same order as the previously defined BCs list</span>
+<span class="n">dict_adaptive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;residual&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span>
+                 <span class="s2">&quot;BCs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]}</span>
+ <span class="c1"># So, in this case, we are telling the SA-PINN to have put weights on the residual, </span>
+ <span class="c1"># and init, but not the periodic BC</span>
+
+                 
 
 <span class="k">def</span> <span class="nf">f_model</span><span class="p">(</span><span class="n">u_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">u_model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
