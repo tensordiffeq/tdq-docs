@@ -19,11 +19,7 @@ Domain.generate_collocation_points(N_f)
 def func_ic(x):
     return x ** 2 * np.cos(math.pi * x)
 
-# We must select which loss functions will have adaptive weights
-# "residual" should a tuple for the case of multiple residual equation
-# BCs have to follow the same order as the previously defined BCs list
-dict_adaptive = {"residual": [True],
-                 "BCs": [True, False]}
+
                  
 ## Weights initialization
 # dictionary with keys "residual" and "BCs". Values must be a tuple with dimension
@@ -46,6 +42,15 @@ x_periodic = periodicBC(Domain, ['x'], [deriv_model])
 
 BCs = [init, x_periodic]
 
+# We must select which loss functions will have adaptive weights
+# "residual" should a tuple for the case of multiple residual equation
+# BCs have to follow the same order as the previously defined BCs list
+dict_adaptive = {"residual": [True],
+                 "BCs": [True, False]}
+ # So, in this case, we are telling the SA-PINN to have put weights on the residual, 
+ # and init, but not the periodic BC
+
+                 
 
 def f_model(u_model, x, t):
     u = u_model(tf.concat([x, t], 1))
