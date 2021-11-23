@@ -69,8 +69,10 @@ u_weights = tf.Variable(100 * tf.random.uniform([512, 1]), trainable=True, dtype
 layer_sizes = [2, 128, 128, 128, 128, 1]
 
 model = CollocationSolverND()
+
+# Now we just need to include the dict_adaptive and init_weights in the compile call
 model.compile(layer_sizes, f_model, Domain, BCs, isAdaptive=True,
-                col_weights=col_weights, u_weights=u_weights)
+              dict_adaptive=dict_adaptive, init_weights=init_weights)
 model.fit(tf_iter=10000, newton_iter=10000)
 
 ```
