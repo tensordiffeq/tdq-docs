@@ -19,6 +19,17 @@ Domain.generate_collocation_points(N_f)
 def func_ic(x):
     return x ** 2 * np.cos(math.pi * x)
 
+# We must select which loss functions will have adaptive weights
+# "residual" should a tuple for the case of multiple residual equation
+# BCs have to follow the same order as the previously defined BCs list
+dict_adaptive = {"residual": [True],
+                 "BCs": [True, False]}
+                 
+## Weights initialization
+# dictionary with keys "residual" and "BCs". Values must be a tuple with dimension
+# equal to the number of residuals and boundary conditions, respectively
+init_weights = {"residual": [tf.random.uniform([N_f, 1])],
+                "BCs": [100 * tf.random.uniform([512, 1]), None]}                 
 
 # Conditions to be considered at the boundaries for the periodic BC
 def deriv_model(u_model, x, t):
