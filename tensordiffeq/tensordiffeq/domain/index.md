@@ -31,7 +31,7 @@ Args:
 - `token` - A `str` by which the variable will be referenced, usually a dimension of the problem such as
 `"x"` or `"y"`
 - `vals` - a `list` of inputs corresponding to `[min, max]` of the target domain
-- `fidel` - An `int` defining the level of fidelity of the evenly spaced samples along this simensions boundary points
+- `fidel` - An `int` defining the level of fidelity of the evenly spaced samples along this dimension boundary points
 
 ```{note}
 TensorDiffEq uses *meshless* solvers, i.e. the domain is not solved using evenly spaced meshs across the domain, as in FEA.
@@ -58,7 +58,7 @@ generate_collocation_points(N_f)
 ```
 
 Args:
-- `N_f` is an `int` describing the numbe of collocation points desired within the domain defined in your `DomainND` object
+- `N_f` is an `int` describing the number of collocation points desired within the domain defined in your `DomainND` object
 
 Example:
 ```{code-block} python

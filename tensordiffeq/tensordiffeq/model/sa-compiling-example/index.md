@@ -77,8 +77,8 @@ model.fit(tf_iter=10000, newton_iter=10000)
 
 ```
 
-Lets break this script up and discuss it a bit. First we define the `domain` and everything associated in it, in this case
-we have a problems that is only dependent on `x` and `t`.
+Lets break this script up and discuss it a bit. First we define the `domain` and everything associated to it, in this case
+we have a problem that is only dependent on `x` and `t`.
 
 ```{code} python
 Domain = DomainND(["x", "t"], time_var='t')
@@ -90,8 +90,7 @@ N_f = 50000
 Domain.generate_collocation_points(N_f)
 ```
 
-Notice how this problem we take more collocation points than the [last example](../compiling-example/index.ipynb) with its simpler
-example.
+Notice how in this problem we take more collocation points than the [last example](../compiling-example/index.ipynb).
 
 Next up lets take a look at defining the [initial condition](../../ic-bc/ic/index.ipynb) and the
 [periodic BC derivative model](../../ic-bc/bc/index.html#derivative-models). Then we drop those conditions into a list to drop them
